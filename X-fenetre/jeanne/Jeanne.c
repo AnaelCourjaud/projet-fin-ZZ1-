@@ -69,11 +69,20 @@ int main(int argc, char **argv) {
     }
 
     int i;
-    int *x;
-    int *y;
+    int x;
+    int y;
+    int w,h;
     for(i=0;i<10;i++){
-    SDL_GetWindowPosition(window_1,x,y);
+    SDL_GetWindowPosition(window_1,&x,&y);
     SDL_SetWindowPosition(window_1, x+50*i, y+50*i);
+    SDL_GetWindowPosition(window_2,&x,&y);
+    SDL_SetWindowPosition(window_2, x, y+50*i);
+    }
+    for(i=0;i<10;i++){
+    SDL_GetWindowPosition(window_1,&x,&y);
+    SDL_SetWindowPosition(window_1, x-50*i, y);
+    SDL_GetWindowSize(window_1, &w, &h);
+    SDL_SetWindowSize(window_1, w+50, h+50);
     }
 
   SDL_Delay(50000);                           // Pause exprimée  en ms
