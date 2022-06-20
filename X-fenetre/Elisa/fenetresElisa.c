@@ -1,46 +1,6 @@
 #include <SDL2/SDL.h>
 #include <stdio.h>
 
-SDL_Window *creerWindow(int largeur, int longueur, int x, int y)
-{
-    
-    /* Création de la fenêtre premiere fenetre*/
-    SDL_Window *window  = SDL_CreateWindow(
-        "Fenetre 1",
-        x, y,
-        largeur, longueur,
-        SDL_WINDOW_RESIZABLE);
-    
-    
-    if (window == NULL){
-        SDL_Log("Error : SDL window 1 creation -%s\n",
-            SDL_GetError());
-        SDL_Quit();                              // On referme la SDL       
-        exit(EXIT_FAILURE);
-    }
-
-    return window;
-}
-
-SDL_Renderer *creerRender(SDL_Window *window)
-{
-    
-    SDL_Renderer 
-        *renderer = NULL;
-
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    if (renderer == 0) {
-     fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); 
-      /*faire ce qu'il faut pour quitter proprement */
-    }
-    
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 128);
-    SDL_RenderClear(renderer);
-
-    SDL_RenderPresent(renderer);
-
-    return renderer;
-}
 
 int main()
 {
