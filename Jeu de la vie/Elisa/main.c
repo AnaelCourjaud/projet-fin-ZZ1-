@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
@@ -10,6 +11,17 @@
 
 #define HAUTEUR 25
 #define LARGEUR 48
+
+#define CoinToriqueYHaut 540
+#define CoinToriqueYBas 630
+#define CoinToriqueXGauche 670 
+#define CoinToriqueXDroit 1360
+
+#define CoinNormalYHaut 710
+#define CoinNormalYBas 800
+#define CoinNormalXGauche 720 
+#define CoinNormalXDroit 1320
+
 
 int main()
 {
@@ -60,28 +72,20 @@ int main()
     
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_RenderClear(renderer);
-    //SDL_RenderPresent(renderer); 
 
-    /* Creation de grille*/
-    // 26 carreaux et 48 carreaux
 
-        
-    /*
-    static SDL_Point points[POINTS_COUNT] = {
-        {0, 0},
-        {0 , 1080},
-        {40, 1080},
-        {40, 0}
-    };
+    /***************************** Texte ********************************************/
+    /*                                                                              */
+    /********************************************************************************/
 
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_RenderDrawLines(renderer, points, POINTS_COUNT);
-    SDL_RenderPresent(renderer);*/
-    
-    /*SDL_Rect rect = {0, 65, 40, 40};
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_RenderDrawRect(renderer, &rect);
-    SDL_RenderPresent(renderer);*/
+    /*****Initialisation*****/
+
+    if (TTF_Init() < 0) fprintf(stderr, "Unable to initialize TTF:  %s\n", SDL_GetError());
+
+    creationTexte("Bienvenue dans le jeu de la vie :", renderer, 70, 200, 100, 175); 
+    creationTexte("Choix du Monde :", renderer, 100, 500, 400, 255); 
+    creationTexte("~Torique~", renderer, 100, 700, 600, 200);  
+    creationTexte("~NorMal~", renderer, 100, 740, 760, 200); 
 
     /*************************  Gestion du tableau *********************************/
     /*                                                                             */
@@ -105,6 +109,7 @@ int main()
     SDL_bool program_on = SDL_TRUE;               // Booléen pour dire que le programme doit continuer
     SDL_Event event;                              // c'est le type IMPORTANT !!
 
+    int x; int y; int monde = 2;
     while (program_on){                             // Voilà la boucle des évènements 
 
         if (SDL_PollEvent(&event)){                 // si la file d'évènements n'est pas vide : défiler l'élément en tête
@@ -115,12 +120,26 @@ int main()
                     break;
                 default:                                  // L'évènement défilé ne nous intéresse pas
                     break;
+                case SDL_MOUSEBUTTONDOWN:                     // Click souris   
+                    if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT) ) {         // Si c'est un click gauche
+                        SDL_GetMouseState(&x, &y);
+                        if(((x > CoinToriqueXGauche) &&(x < CoinToriqueXDroit))&&((y > CoinToriqueYHaut) && (y < CoinToriqueYBas))){
+                            monde = 1;
+                            printf("monde :%d", monde);
+                        }
+                        if(((x > CoinNormalXGauche) &&(x < CoinNormalXDroit))&&((y > CoinNormalYHaut) && (y < CoinNormalYBas))){
+                            monde = 0;
+                            printf("monde :%d", monde);
+                        }
+                    }
                 
             }
         }   
     }
     SDL_DestroyRenderer(renderer);  
     SDL_DestroyWindow(window); 
+    TTF_Quit();
     SDL_Quit();   
     return 0;
+
 }
