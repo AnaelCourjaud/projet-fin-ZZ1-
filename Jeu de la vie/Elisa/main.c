@@ -82,6 +82,7 @@ int main()
 
     if (TTF_Init() < 0) fprintf(stderr, "Unable to initialize TTF:  %s\n", SDL_GetError());
 
+    creationTexte("Bienvenue dans le jeu de la vie :", renderer, 70, 200, 100, 175); 
     creationTexte("Choix du Monde :", renderer, 100, 500, 400, 255); 
     creationTexte("~Torique~", renderer, 100, 700, 600, 200);  
     creationTexte("~NorMal~", renderer, 100, 740, 760, 200); 
@@ -108,7 +109,7 @@ int main()
     SDL_bool program_on = SDL_TRUE;               // Booléen pour dire que le programme doit continuer
     SDL_Event event;                              // c'est le type IMPORTANT !!
 
-    int x; int y; int monde;
+    int x; int y; int monde = 2;
     while (program_on){                             // Voilà la boucle des évènements 
 
         if (SDL_PollEvent(&event)){                 // si la file d'évènements n'est pas vide : défiler l'élément en tête
@@ -122,11 +123,13 @@ int main()
                 case SDL_MOUSEBUTTONDOWN:                     // Click souris   
                     if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT) ) {         // Si c'est un click gauche
                         SDL_GetMouseState(&x, &y);
-                        if(((x > CoinToriqueXGauche) &&(x < CoinToriqueXDroit))||((y > CoinToriqueYHaut) && (y < CoinToriqueYBas))){
+                        if(((x > CoinToriqueXGauche) &&(x < CoinToriqueXDroit))&&((y > CoinToriqueYHaut) && (y < CoinToriqueYBas))){
                             monde = 1;
+                            printf("monde :%d", monde);
                         }
-                        if(((x > CoinNormalXGauche) &&(x < CoinNormalXDroit))||((y > CoinNormalYHaut) && (y < CoinNormalYBas))){
+                        if(((x > CoinNormalXGauche) &&(x < CoinNormalXDroit))&&((y > CoinNormalYHaut) && (y < CoinNormalYBas))){
                             monde = 0;
+                            printf("monde :%d", monde);
                         }
                     }
                 
