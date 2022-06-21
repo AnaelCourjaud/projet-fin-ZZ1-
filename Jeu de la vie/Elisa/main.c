@@ -7,7 +7,9 @@
 #include <time.h>
 
 #include "jeuVie.h"
-#define POINTS_COUNT 4
+
+#define HAUTEUR 25
+#define LARGEUR 48
 
 int main()
 {
@@ -76,10 +78,25 @@ int main()
     SDL_RenderDrawLines(renderer, points, POINTS_COUNT);
     SDL_RenderPresent(renderer);*/
     
-    SDL_Rect rect = {0, 65, 40, 40};
+    /*SDL_Rect rect = {0, 65, 40, 40};
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderDrawRect(renderer, &rect);
-    SDL_RenderPresent(renderer);
+    SDL_RenderPresent(renderer);*/
+
+    /*************************  Gestion du tableau *********************************/
+    /*                                                                             */
+    /*******************************************************************************/
+
+    int i; int j;
+    int grille[HAUTEUR][LARGEUR];
+
+    for(i=0;i<HAUTEUR;i++){
+        for(j=0;j<LARGEUR;j++){
+            grille[i][j] = 0;
+        }
+    }
+
+    affichage(grille, renderer);
 
     /*************************  Gestion des evenements *****************************/
     /*                                                                             */
@@ -96,7 +113,6 @@ int main()
                 case SDL_QUIT :                           // Un évènement simple, on a cliqué sur la x de la fenêtre
                     program_on = SDL_FALSE;                 // Il est temps d'arrêter le programme
                     break;
-
                 default:                                  // L'évènement défilé ne nous intéresse pas
                     break;
                 
