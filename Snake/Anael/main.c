@@ -121,7 +121,7 @@ int main(int argc, char **argv)
   SDL_Point posCercle;
   SDL_Point vitesseCercle;
   SDL_Color couleurFond;
-
+  SDL_Rect rectangle;
   int recupCoord = 0;
 
   posCercle.x = 10;
@@ -134,6 +134,8 @@ int main(int argc, char **argv)
   couleurFond.g = 128;
   couleurFond.b = 128;
   couleurFond.a = 255;
+
+  int chrono = 0;
 
   SDL_bool
       program_on = SDL_TRUE,   // Booléen pour dire que le programme doit continuer
@@ -199,6 +201,8 @@ int main(int argc, char **argv)
 
       vitesseCercle.x = ((rand() % 20) - 10)*2;
       vitesseCercle.y = ((rand() % 20) - 10)*2;
+      chrono = 100;
+
     }
 
     if(posCercle.x >= tailleFenetre.x && posCercle.y > 0 && posCercle.y < tailleFenetre.y){
@@ -223,13 +227,26 @@ vitesseCercle.y = -1*vitesseCercle.y;
     SDL_SetRenderDrawColor(renderer, couleurFond.r, couleurFond.g, couleurFond.b, couleurFond.a);
     SDL_RenderClear(renderer);
     draw(renderer, posCercle.x, posCercle.y); // appel de la fonction qui crée l'image
+    if(chrono > 0){
+      SDL_SetRenderDrawColor(renderer,                                                
+                         50, 0, 0,                                  // mode Red, Green, Blue (tous dans 0..255)
+                         255);                                      // 0 = transparent ; 255 = opaque
+  rectangle.x = 0;                                                  // x haut gauche du rectangle
+  rectangle.y = 0;                                                  // y haut gauche du rectangle
+  rectangle.w = posCercle.x;                                                // sa largeur (w = width)
+  rectangle.h = posCercle.y;                                                // sa hauteur (h = height)
+
+  SDL_RenderFillRect(renderer, &rectangle);    
+    }    
     SDL_RenderPresent(renderer);
     // draw(state, &color, renderer, window);          // On redessine
 
     posCercle.x += vitesseCercle.x;
     posCercle.y += vitesseCercle.y;
-
-    SDL_Delay(10); // Petite pause
+if(chrono != 0){
+  chrono--;
+}
+    SDL_Delay(20); // Petite pause
   }
 
   /* on referme proprement la SDL */
