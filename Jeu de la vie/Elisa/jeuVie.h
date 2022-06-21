@@ -9,4 +9,9 @@
 #include <time.h>
 
 
+#define HAUTEUR 25
+#define LARGEUR 48
+
+void affichage(int grille[HAUTEUR][LARGEUR], SDL_Renderer *renderer);
+
 #endif
