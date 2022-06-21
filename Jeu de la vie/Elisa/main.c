@@ -112,6 +112,7 @@ int main(int argc, char *argv[])
     SDL_Event event;                              // c'est le type IMPORTANT !!
 
     int x; int y; int monde = 2; int e = 0;
+    int modification = 0;
            
 
     char CONTROLE[] = "MONDE";
@@ -141,9 +142,7 @@ int main(int argc, char *argv[])
             {                // la touche appuyée est ...'
             case SDLK_SPACE: // ou 'SPC'
             // paused = !paused; // basculement pause/unpause
-                break;
-            case SDLK_ESCAPE:         // 'ESCAPE'
-            //case SDLK_ENTER: 
+                break; 
             case SDLK_q:              // ou 'q'
                 program_on = SDL_FALSE; // 'escape' ou 'q', d'autres façons de quitter le programme
                 interessant = SDL_TRUE;
@@ -216,14 +215,23 @@ int main(int argc, char *argv[])
                         
                     } 
                 }  
-                else {
+                else  {
                     switch (event.key.keysym.sym){                
                         case SDLK_s:
-                            e = 1;}
-                    if (e=1) strcpy(CONTROLE ,"ITER");}
-                
+                            e = 1;}}
+                if ( e == 1) strcpy(CONTROLE ,"ITER");
+                break;
             case 'I':
-                
+                printf("patate");
+                //int modification = nouvgengrille(grille , grilletemp);
+                if (modification == 0){
+                    strcpy(CONTROLE ,"STABLE");
+                }
+                break;
+            case 'S':
+                printf(" s ");
+                creationTexte("L'état est stable", renderer, 100, 700, 600, 200);  
+                affichage(grille, renderer);
                 break;
             case 'P':
                 /*
