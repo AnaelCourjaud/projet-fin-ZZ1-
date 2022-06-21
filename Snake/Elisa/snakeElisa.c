@@ -10,6 +10,7 @@ int main()
 {
     /************** Initialisation de la SDL  + gestion de l'échec possible *********/
     /*                                                                              */
+    /********************************************************************************/
 
     if(SDL_Init(SDL_INIT_VIDEO) !=0 ){
         SDL_Log("Error : SDL initialisation - %s\n",
@@ -20,6 +21,8 @@ int main()
 
     /*************************  Gestion des fenetres   *****************************/
     /*                                                                             */
+    /*******************************************************************************/
+
     SDL_DisplayMode taille;
     SDL_GetCurrentDisplayMode(0, &taille);
 
@@ -57,6 +60,7 @@ int main()
 
     /*************************  Dessins *****************************/
     /*                                                              */
+    /****************************************************************/
     
 
     SDL_Rect rect;
@@ -79,19 +83,10 @@ int main()
 
     /*************************  Gestion des evenements *****************************/
     /*                                                                             */
+    /*******************************************************************************/
 
     SDL_bool program_on = SDL_TRUE;               // Booléen pour dire que le programme doit continuer
     SDL_Event event;                              // c'est le type IMPORTANT !!
-
-    /*while (program_on){                             // Voilà la boucle des évènements 
-        while (SDL_PollEvent(&event)){
-
-            SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-            SDL_RenderClear(renderer);
-            SDL_RenderPresent(renderer);
-        }
-            SDL_Delay(50);
-    }*/
 
     int x; int y;
 
@@ -142,7 +137,6 @@ int main()
             }
         }   
     }
-    //SDL_DestroyRenderer(dessin1);
     SDL_DestroyRenderer(renderer);  
     SDL_DestroyWindow(window); 
     SDL_Quit();   
