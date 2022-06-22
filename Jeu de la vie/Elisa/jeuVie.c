@@ -6,7 +6,7 @@ void affichage(int grille[HAUTEUR][LARGEUR], SDL_Renderer *renderer)
 
     for(i=0;i<HAUTEUR;i++){
         for(j=0;j<LARGEUR;j++){
-            SDL_Rect rect = {40*j, 40*i+65, 40, 40};
+            SDL_Rect rect = {40*j, 40*i, 40, 40};
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
             if(grille[i][j] == 0){  
                 SDL_RenderDrawRect(renderer, &rect);    
