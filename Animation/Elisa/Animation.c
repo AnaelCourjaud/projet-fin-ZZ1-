@@ -135,22 +135,21 @@ int main()
     SDL_bool program_on = SDL_TRUE;               // Booléen pour dire que le programme doit continuer
     SDL_Event event;                              // c'est le type IMPORTANT !!
 
-     int arret = 0;
+
     while (program_on){                             // Voilà la boucle des évènements 
-        if ((arret == 0) && (SDL_PollEvent(&event))){                 // si la file d'évènements n'est pas vide : défiler l'élément en tête
+        if ((SDL_PollEvent(&event))){                 // si la file d'évènements n'est pas vide : défiler l'élément en tête
                                                     // de file dans 'event'
                 switch(event.type){                       // En fonction de la valeur du type de cet évènement
                 case SDL_QUIT :                           // Un évènement simple, on a cliqué sur la x de la fenêtre
-                    arret = 1;
                     program_on = SDL_FALSE;                 // Il est temps d'arrêter le programme
                     break;
                 default:
                     break;
             }   
         }
-        if (arret == 0 ) {
-            Animation("pacman.png", "fond.jpg", renderer, window, 400, 400, 0, 300, 3);
-            SDL_RenderPresent(renderer);}
+
+        Animation("pacman.png", "fond.jpg", renderer, window, 400, 400, 0, 300, 3);
+        SDL_RenderPresent(renderer);
     }
     SDL_DestroyRenderer(renderer);  
     SDL_DestroyWindow(window); 
