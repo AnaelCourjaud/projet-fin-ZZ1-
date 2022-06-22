@@ -79,4 +79,3 @@ switch(resultat)
              c = "attaque feu ennemi"
             ...
 
-Tableau des
