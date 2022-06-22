@@ -1,0 +1,82 @@
+Etats Jeu :
+    - Accueil *message de bienvenue + explication des commandes*
+    - Jeu *gameplay*
+    - Ecran de fin de jeu *en cas de victoire : perso qui saut en , cas de defaite : perso qui tombe*
+
+Gestion Etat Jeux
+case Jeu:
+    affichage attente() *affiche l'ecran d'attente* FONCTION
+    4 touches qui definissent l'etat perso *son action*
+    changemenEtatEnnemi() FONCTION
+    int resultat = gagnat(int etatperso, int etatennemi) *resultat = 0 si le joueur gagne, resultat = 1 si l'ennemi gagne, resultat = 2 si aucun ne gagne           
+                                                         (etatperso=etatennemi), resultat = 3 l'un des deux se denfend : on affiche les deux animations* FONCTION  
+    resolutionPV() *ATENTION au cas ou le joeur se defend* FONCTION
+    si resultat = 0 ou resultat = 1
+        char nomsprite = spriteaenvoyer(resultat,etatperso,etatennemi)
+        affichageAttaque(nomsprite)
+    si resultat = 2
+        Tant que ((compteur1<10)&&(compteur2<10))
+            char nomsprite1 = spriteaenvoyer(0,etatperso,etatennemi)
+            char nomsprite2 = spriteaenvoyer(1,etatperso,etatennemi)
+            affichageAttaque()
+            compteur1++ 
+            compteur2++
+    verifier Pvennemi != 0 et PVperso!= 0
+    sinon etat jeu devient fin de jeu
+
+Etats :
+events
+    touches 
+        SDLK_E
+            etatperso = 0
+        SDLK_F
+            etatperso = 1
+        SDLK_T
+            etatperso = 2
+        SDLK_D
+            etatperso = 3
+
+Variables :
+int PVennemi
+int PVperso
+int compteur1 et compteur2
+int etatperso * 0: eau 1:Feu 2:Terre 3:Defense*
+int etatennemis * 0: eau 1:Feu 2:Terre 3:Defense*
+int tab [4][3] *tableaux des transitions de Markov*
+    {[10][45][80]
+    [50][60][90]
+    [40][60][70]
+    [33][66][100]}
+
+Fonctions :
+
+int changemenEtatEnnemi(etatennemi) FONCTION
+switch(etatennemi)
+case 0 :
+    r random entre 0 et 100
+    if(tab[etat][0] < r =< tab[etat][1])
+        etatennemis = 1
+    if(tab[etat][1] < r =< tab[etat][2])
+        etatennemis = 2
+    if(tab[etat][2] < r)
+        etatennemis = 3
+        ...
+
+char spriteaenvoyer(resultat,etatperso,etatennemi)
+switch(resultat)
+    case 0 :
+        switch(etatperso)
+            case 0:
+              c = "attaque eau"
+            case 1:
+              c = "attaque feu"
+            ...
+    case 1 :
+        switch(etatennemi)
+        case 0:
+              c = "attaque eau ennemi"
+        case 1:
+             c = "attaque feu ennemi"
+            ...
+
+Tableau des
