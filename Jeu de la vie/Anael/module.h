@@ -17,13 +17,25 @@
 #define STABLE 60
 #define FIN 70
 
-#define HAUTEUR 24
-#define LARGEUR 40
+#define HAUTEUR 30
+#define LARGEUR 30
+#define TAILLECELLULES 20
 
 #define TAILLE_MAX 50
 
+#define CoinToriqueYHaut 540
+#define CoinToriqueYBas 630
+#define CoinToriqueXGauche 670 
+#define CoinToriqueXDroit 1360
+
+#define CoinNormalYHaut 710
+#define CoinNormalYBas 800
+#define CoinNormalXGauche 720 
+#define CoinNormalXDroit 1320
 
 
+void sauvegarder(int grille[HAUTEUR][LARGEUR]);
+int loadConfig(int grille[HAUTEUR][LARGEUR], char nom_fic[100]);
 
 void end_sdl(char, char const *, SDL_Window *, SDL_Renderer *);
 int chargerConfigInit(int[HAUTEUR][LARGEUR], int, char *);

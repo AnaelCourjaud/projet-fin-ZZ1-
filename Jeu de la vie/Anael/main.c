@@ -46,11 +46,21 @@ int main(int argc, char *argv[])
 
     int CONTROLE = MONDE;
     int chrono = 0;
+    int freqIter = 2;
+    int monde = 0;
 
     int grille[HAUTEUR][LARGEUR];
     int nouvelleGrille[HAUTEUR][LARGEUR];
 
-    //clock_t begin = clock();
+    int flecheGauche = 0;
+    int flecheDroite = 0;
+    int espace = 0;
+    int sauv = 0;
+    int torique =0;
+    int normal =0;
+
+
+    // clock_t begin = clock();
 
     initGrille(grille);
 
@@ -77,26 +87,122 @@ int main(int argc, char *argv[])
                 CONTROLE = FIN;
                 interessant = 1; // Il est temps d'arrêter le programme
                 break;
-                /*
-              case SDL_KEYDOWN: // Le type de event est : une touche appuyée
-                                // comme la valeur du type est SDL_Keydown, dans la partie 'union' de
-                                // l'event, plusieurs champs deviennent pertinents
+
+            case SDL_KEYUP: // Le type de event est : une touche appuyée
+                            // comme la valeur du type est SDL_Keydown, dans la partie 'union' de
+                            // l'event, plusieurs champs deviennent pertinents
                 switch (event.key.keysym.sym)
-                {                // la touche appuyée est ...
-                case SDLK_p:     // 'p'
+                { // la touche appuyée est ...
+
+                case SDLK_SPACE:
+                    if (CONTROLE == ITER)
+                    {
+                        CONTROLE = PAUSE;
+                    }
+                    else if (CONTROLE == PAUSE)
+                    {
+                        CONTROLE = ITER;
+                        chrono = 0;
+                    }
+                    else if (CONTROLE == CONFIG)
+                    {
+                        CONTROLE = ITER;
+                        chrono = 0;
+                    }
+                    interessant = 1;
+                    break;
+                case SDLK_ESCAPE:
+                    if (CONTROLE == ITER)
+                    {
+                        CONTROLE = FIN;
+                    }
+                    else if (CONTROLE == STABLE)
+                    {
+                        CONTROLE = FIN;
+                    }
+                    interessant = 1;
+                    break;
+                case SDLK_s:
+                    sauv =1;
+                    interessant =1;
+                    break;
+                case SDLK_t :
+                    torique =1;
+                    interessant =1;
+                    break;
+                case SDLK_n:
+                    normal =1;
+                    interessant =1;
+                    break;
+                    /*
+                    case SDLK_BACKSPACE:
+                    if (CONTROLE == CONFIG)
+                    {
+                        CONTROLE = ITER;
+                    }
+                    else if (CONTROLE == STABLE)
+                    {
+                        CONTROLE = FIN;
+                    }
+                    interessant = 1;
+                    break;
+                    */
+                /*
+                case SDLK_RIGHT:
+
+                    flecheDroite = 1;
+                    interessant = 1;
+                    break;
+                case SDLK_LEFT:
+                    flecheGauche = 1;
+                    interessant = 1;
+                    break;
+                case SDLK_p:
+                    break;       // 'p'
                 case SDLK_SPACE: // ou 'SPC'
-                  // paused = !paused; // basculement pause/unpause
-                  break;
-                case SDLK_ESCAPE:         // 'ESCAPE'
-                case SDLK_q:              // ou 'q'
-                 // program_on = SDL_FALSE; // 'escape' ou 'q', d'autres façons de quitter le programme
-                  interessant = 1;
-                  break;
+                    // paused = !paused; // basculement pause/unpause
+                    break;
+                case SDLK_ESCAPE: // 'ESCAPE'
+                case SDLK_q:      // ou 'q'
+                                  // program_on = SDL_FALSE; // 'escape' ou 'q', d'autres façons de quitter le programme
+                    interessant = 1;
+                    break;
+                    */
                 default: // Une touche appuyée qu'on ne traite pas
-                  break;
+                    break;
                 }
+            case SDL_KEYDOWN: // Le type de event est : une touche appuyée
+                              // comme la valeur du type est SDL_Keydown, dans la partie 'union' de
+                              // l'event, plusieurs champs deviennent pertinents
+                switch (event.key.keysym.sym)
+                { // la touche appuyée est ...
+                case SDLK_RIGHT:
+
+                    flecheDroite = 1;
+                    interessant = 1;
+                    break;
+                case SDLK_LEFT:
+                    flecheGauche = 1;
+                    interessant = 1;
+                    break;
+                    /*
+                case SDLK_p:
+                    break;       // 'p'
+                case SDLK_SPACE: // ou 'SPC'
+                    // paused = !paused; // basculement pause/unpause
+                    break;
+                case SDLK_ESCAPE: // 'ESCAPE'
+                case SDLK_q:      // ou 'q'
+                                  // program_on = SDL_FALSE; // 'escape' ou 'q', d'autres façons de quitter le programme
+                    interessant = 1;
+                    break;
+                    */
+                default: // Une touche appuyée qu'on ne traite pas
+                    break;
+                }
+
                 break;
-                */
+
             case SDL_MOUSEBUTTONDOWN: // Click souris
                 if (SDL_GetMouseState(NULL, NULL) &
                     SDL_BUTTON(SDL_BUTTON_LEFT))
@@ -105,9 +211,9 @@ int main(int argc, char *argv[])
                     interessant = 1;
                 }
 
-                break;
-            default: // Les évènements qu'on n'a pas envisagé
-                break;
+        // printf(" chrono : %d\n", chrono);
+    
+    
             }
         }
         interessant = 0;
@@ -124,6 +230,10 @@ int main(int argc, char *argv[])
         case MONDE:
             SDL_SetRenderDrawColor(renderer, 0, 255, 255, 255);
             SDL_RenderClear(renderer);
+             creationTexte("Bienvenue dans le jeu de la vie :", renderer, 70, 200, 100, 175); 
+    creationTexte("Choix du Monde :", renderer, 100, 500, 400, 255); 
+    creationTexte("~Torique~", renderer, 100, 700, 600, 200);  
+    creationTexte("~NorMal~", renderer, 100, 740, 760, 200); 
             //"Bienvenue dans le jeu de la vie, choisissez votre Monde :"
             // bouton "monde torique " et bouton "monde normal"
             /*
@@ -137,29 +247,81 @@ int main(int argc, char *argv[])
                                 CONTROLE = ERREUR;
                         }
                         */
+            if(torique == 1 || normal == 1){
+                if(torique ==1){
+                monde = 1;
+                
+            }
+            if(normal == 1){
+                monde = 0;
+                
+            }
+            CONTROLE = CONFIG;
+                loadConfig(grille, "sauvegardeWed Jun 22 15:40:18 2022.txt");
+            }
+            /*
             if (changerEtat == 1)
             {
+                int xClick;
+                int yClick;
+                SDL_GetMouseState(&xClick, &yClick);
+                        if(((xClick > CoinToriqueXGauche) &&(xClick < CoinToriqueXDroit))&&((yClick > CoinToriqueYHaut) && (yClick < CoinToriqueYBas))){
+                            monde = 1;
+                            printf("monde :%d", monde);
+                        }
+                        if(((xClick > CoinNormalXGauche) &&(xClick < CoinNormalXDroit))&&((yClick > CoinNormalYHaut) && (yClick < CoinNormalYBas))){
+                            monde = 0;
+                            printf("monde :%d", monde);
+                        }
                 CONTROLE = CONFIG;
                 changerEtat = 0;
+                loadConfig(grille, "sauvegardeWed Jun 22 15:40:18 2022.txt");
             }
+            */
 
             break;
         case CONFIG:
+            
             SDL_SetRenderDrawColor(renderer, 128, 255, 255, 255);
             SDL_RenderClear(renderer);
 
+            affichage(grille, renderer);
             if (changerEtat == 1)
             {
-                CONTROLE = ITER;
+                // CONTROLE = ITER;
+
+int xClick;
+int yClick;
+        SDL_GetMouseState(&xClick, &yClick);
+        xClick= xClick/TAILLECELLULES;
+        yClick= yClick/TAILLECELLULES;
+        if(xClick >= 0 && xClick < LARGEUR && yClick >= 0 && yClick < HAUTEUR){
+                grille[yClick][xClick] = 1;
+               // affichage(grille, renderer);
+
+            }
                 changerEtat = 0;
-                //begin = clock();
-                chrono=0;
+                // begin = clock();
+                // chrono = 0;
             }
             break;
         case ITER:
+            
+            if (flecheGauche == 1)
+            {
+                freqIter++;
+                flecheGauche = 0;
+            }
+            if (flecheDroite == 1)
+            {
+                if (freqIter >= 1)
+                {
+                    freqIter--;
+                }
+                flecheDroite = 0;
+            }
 
-            SDL_SetRenderDrawColor(renderer, 0, 255, 255, 255);
-            SDL_RenderClear(renderer);
+            
 
             /*
                     if (ok == 0)
@@ -175,33 +337,41 @@ int main(int argc, char *argv[])
                         ok = 1;
                     }
 */
-
+SDL_SetRenderDrawColor(renderer, 0, 255, 255, 255);
+            SDL_RenderClear(renderer);
             affichage(grille, renderer);
-            //SDL_RenderPresent(renderer);
+            // SDL_RenderPresent(renderer);
+            int N_modifs = 10;
 
-            if(chrono >= 100){
-            int N_modifs = nouvgengrille(grille, nouvelleGrille, 0);
-
-            for (int i = 0; i < HAUTEUR; i++) // remplacer grille par nouvelleGrille
+            if (chrono >= freqIter)
             {
-                for (int j = 0; j < LARGEUR; j++)
+                N_modifs = nouvgengrille(grille, nouvelleGrille, monde);
+
+                for (int i = 0; i < HAUTEUR; i++) // remplacer grille par nouvelleGrille
                 {
-                    grille[i][j] = nouvelleGrille[i][j];
+                    for (int j = 0; j < LARGEUR; j++)
+                    {
+                        grille[i][j] = nouvelleGrille[i][j];
+                    }
                 }
-            }
-            //begin = clock();
-            chrono =0;
+                // begin = clock();
+                chrono = 0;
             }
 
-            if (changerEtat == 1)
+            if (N_modifs == 0)
             {
-                CONTROLE = PAUSE;
-                changerEtat = 0;
+                CONTROLE = STABLE;
             }
             break;
         case PAUSE:
+            if(sauv == 1){
+                sauvegarder(grille);
+                printf("iehfguiegfuzegze\n");
+                sauv = 0;
+            }
             SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
             SDL_RenderClear(renderer);
+            affichage(grille, renderer);
             if (changerEtat == 1)
             {
                 CONTROLE = STABLE;
@@ -215,18 +385,15 @@ int main(int argc, char *argv[])
         case STABLE:
             SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
             SDL_RenderClear(renderer);
-            if (changerEtat == 1)
-            {
-                CONTROLE = FIN;
-                changerEtat = 0;
-            }
+            affichage(grille, renderer);
+            
             break;
         }
 
         SDL_RenderPresent(renderer);
         SDL_Delay(20); // Petite pause
         chrono++;
-        printf(" chrono : %d\n",chrono );
+        // printf(" chrono : %d\n", chrono);
     }
     /*
         SDL_bool
