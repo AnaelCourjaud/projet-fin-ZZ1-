@@ -459,5 +459,6 @@ SDL_SetRenderDrawColor(renderer, 0, 255, 255, 255);
 
     // SDL_Delay(10000);
     end_sdl(1, "Normal ending", window, renderer);
+    TTF_Quit();
     return EXIT_SUCCESS;
 }
