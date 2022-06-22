@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdlib.h> 
 
-SDL_Texture  *creationImage(char nom[], SDL_Renderer *renderer, SDL_Window *window, int longueur, int largeur, int x, int y){
+SDL_Texture  *creationImage(char nom[], SDL_Renderer *renderer, int longueur, int largeur, int x, int y){
 
     SDL_Texture  *texture;
     SDL_Surface *image = NULL;
