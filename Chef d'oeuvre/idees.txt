@@ -8,9 +8,9 @@ case Jeu:
     affichage attente() *affiche l'ecran d'attente* FONCTION
     4 touches qui definissent l'etat perso *son action*
     changemenEtatEnnemi() FONCTION
-    int resultat = gagnat(int etatperso, int etatennemi) *resultat = 0 si le joueur gagne, resultat = 1 si l'ennemi gagne, resultat = 2 si aucun ne gagne           
-                                                         (etatperso=etatennemi), resultat = 3 l'un des deux se denfend : on affiche les deux animations* FONCTION  
-    resolutionPV() *ATENTION au cas ou le joeur se defend* FONCTION
+    int resultat = gagnant(int etatperso, int etatennemi) *resultat = 0 si le joueur gagne, resultat = 1 si l'ennemi gagne, resultat = 2 si aucun ne gagne           
+                                                         (etatperso=etatennemi), resultat = 3 l'un des deux se denfend : on affiche les deux animations* FONCTION (gagnant codé jeanne resolution.c)  
+    resolutionPV() *ATENTION au cas ou le joeur se defend* FONCTION (resolutionPV code par Jeanne resolution.c)
     si resultat = 0 ou resultat = 1
         char nomsprite = spriteaenvoyer(resultat,etatperso,etatennemi)
         affichageAttaque(nomsprite)
@@ -37,11 +37,13 @@ events
             etatperso = 3
 
 Variables :
-int PVennemi
-int PVperso
+int PV[2] //PV[0] = Pvperso; PV[1] = PVennemi
+int etat[2] //etat[0] = etatperso; etat[1] = etatennemi
 int compteur1 et compteur2
-int etatperso * 0: eau 1:Feu 2:Terre 3:Defense*
-int etatennemis * 0: eau 1:Feu 2:Terre 3:Defense*
+#define EAU 0
+#define FEU 1
+#define TERRE 2
+#define DEFENSE 3
 int tab [4][3] *tableaux des transitions de Markov*
     {[10][45][80]
     [50][60][90]
