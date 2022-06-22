@@ -216,9 +216,10 @@ int main(int argc, char *argv[])
                     } 
                 }  
                 else  {
+                    while (SDL_PollEvent(&event)){
                     switch (event.key.keysym.sym){                
                         case SDLK_s:
-                            e = 1;}}
+                            e = 1;}}}
                 if ( e == 1) strcpy(CONTROLE ,"ITER");
                 break;
             case 'I':
