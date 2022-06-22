@@ -6,7 +6,7 @@ EXE=jeuVie
 CC=gcc
 CFLAGS:=-Wall -Wextra -MMD -Og -g $(sdl2-config --cflags)
 #CFLAGS:=-Wall -Wextra -MMD -O2 $(sdl2-config --cflags)  # pour la version release
-LDFLAGS:=-lSDL2_image -lSDL2_ttf -lSDL2_gfx -lm -lSDL2
+LDFLAGS:=-lSDL2_image -lSDL2_ttf -lSDL2_gfx -lm -g -lSDL2
 
 all: $(OBJ) 
 		$(CC) $(SRC) -o $(EXE) $^ $(LDFLAGS)
