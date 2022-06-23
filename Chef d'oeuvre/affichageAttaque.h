@@ -15,5 +15,8 @@
 #define TERRE 2
 #define DEFENSE 3
 
-SDL_Texture * textureAttaque(SDL_Texture * [2][7], int , int [2], int );
+#define ligneTexture 2
+#define colonneTexture 9
+
+SDL_Texture * textureAttaque(SDL_Texture * [ligneTexture][colonneTexture], int , int [2], int );
 #endif
