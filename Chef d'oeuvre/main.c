@@ -206,7 +206,7 @@ int main(int argc, char *argv[])
             /*SDL_SetRenderDrawColor(renderer, 0, 145, 255, 255);
             SDL_RenderClear(renderer);*/
             SDL_RenderClear(renderer);
-            creationImage(texture[0][0],window, renderer, tailleFenetre.w, tailleFenetre.h, 0, 0);
+            creationImage(texture[0][8],window, renderer, tailleFenetre.w, tailleFenetre.h, 0, 0);
 
             creationTexte("Bienvenue :", "normal", "./fonts/font.ttf", renderer, 100, 600, 100, 255);
             creationTexte("Commandes :", "surligne", "./fonts/font2.ttf", renderer, 90, 400, 300, 255);
@@ -253,15 +253,15 @@ int main(int argc, char *argv[])
             }
 
             if(animationFinieTerminee == 1){
-                sprite1 = texture[0][1];
-                sprite2 = texture[0][2];
+                sprite1 = texture[0][5];
+                sprite2 = texture[1][5];
 
                 nbrImageSprite1 = 2;
                 nbrImageSprite2 = 2;
             }
 
 
-            textureFond= texture[0][3];
+            textureFond= texture[1][8];
 
             printf("justeAvant animation\n");
 
