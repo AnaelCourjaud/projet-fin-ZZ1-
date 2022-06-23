@@ -1,1 +1,1 @@
-gcc main.c -o prog -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_net -lm -Wall -Wextra
+gcc main.c -o prog -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_net -lm -Wall -Wextra -g
