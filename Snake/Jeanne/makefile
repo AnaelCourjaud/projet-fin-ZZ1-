@@ -1,4 +1,4 @@
-SRC=AnimationJeanne.c
+SRC=Jeanne.c
 #SRC+=world.c etc1.c etc2.c
 #SRC=$(wildcard *.c)  # en commentaire, je ne suis pas un grand amateur
 EXE=exe.out
