@@ -35,13 +35,3 @@ void changement(int etat[])
         i++;
     etat[1] = i;
 }
-
-int main()
-{
-    int PV[2] = {10, 6};
-    int etat[2] = {EAU, DEFENSE};
-    int resultat = gagnant(etat);
-    changement(etat);
-    printf("%d", etat[1]);
-    return 0;
-}

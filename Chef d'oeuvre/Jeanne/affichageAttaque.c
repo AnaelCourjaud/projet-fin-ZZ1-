@@ -1,34 +1,47 @@
 #include "affichageAttaque.h"
 
-char spriteaenvoyer(int resultat, int etat[2])
+SLD_Texture * textureAttaque(int animation[2][7], int joueur, int etat[2], int resultat)
 {
-    char spriteaenvoyer;
-    int total;
-    // ABCD AB/CD: 0X = attaque perso/ennemi de l'etat X(0,1,2,3); 10 = degat ; 20 = attente ;31 = victoire; 32 = défaite
+    SLD_Texture * texture;
     switch (resultat)
     {
-    case 0:
-        total = 100 * etat[0] + 10 + etat[1];
-        spriteaenvoyer = strcat('0', total + '0');
-    case 1:
-        total = 1000 + 100 * etat[0] + etat[1];
-        spriteaenvoyer = total + '0';
-    case 2:
-        total = 2000 + 20;
-        spriteaenvoyer = total + '0';
-    case 3:
-        total = 100 * etat[0] + etat[1];
-        spriteaenvoyer = strcat('0', total + '0');
+    case 0: // victoire perso
+        if (joueur == 0)
+            texture = animation[0][etat[0]];
+        else
+            texture = animation[1][4];
+        break;
+    case 1: // victoire ennemi
+        if (joueur == 0)
+            texture = animation[0][4];
+        else
+            texture = animation[1][etat[1]];
+        break;
+    default: // ex aequo et défense
+        if (joueur == 0)
+            texture = animation[0][etat[0]];
+        else
+            texture = animation[1][etat[1]];
     }
-    return spriteaenvoyer;
+    return texture;
 }
 
-int main()
+/*int main()
 {
     int PV[2] = {10, 6};
-    int etat[2] = {EAU, DEFENSE};
+    int etat[2] = {FEU, FEU};
     int resultat = gagnant(etat);
-    char nomsprite = spriteaenvoyer(etat);
-    printf("%s", nomsprite);
+    int animation[2][7] = {{0, 1, 2, 3, 4, 5, 6}, {10, 11, 12, 13, 14, 15, 16}};
+    printf("Resultat:"
+           "%d\n",
+           resultat);
+    int textureperso = textureAttaque(animation, 0, etat, resultat);
+    int textureennemi = textureAttaque(animation, 1, etat, resultat);
+    printf("Perso:"
+           "%d\n",
+           textureperso);
+    printf("Ennemi:"
+           "%d\n",
+           textureennemi);
     return 0;
-}
+}*/
