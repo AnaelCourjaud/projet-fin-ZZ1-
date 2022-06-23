@@ -206,7 +206,7 @@ int main(int argc, char *argv[])
             /*SDL_SetRenderDrawColor(renderer, 0, 145, 255, 255);
             SDL_RenderClear(renderer);*/
             SDL_RenderClear(renderer);
-            creationImage(texture[0][0],window, renderer, tailleFenetre.w, tailleFenetre.h, 0, 0);
+            creationImage(texture[0][8],window, renderer, tailleFenetre.w, tailleFenetre.h, 0, 0);
 
             creationTexte("Bienvenue :", "normal", "./fonts/font.ttf", renderer, 100, 600, 100, 255);
             creationTexte("Commandes :", "surligne", "./fonts/font2.ttf", renderer, 90, 400, 300, 255);
@@ -239,8 +239,6 @@ int main(int argc, char *argv[])
                 printf(" textureAttaqueSprite1 fait\n");
                 sprite2 = textureAttaque(texture,1, etat, resultat);
                 printf(" textureAttaqueSprite2 fait\n");
-                nbrImageSprite1 = nbrImageSpriteFini;
-                nbrImageSprite2 = nbrImageSpriteFini;
 
                 choixFait = 0;
                 animationFinieTerminee = 0;
@@ -253,18 +251,40 @@ int main(int argc, char *argv[])
             }
 
             if(animationFinieTerminee == 1){
-                sprite1 = texture[0][1];
-                sprite2 = texture[0][2];
+                sprite1 = texture[0][5];
+                sprite2 = texture[1][5];
 
-                nbrImageSprite1 = 2;
-                nbrImageSprite2 = 2;
+            }
+
+            for(int i=0;i<ligneTexture;i++){
+                for(int j=0;j<colonneTexture;j++){
+                    if(sprite1 == texture[i][j]){
+                        if(j==0 || j==1 || j==2 || j==3 || j==4){
+                            nbrImageSprite1=10;
+                        }else if(j==5 || j==6){
+                            nbrImageSprite1=2;
+                        }else{
+                            nbrImageSprite1=3;
+                        }
+                    }
+                    if(sprite2 == texture[i][j]){
+                        if(j==0 || j==1 || j==2 || j==3 || j==4){
+                            nbrImageSprite2=10;
+                        }else if(j==5 || j==6){
+                            nbrImageSprite2=2;
+                        }else{
+                            nbrImageSprite2=3;
+                        }
+                    }
+
+                }
             }
 
 
-            textureFond= texture[0][3];
+            textureFond= texture[1][8];
 
             printf("justeAvant animation\n");
-
+            printf(" textures égales : %d\n", texture[0][5] == texture[0][4]);
             Animation(sprite1, sprite2, textureFond, renderer, window, 400, 400, 200, 1300, 500, nbrImageSprite1,nbrImageSprite2, i);
 
             printf("justeAprès animation\n");
