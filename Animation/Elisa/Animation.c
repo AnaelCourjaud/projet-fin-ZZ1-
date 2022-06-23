@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdlib.h> 
 
-SDL_Texture  *creationImage(char nom[], SDL_Renderer *renderer, SDL_Window *window, int longueur, int largeur, int x, int y){
+void creationImage(char nom[], SDL_Renderer *renderer, int longueur, int largeur, int x, int y){
 
     SDL_Texture  *texture;
     SDL_Surface *image = NULL;
@@ -21,7 +21,6 @@ SDL_Texture  *creationImage(char nom[], SDL_Renderer *renderer, SDL_Window *wind
     rect.h = largeur;
 
     SDL_RenderCopy(renderer, texture, NULL, &rect);
-    return texture;
 }
 
 void Animation(char nom[], char fond[], SDL_Renderer *renderer, SDL_Window *window, int longueur, int largeur, int x, int y,int nbimage)
@@ -68,7 +67,7 @@ void Animation(char nom[], char fond[], SDL_Renderer *renderer, SDL_Window *wind
 
     i = 0;
     for (int cpt = 0; cpt < nbimage; ++cpt) {
-    creationImage(fond, renderer, window, 1920, 1080, 0, 0);
+    creationImage(fond, renderer, 1920, 1080, 0, 0);
     SDL_RenderCopy(renderer, texture, &state[i], &destination);
     i = (i + 1) % nbimage;                  // Passage à l'image suivante, le modulo car l'animation est cyclique 
     SDL_RenderPresent(renderer);              // Affichage
@@ -116,14 +115,13 @@ int main()
 
     /* Creation de fond*/
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED );
-    SDL_RenderClear(renderer);
 
     if (renderer == 0) {
      fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); 
       /*faire ce qu'il faut pour quitter proprement */
     }
 
-    SDL_Texture  *texture = creationImage("fond.jpg", renderer, window, 1920, 1080, 0, 0);
+    creationImage("fond.jpg", renderer, 1920, 1080, 0, 0);
     SDL_RenderClear(renderer);
     
 
