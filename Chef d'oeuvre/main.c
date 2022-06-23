@@ -190,7 +190,7 @@ int main(int argc, char *argv[])
                     interessant = 1;
                     }
                     break;
-                case SDLK_d:            Animation(sprite1, sprite2, textureFond, renderer, window, 400, 400, 200, 1300, 500, nbrImageSprite1,nbrImageSprite2, i);
+                case SDLK_d:
                     if(animationFinieTerminee ==1){
                     etatPrec = etat[0];
                     etat[0] = 3;
