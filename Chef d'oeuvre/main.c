@@ -132,13 +132,13 @@ int main(int argc, char *argv[])
             SDL_RenderClear(renderer);
             creationImage("./Sprites/fond1.jpg", renderer, 1920, 1080, 0, 0);
 
-            creationTexte("Bienvenue :", "normal", "font.ttf", renderer, 100, 600, 100, 255);
-            creationTexte("Commandes :", "surligne", "font2.ttf", renderer, 90, 400, 300, 255);
-            creationTexte("E pour attaque eau", "normal", "font2.ttf", renderer, 90, 500, 450, 255);
-            creationTexte("F pour attaque feu", "normal", "font2.ttf", renderer, 90, 500, 550, 255);
-            creationTexte("T pour attaque terre", "normal", "font2.ttf", renderer, 90, 500, 650, 255);
-            creationTexte("D pour defense", "normal", "font2.ttf", renderer, 90, 500, 750, 255);
-            creationTexte("Q pour revenir ici", "normal", "font2.ttf", renderer, 90, 500, 850, 255);
+            creationTexte("Bienvenue :", "normal", "./fonts/font.ttf", renderer, 100, 600, 100, 255);
+            creationTexte("Commandes :", "surligne", "./fonts/font2.ttf", renderer, 90, 400, 300, 255);
+            creationTexte("E pour attaque eau", "normal", "./fonts/font2.ttf", renderer, 90, 500, 450, 255);
+            creationTexte("F pour attaque feu", "normal", "./fonts/font2.ttf", renderer, 90, 500, 550, 255);
+            creationTexte("T pour attaque terre", "normal", "./fonts/font2.ttf", renderer, 90, 500, 650, 255);
+            creationTexte("D pour defense", "normal", "./fonts/font2.ttf", renderer, 90, 500, 750, 255);
+            creationTexte("Q pour revenir ici", "normal", "./fonts/font2.ttf", renderer, 90, 500, 850, 255);
             
             break;
         case JEU:
