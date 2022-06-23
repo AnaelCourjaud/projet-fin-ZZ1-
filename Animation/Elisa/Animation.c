@@ -63,6 +63,7 @@ void Animation(char nom[], char fond[], SDL_Renderer *renderer, SDL_Window *wind
     destination.w = largeur;           // Largeur du sprite à l'écran
     destination.h = longueur;            // Hauteur du sprite à l'écran
     destination.x = x + i*50; // Position en x pour l'affichage du sprite
+    destination.x += 50*ite;
     destination.y = y + i*50;  // Position en y pour l'affichage du sprite
 
     ite = ite % nbimage;   
