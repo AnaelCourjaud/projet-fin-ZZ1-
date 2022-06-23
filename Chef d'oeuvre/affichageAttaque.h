@@ -16,7 +16,8 @@
 #define DEFENSE 3
 
 #define ligneTexture 2
-#define colonneTexture 9
+#define colonneTexture 10
 
 SDL_Texture * textureAttaque(SDL_Texture * [ligneTexture][colonneTexture], int , int [2], int );
+
 #endif

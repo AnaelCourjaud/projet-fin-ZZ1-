@@ -50,102 +50,10 @@ void creationImage(SDL_Texture *my_texture,SDL_Window *window, SDL_Renderer *ren
     SDL_RenderCopy(renderer, my_texture , &source, &destination);
 
 }
-/*
-void AnimationInfinie(SDL_Texture * texture1, SDL_Texture *texture2, SDL_Texture *fond, SDL_Renderer *renderer, SDL_Window *window, int longueur, int largeur, int x1,  int x2, int y,int nbimage, int ite)
-{
-  //  SDL_Texture  *texture1;
-    //SDL_Surface *image1 = NULL;
 
-    SDL_Rect
-        source1 = {0},                             // Rectangle définissant la zone de la texture à récupérer
-        window_dimensions1 = {0},                  // Rectangle définissant la fenêtre, on  n'utilisera que largeur et hauteur
-        destination1 = {0};                        // Rectangle définissant où la zone_source doit être déposée dans le renderer
-
-//    SDL_Texture  *texture2;
-  //  SDL_Surface *image2 = NULL;
-
-    SDL_Rect
-        source2 = {0},                             // Rectangle définissant la zone de la texture à récupérer
-        window_dimensions2 = {0},                  // Rectangle définissant la fenêtre, on  n'utilisera que largeur et hauteur
-        destination2 = {0};
-
-/*
-    image1=IMG_Load(nom1);
-    image2=IMG_Load(nom2);
-
-    texture1 = SDL_CreateTextureFromSurface(renderer, image1);
-    SDL_FreeSurface(image1);
-
-    texture2 = SDL_CreateTextureFromSurface(renderer, image2);
-    SDL_FreeSurface(image2);
-
-    SDL_Rect state1[nbimage];                         // Tableau qui stocke les vignettes dans le bon ordre pour l'animation
-    SDL_Rect state2[nbimage]; 
-
-    SDL_QueryTexture(texture1, NULL, NULL, &source1.w, &source1.h); 
-    int offset_x1 = source1.w / nbimage,                // La largeur d'une vignette de l'image
-        offset_y1 = source1.h;
-
-    /* construction des différents rectangles autour de chacune des vignettes de la planche 
-    int i1 = 0;                                   
-    for (int y1 = 0; y1 < source1.h ; y1 += offset_y1) {
-    for (int x1 = 0; x1 < source1.w; x1 += offset_x1) {
-      state1[i1].x = x1;
-      state1[i1].y = y1;
-      state1[i1].w = offset_x1;
-      state1[i1].h = offset_y1;
-      ++i1;
-    } 
-    }
-
-    for(; i1< nbimage ; ++i1){                  // reprise du début de l'animation en sens inverse  
-        state1[i1] = state1[nbimage-1-i1];
-    }
-
-    SDL_QueryTexture(texture2, NULL, NULL, &source2.w, &source2.h); 
-    int offset_x2 = source2.w / nbimage,                // La largeur d'une vignette de l'image
-        offset_y2 = source2.h;
-
-    /* construction des différents rectangles autour de chacune des vignettes de la planche 
-    int i2 = 0;                                   
-    for (int y2 = 0; y2 < source2.h ; y2 += offset_y2) {
-    for (int x2 = 0; x2 < source2.w; x2 += offset_x2) {
-      state2[i2].x = x2;
-      state2[i2].y = y2;
-      state2[i2].w = offset_x2;
-      state2[i2].h = offset_y2;
-      ++i2;
-    } 
-    }
-
-    for(; i2< nbimage ; ++i2){                  // reprise du début de l'animation en sens inverse  
-        state2[i2] = state2[nbimage-1-i2];
-    }
-
-    destination1.w = largeur;           // Largeur du sprite à l'écran
-    destination1.h = longueur;            // Hauteur du sprite à l'écran
-    destination1.x = x1; // Position en x pour l'affichage du sprite
-    destination1.y = y;  // Position en y pour l'affichage du sprite
-
-    destination2.w = largeur;           // Largeur du sprite à l'écran
-    destination2.h = longueur;            // Hauteur du sprite à l'écran
-    destination2.x = x2; // Position en x pour l'affichage du sprite
-    destination2.y = y;  // Position en y pour l'affichage du sprite
-
-
-    ite = ite % nbimage;   
-    creationImage(fond, window, renderer, 1920, 1080, 0, 0);
-    SDL_RenderCopy(renderer, texture1, &state1[ite], &destination1);
-    SDL_RenderCopy(renderer, texture2, &state2[ite], &destination2);
-
-}
-*/
 
 void Animation(SDL_Texture * texture1, SDL_Texture *texture2, SDL_Texture *fond, SDL_Renderer *renderer, SDL_Window *window, int longueur, int largeur, int x1,  int x2, int y,int nbimage1,int nbimage2, int nbimageFond, int ite, int iteFond)
 {
-  //  SDL_Texture  *texture1;
-    //SDL_Surface *image1 = NULL;
-
     SDL_Rect
         source1 = {0},                             // Rectangle définissant la zone de la texture à récupérer
        // window_dimensions1 = {0},                  // Rectangle définissant la fenêtre, on  n'utilisera que largeur et hauteur
@@ -163,16 +71,8 @@ SDL_Rect
         sourceFond = {0},                             // Rectangle définissant la zone de la texture à récupérer
        // window_dimensions1 = {0},                  // Rectangle définissant la fenêtre, on  n'utilisera que largeur et hauteur
         destinationFond = {0};
-/*
-    image1=IMG_Load(nom1);
-    image2=IMG_Load(nom2);
 
-    texture1 = SDL_CreateTextureFromSurface(renderer, image1);
-    SDL_FreeSurface(image1);
 
-    texture2 = SDL_CreateTextureFromSurface(renderer, image2);
-    SDL_FreeSurface(image2);
-*/
     SDL_Rect state1[nbimage1];                         // Tableau qui stocke les vignettes dans le bon ordre pour l'animation
     SDL_Rect state2[nbimage2];
     SDL_Rect stateFond[nbimageFond]; 
@@ -192,11 +92,7 @@ SDL_Rect
       ++i1;
     } 
     }
-/*
-    for(; i1< nbimage1 ; ++i1){                  // reprise du début de l'animation en sens inverse  
-        state1[i1] = state1[nbimage1-1-i1];
-    }
-*/
+
     SDL_QueryTexture(texture2, NULL, NULL, &source2.w, &source2.h); 
     int offset_x2 = source2.w / nbimage2,                // La largeur d'une vignette de l'image
         offset_y2 = source2.h;
@@ -228,20 +124,31 @@ SDL_Rect
       ++iFond;
     } 
     }
-/*
-    for(; i2< nbimage2 ; ++i2){                  // reprise du début de l'animation en sens inverse  
-        state2[i2] = state2[nbimage2-1-i2];
-    }
-*/
+
+
     destination1.w = largeur;           // Largeur du sprite à l'écran
     destination1.h = longueur;            // Hauteur du sprite à l'écran
     destination1.x = x1; // Position en x pour l'affichage du sprite
     destination1.y = y;  // Position en y pour l'affichage du sprite
 
+    if(offset_x1 >= 150){
+        destination1.w = 750;
+        destination1.h += 50;
+        destination1.x += 50;
+        destination1.y -= 50;
+    }
+
     destination2.w = largeur;           // Largeur du sprite à l'écran
     destination2.h = longueur;            // Hauteur du sprite à l'écran
     destination2.x = x2; // Position en x pour l'affichage du sprite
     destination2.y = y;  // Position en y pour l'affichage du sprite
+
+    if(offset_x2 >= 150){
+        destination2.w = 750;
+        destination2.h += 50;
+        destination2.x -= 400;
+        destination2.y -= 50;
+    }
 
     destinationFond.w = 1920;           // Largeur du sprite à l'écran
     destinationFond.h = 1080;            // Hauteur du sprite à l'écran
@@ -254,14 +161,8 @@ SDL_Rect
     int courant2 = ite % nbimage2;
     int courantFond = iteFond % nbimageFond;
 
-    printf("juste avant le bloc creationImage et renderCopy etc...\n");
-SDL_SetRenderDrawColor(renderer, 0,255,255,255);
-    SDL_RenderClear(renderer);
-    //creationImage(fond, window, renderer, 1920, 1080, 0, 0);
     SDL_RenderCopy(renderer, fond, &stateFond[courantFond], &destinationFond);
-printf("juste avant le bloc renderCopy etc...\n");
     SDL_RenderCopy(renderer, texture1, &state1[courant1], &destination1);
     SDL_RenderCopy(renderer, texture2, &state2[courant2], &destination2);
-
 
 }

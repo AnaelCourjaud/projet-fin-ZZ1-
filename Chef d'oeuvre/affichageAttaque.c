@@ -25,23 +25,3 @@ SDL_Texture * textureAttaque(SDL_Texture *texture[ligneTexture][colonneTexture],
     }
     return textureperso;
 }
-
-/*int main()
-{
-    int PV[2] = {10, 6};
-    int etat[2] = {FEU, FEU};
-    int resultat = gagnant(etat);
-    int animation[2][7] = {{0, 1, 2, 3, 4, 5, 6}, {10, 11, 12, 13, 14, 15, 16}};
-    printf("Resultat:"
-           "%d\n",
-           resultat);
-    int textureperso = textureAttaque(animation, 0, etat, resultat);
-    int textureennemi = textureAttaque(animation, 1, etat, resultat);
-    printf("Perso:"
-           "%d\n",
-           textureperso);
-    printf("Ennemi:"
-           "%d\n",
-           textureennemi);
-    return 0;
-}*/

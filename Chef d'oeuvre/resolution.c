@@ -123,13 +123,3 @@ void end_sdl(char ok,            // fin anormale : ok = 0 ; normale ok = 1
         exit(EXIT_FAILURE);
     }
 }
-/*
-int main(){
-    int PV[2] = {10, 6};
-    int etat[2] = {FEU, EAU};
-    int resultat = gagnant(etat);
-    resolutionPV(PV, resultat, etat);
-    printf("%d", PV[0]);
-    printf("%d", PV[1]);
-    return 0;
-}*/

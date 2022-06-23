@@ -4,11 +4,11 @@
 
 
 #define ligneTexture 2
-#define colonneTexture 9
+#define colonneTexture 10
 #define nombreFichier 18
 #define tailleMaxFichiers 50
 
-#define nbrImageSpriteFini 10
+#define nbrImageSpriteFini 10 //toutes les animations finies sont des sprites avec 10 images
 
 int main(int argc, char *argv[])
 {
@@ -43,7 +43,6 @@ int main(int argc, char *argv[])
     /*                                                                             */
     /*******************************************************************************/
 
-    // SDL_DisplayMode screen;
     SDL_GetCurrentDisplayMode(0, &screen);
     tailleFenetre.w = screen.w * 1.0; //réduction fenetre
     tailleFenetre.h = screen.h * 1.0;
@@ -51,15 +50,6 @@ int main(int argc, char *argv[])
            screen.w, screen.h);
     printf("Résolution fenetre\n\tw : %d\n\th : %d\n",
            tailleFenetre.w, tailleFenetre.h);
-
-    // SDL_Window *window = NULL;
-    // SDL_Renderer *renderer = NULL;
-
-    /*tailleFenetre.x = screen.w;
-    tailleFenetre.y = screen.h;
-    printf("Résolution écran\n\tw : %d\n\th : %d\n",
-           screen.w, screen.h);
-    printf("Pour fermer : cliquer sur la croix, ou alors 'q' ou alors 'ESCAPE'. Bon trip !\n");*/
 
     /* Création de la fenêtre */
     window = SDL_CreateWindow("Jeu de l'ambiance",
@@ -76,14 +66,12 @@ int main(int argc, char *argv[])
     if (renderer == NULL)
         end_sdl(0, "ERROR RENDERER CREATION", window, renderer);
 
-    /*************************  Gestion des evenements *****************************/
-    /*                                                                             */
-    /*******************************************************************************/
+   
 
 /////////////// récupération des textures et stockage dans tableau
    SDL_Texture *texture[ligneTexture][colonneTexture];
-    char nomFichiers[ligneTexture][colonneTexture][tailleMaxFichiers] = {{"./Sprites/attaqueeau.png", "./Sprites/attaquefeu.png", "./Sprites/attaquepierre.png", "./Sprites/defense.png","./Sprites/attente.png","./Sprites/persobase.png","./Sprites/victoire.png","./Sprites/defaite.png","./Sprites/fond1.jpg"},
- {"./Sprites/attaqueeauennemi.png", "./Sprites/attaquefeuennemi.png", "./Sprites/attaquepierreennemi.png", "./Sprites/defenseennemi.png","./Sprites/attenteennemi.png","./Sprites/ennemibase.png","./Sprites/victoireennemi.png","./Sprites/defaiteennemi.png","./Sprites/fond2.jpg"}};
+    char nomFichiers[ligneTexture][colonneTexture][tailleMaxFichiers] = {{"./Sprites/attaqueeau.png", "./Sprites/attaquefeu.png", "./Sprites/attaquepierre.png", "./Sprites/defense.png","./Sprites/attente.png","./Sprites/persobase.png","./Sprites/victoire.png","./Sprites/defaite.png","./Sprites/fond1.jpg","./Sprites/winner.png"},
+ {"./Sprites/attaqueeauennemi.png", "./Sprites/attaquefeuennemi.png", "./Sprites/attaquepierreennemi.png", "./Sprites/defenseennemi.png","./Sprites/attenteennemi.png","./Sprites/ennemibase.png","./Sprites/victoireennemi.png","./Sprites/defaiteennemi.png","./Sprites/fond2.jpg","./Sprites/loser.png"}};
     for (int i = 0; i < ligneTexture; i++)
     {
         for (int j = 0; j < colonneTexture; j++)
@@ -93,20 +81,12 @@ int main(int argc, char *argv[])
                 end_sdl(0, "Echec du chargement de l'image dans la texture", window, renderer);
         }
     }
+//////////////////////////
 
-////////:::////
-
-   // int nbCycleMax=10;
-    //int cycleActuel=0;
 
     SDL_bool program_on = SDL_TRUE; // Booléen pour dire que le programme doit continuer
     SDL_Event event;                // c'est le type IMPORTANT !!
-/*
-    SDL_Point 
-                indicesSprite1 = {0},
-                indicesSprite2 = {0},
-                indicesFond = {0};
-*/
+
     SDL_Texture *sprite1;
     SDL_Texture *sprite2;
     SDL_Texture *textureFond;
@@ -114,21 +94,25 @@ int main(int argc, char *argv[])
     int nbrImageSprite1;
     int nbrImageSprite2;
     int animationFinieTerminee = 1;
+    int gameOver = 0;
 
     int ETATJEU = ACCUEIL;
     int i = 0;
     int j=0;
 
-    int PV[2] = {1, 1};
+    int PV[2] = {10, 10};
     int etat[2] = {EAU, EAU};
 
     while (program_on)
     {
         // Voilà la boucle des évènements
         int interessant = 0;
-        //int changerEtat = 0;
         int choixFait = 0;
-        int etatPrec;
+        int etatPrec; //sert à l'utilisation de la chaîne de Markov
+
+    /*************************  Gestion des evenements *****************************/
+    /*                                                                             */
+    /*******************************************************************************/
 
         while ((interessant == 0) && (SDL_PollEvent(&event)))
         {   // tant que la file d'évènements n'est pas vide : défiler l'élément en tête et l'on a pas d'évènements interessants à traiter
@@ -149,6 +133,12 @@ int main(int argc, char *argv[])
                         ETATJEU = JEU;
                         i=0;
                         j=0;
+                        animationFinieTerminee = 1;
+                        gameOver = 0;
+                        PV[0] = 10;
+                        PV[1] = 10;
+                        etat[0] = EAU;
+                        etat[1] = EAU;
                     }
                     interessant = 1;
                     break;
@@ -160,43 +150,27 @@ int main(int argc, char *argv[])
                         }
                         interessant = 1;
                     }
-                case SDLK_r:
-                    if(animationFinieTerminee ==1){
-                        if (ETATJEU == FINJEU)
-                        {
-                            ETATJEU = ACCUEIL;
-                        }
-                        interessant = 1;
-                    }
                     break;
                 case SDLK_e:
-                    if(animationFinieTerminee ==1){
                     etat[0] = 0;
                     choixFait = 1;
                     interessant = 1;
-                    }
                     break;
                 case SDLK_f:
-                    if(animationFinieTerminee ==1){
                     etat[0] = 1;
                     choixFait = 1;
                     interessant = 1;
-                    }
                     break;
                 case SDLK_t:
-                    if(animationFinieTerminee ==1){
                     etat[0] = 2;
                     choixFait = 1;
                     interessant = 1;
-                    }
                     break;
                 case SDLK_d:
-                    if(animationFinieTerminee ==1){
                     etatPrec = etat[0];
                     etat[0] = 3;
                     choixFait = 1;
                     interessant = 1;
-                    }
                     break;
                 default:
                     break;
@@ -207,17 +181,15 @@ int main(int argc, char *argv[])
             }
         }
         interessant = 0;
-           // cycleActuel++;
-            //if(cycleActuel>nbCycleMax){
+
         switch (ETATJEU)
         {
         case ERREUR:
             break;
         case ACCUEIL:
-            /*SDL_SetRenderDrawColor(renderer, 0, 145, 255, 255);
-            SDL_RenderClear(renderer);*/
+
             SDL_RenderClear(renderer);
-            creationImage(texture[0][8],window, renderer, tailleFenetre.w, tailleFenetre.h, 0, 0);
+            creationImage(texture[0][8],window, renderer, tailleFenetre.w, tailleFenetre.h, 0, 0); //on affiche le fond inanimé
 
             creationTexte("Bienvenue :", "normal", "./fonts/font.ttf", renderer, 100, 600, 100, 255);
             creationTexte("Commandes :", "surligne", "./fonts/font2.ttf", renderer, 90, 400, 300, 255);
@@ -229,14 +201,8 @@ int main(int argc, char *argv[])
 
             break;
         case JEU:
-            // SDL_RenderClear(renderer);
-            // creationImage("./Sprites/fond2.jpg", renderer, 1920, 1080, 0, 0);
 
-
-            //SDL_Texture *sprite1 = texture[0][1];
-            //SDL_Texture *sprite2 = texture[0][2];
-            //SDL_Texture *fond = texture[0][3];
-            if(choixFait ==1){
+            if(choixFait == 1 && animationFinieTerminee == 1 && gameOver == 0){ // quand l'utilisateur a appuyé sur une touche, qu'il n'y a pas d'animation finie en cours et que le jeu n'est pas fini, on traite le jeu en fonction de la touche pressée
                 changementEtatEnnemi(etat);
                 reussitedefense(etat, etatPrec);
                 int resultat = gagnant(etat);
@@ -249,26 +215,49 @@ int main(int argc, char *argv[])
                 i=0;
             }
 
-            if(i >= nbrImageSpriteFini && animationFinieTerminee == 0){
+            if(i >= nbrImageSpriteFini && animationFinieTerminee == 0){ // quand une animation finie a affiché chacunes de ses 10 images, on l'arrete
                 animationFinieTerminee = 1;
                 i=0;
             }
 
-            if(animationFinieTerminee == 1){
+            if(animationFinieTerminee == 1){ // quand une animation finie est terminée, on revient à l'état de base : les deux persos qui donnent des coups de poing dans le vide (animation infinie)
                 sprite1 = texture[0][5];
                 sprite2 = texture[1][5];
 
             }
 
-            for(int i=0;i<ligneTexture;i++){
+            textureFond = texture[1][8]; //par défaut 
+            int nbrImageFond = 1; // possibilité de fond animé 
+
+            if(((PV[0] <= 0)||(PV[1] <= 0))&&(animationFinieTerminee == 1 )){ // si un des deux joueurs est mort et qu'il n'y a pas d'animation finie en cours
+                if(PV[1] <=0 ){
+                sprite1 = texture[0][6];
+                sprite2 = texture[1][7];
+                textureFond = texture[0][9];
+            }
+            if(PV[0] <=0 ){
+                sprite1 = texture[0][7];
+                sprite2 = texture[1][6];
+                textureFond = texture[1][9];
+            }
+                gameOver = 1;
+            }
+
+            for(int i=0;i<ligneTexture;i++){ // En quelque sorte un "tableau du nombre d'image en fonction du sprite" (on a pas eu le temps de faire ça "proprement" avec un vrai tableau).
                 for(int j=0;j<colonneTexture;j++){
                     if(sprite1 == texture[i][j]){
                         if(j==0 || j==1 || j==2 || j==3 || j==4){
                             nbrImageSprite1=10;
                         }else if(j==5 || j==6){
                             nbrImageSprite1=2;
-                        }else{
+                        }else if(j == 7){
                             nbrImageSprite1=3;
+                        }else if(j == 8){
+                            if(i==0){
+                                nbrImageSprite1 = 1;
+                            }else if(i==1){
+                                    nbrImageSprite1 =1;
+                            }
                         }
                     }
                     if(sprite2 == texture[i][j]){
@@ -276,71 +265,55 @@ int main(int argc, char *argv[])
                             nbrImageSprite2=10;
                         }else if(j==5 || j==6){
                             nbrImageSprite2=2;
-                        }else{
+                        }else if(j == 7){
                             nbrImageSprite2=3;
+                        }else if(j == 8){
+                            if(i==0){
+                                nbrImageSprite2 = 1;
+                            }else if(i==1){
+                                    nbrImageSprite2 =1;
+                            }
+                        }
+                    }
+                    if(textureFond == texture[i][j]){
+                        if(j==0 || j==1 || j==2 || j==3 || j==4){
+                            nbrImageFond=10;
+                        }else if(j==5 || j==6){
+                            nbrImageFond=2;
+                        }else if(j == 7){
+                            nbrImageFond=3;
+                        }else if(j == 8){
+                            if(i==0){
+                                nbrImageFond = 1;
+                            }else if(i==1){
+                                    nbrImageFond =1;
+                            }
                         }
                     }
                }
             }
 
-
-            textureFond= texture[1][8];
-            int nbrImageFond = 1;
-
-            printf("justeAvant animation\n");
-            printf(" textures égales : %d\n", texture[0][5] == texture[0][4]);
-            //Animation(sprite1, sprite2, textureFond, renderer, window, 400, 400, 200, 1300, 500, nbrImageSprite1,nbrImageSprite2, i);
             Animation(sprite1, sprite2, textureFond, renderer, window, 400, 400, 200, 1300, 500, nbrImageSprite1,nbrImageSprite2, nbrImageFond, i, j);
-            printf("justeAprès animation\n");
+
             i++;
             j++;
-            //Animation(sprite1, sprite2, textureFond, renderer, window, 400, 400, 200, 1300, 500, nbrImageSprite1,nbrImageSprite2, i);
+          
+            char message[50];
+            char message2[50];
+            sprintf(message,"PV : %d",PV[0]);
+            sprintf(message2,"PV : %d",PV[1]);
+            creationTexte(message, "normal", "./fonts/font.ttf", renderer, 100, 10, 350, 255);
+            creationTexte(message2, "normal", "./fonts/font.ttf", renderer, 100, 1450, 350, 255);
 
-
-            if(((PV[0] <= 0)||(PV[1] <= 0))&&(animationFinieTerminee == 1 )){
-                ETATJEU = FINJEU;
-            }
-            
-            /*animationFinieTerminee = 0;
-         
-
-            int nbrImageSprite1 = 2;
-            int nbrImageSprite2 = 2;
-
-
-            Animation(texture[indicesSprite1.x][indicesSprite1.y], texture[indicesSprite2.x][indicesSprite2.y], texture[indicesFond.x][indicesFond.y], renderer, window, 400, 400, 200, 1300, 500, nbrImageSprite1,nbrImageSprite2, i);
-            i++;
-            */
-           
-            /*SDL_RenderClear(renderer);
-            creationImage("fond.jpg", renderer, 1920, 1080, 0, 0);*/
-
-            break;
-        case FINJEU:
-            if(PV[1] <=0 ){
-                sprite1 = texture[0][6];
-                sprite2 = texture[1][7];
-                nbrImageSprite1=2;
-                nbrImageSprite2=3;
-            }
-            if(PV[0] <=0 ){
-                sprite1 = texture[1][7];
-                sprite2 = texture[0][6];
-                nbrImageSprite1=3;
-                nbrImageSprite2=2;
-            }
-            Animation(sprite1, sprite2, textureFond, renderer, window, 400, 400, 200, 1300, 500, nbrImageSprite1,nbrImageSprite2,1, i,j);
-            i++;
             break;
         default:
             ETATJEU = ERREUR;
             break;
         }
-        //cycleActuel=0;
-          //  }
-        
+
         SDL_RenderPresent(renderer);
         SDL_Delay(150);
+        printf("PV perso %d  PV ennemi : %d\n",PV[0], PV[1]);
     }
 
    end_sdl(1, "FIN NORMALE", window, renderer);
