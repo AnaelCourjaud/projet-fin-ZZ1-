@@ -4,7 +4,7 @@
 
 
 #define ligneTexture 2
-#define colonneTexture 7
+#define colonneTexture 8
 #define nombreFichier 14
 #define tailleMaxFichiers 50
 
@@ -82,7 +82,8 @@ int main(int argc, char *argv[])
 
 /////////////// récupération des textures et stockage dans tableau
    SDL_Texture *texture[ligneTexture][colonneTexture];
-    char nomFichiers[ligneTexture][colonneTexture][tailleMaxFichiers] = {{"./Sprites/fond1.jpg", "./Sprites/persobase.png", "./Sprites/ennemibase.png", "./Sprites/fond2.jpg", "./panther.png", "./panther.png", "./panther.png"},{ "./panther.png", "./panther.png", "./panther.png", "./panther.png", "./panther.png", "./panther.png", "./panther.png"}};
+    char nomFichiers[ligneTexture][colonneTexture][tailleMaxFichiers] = {{"./Sprites/attaqueeau.png", "./Sprites/attaquefeu.png", "./Sprites/attaqueterre.png", "./Sprites/defense.png","./Sprites/attente.png","./Sprites/normal.png","./Sprites/victoire.png","./Sprites/defaite.png","./Sprites/fond1.jpg"},
+                                                                        {"./Sprites/attaqueeauennemi.png", "./Sprites/attaquefeuennemi.png", "./Sprites/attaqueterreennemi.png", "./Sprites/defenseennemi.png","./Sprites/attenteennemi.png","./Sprites/normalennemi.png","./Sprites/victoireennemi.png","./Sprites/defaiteennemi.png","./Sprites/fond2.jpg"}};
 
     for (int i = 0; i < ligneTexture; i++)
     {
