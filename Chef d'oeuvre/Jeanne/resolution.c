@@ -21,6 +21,58 @@ void resolutionPV(int PV[], int resultat, int etat[])
     // si meme attaque ou si defense, pas de changemement de PV
 }
 
+int defaite(int etat[2])
+{
+    // renvoie l'etat contre lequel gagne l'ennemi
+    int etatperdant;
+    printf("etatEnnemi:"
+           "%d\n",
+           etat[1]);
+    switch (etat[1])
+    {
+    case EAU:
+        etatperdant = FEU;
+        break;
+    case FEU:
+        etatperdant = TERRE;
+        break;
+    case TERRE:
+        etatperdant = EAU;
+        break;
+    case DEFENSE:
+        etatperdant = DEFENSE;
+        break;
+    }
+    return etatperdant;
+}
+
+void reussitedefense(int etat[2], int etatprec)
+{
+    srand(time(NULL));
+    int pourcentEtat = rand() % 100;
+    printf("%d\n", pourcentEtat);
+    if (etat[0] == 3)
+    { // si le perso tente une defense
+        switch (etatprec)
+        {
+        case TERRE:
+            if (pourcentEtat < 50)
+                etat[0] = defaite(etat);
+            break;
+        case EAU:
+            if (pourcentEtat < 40)
+                etat[0] = defaite(etat);
+            break;
+        case FEU:
+            if (pourcentEtat < 30)
+                etat[0] = defaite(etat);
+            break;
+        case DEFENSE:
+            etat[0] = defaite(etat);
+        }
+    }
+}
+
 void changement(int etat[])
 {
     srand(time(NULL));
@@ -34,4 +86,23 @@ void changement(int etat[])
     while ((changementEtat[etat[1]][i] < pourcentEtat) && (i < 3))
         i++;
     etat[1] = i;
+}
+
+int main()
+{
+    // int PV[2] = {10, 6};
+    int etat[2] = {FEU, EAU};
+    int etatprec = DEFENSE;
+    int nouvetat = defaite(etat);
+    printf("ancienEtat:"
+           "%d\n",
+           etat[0]);
+    printf("nouvEtat:"
+           "%d\n",
+           nouvetat);
+    reussitedefense(etat, etatprec);
+    printf("nouvEtateffectif:"
+           "%d\n",
+           etat[0]);
+    return 0;
 }
