@@ -257,7 +257,7 @@ int main(int argc, char *argv[])
                 
             }
             CONTROLE = CONFIG;
-                loadConfig(grille, "sauvegardeWed Jun 22 15:40:18 2022.txt");
+                //loadConfig(grille, "sauvegardeWed Jun 22 15:40:18 2022.txt");
             }
             /*
             if (changerEtat == 1)
