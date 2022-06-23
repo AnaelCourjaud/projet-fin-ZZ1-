@@ -23,7 +23,7 @@ void creationImage(char nom[], SDL_Renderer *renderer, int longueur, int largeur
     SDL_RenderCopy(renderer, texture, NULL, &rect);
 }
 
-void Animation(char nom[], char fond[], SDL_Renderer *renderer, SDL_Window *window, int longueur, int largeur, int x, int y,int nbimage)
+void Animation(char nom[], char fond[], SDL_Renderer *renderer, SDL_Window *window, int longueur, int largeur, int x, int y,int nbimage, int ite)
 {
     SDL_Texture  *texture;
     SDL_Surface *image = NULL;
@@ -65,14 +65,9 @@ void Animation(char nom[], char fond[], SDL_Renderer *renderer, SDL_Window *wind
     destination.x = x + i*50; // Position en x pour l'affichage du sprite
     destination.y = y + i*50;  // Position en y pour l'affichage du sprite
 
-    i = 0;
-    for (int cpt = 0; cpt < nbimage; ++cpt) {
+    ite = ite % nbimage;   
     creationImage(fond, renderer, 1920, 1080, 0, 0);
-    SDL_RenderCopy(renderer, texture, &state[i], &destination);
-    i = (i + 1) % nbimage;                  // Passage à l'image suivante, le modulo car l'animation est cyclique 
-    SDL_RenderPresent(renderer);              // Affichage
-    SDL_Delay(100); 
-    }
+    SDL_RenderCopy(renderer, texture, &state[ite], &destination);
 
 }
 
@@ -133,21 +128,28 @@ int main()
     SDL_bool program_on = SDL_TRUE;               // Booléen pour dire que le programme doit continuer
     SDL_Event event;                              // c'est le type IMPORTANT !!
 
+    int i = 0; int interessant = 0;
 
-    while (program_on){                             // Voilà la boucle des évènements 
-        if ((SDL_PollEvent(&event))){                 // si la file d'évènements n'est pas vide : défiler l'élément en tête
+    while (program_on){ 
+                                 // Voilà la boucle des évènements 
+        while ((interessant == 0 )&&(SDL_PollEvent(&event))){                 // si la file d'évènements n'est pas vide : défiler l'élément en tête
                                                     // de file dans 'event'
                 switch(event.type){                       // En fonction de la valeur du type de cet évènement
-                case SDL_QUIT :                           // Un évènement simple, on a cliqué sur la x de la fenêtre
-                    program_on = SDL_FALSE;                 // Il est temps d'arrêter le programme
+                case SDL_QUIT :
+                printf("quit\n");                           // Un évènement simple, on a cliqué sur la x de la fenêtre
+                    program_on = SDL_FALSE;   
+                    interessant = 1;             // Il est temps d'arrêter le programme
                     break;
                 default:
                     break;
             }   
         }
 
-        Animation("pacman.png", "fond.jpg", renderer, window, 400, 400, 0, 300, 3);
+        Animation("pacman.png", "fond.jpg", renderer, window, 400, 400, 0, 300, 3, i);
+        i++;
         SDL_RenderPresent(renderer);
+        interessant = 0;
+        SDL_Delay(100);
     }
     SDL_DestroyRenderer(renderer);  
     SDL_DestroyWindow(window); 
