@@ -1,11 +1,14 @@
 #include "resolution.h"
 #include "affichage.h"
+#include "affichageAttaque.h"
 
 
 #define ligneTexture 2
 #define colonneTexture 7
 #define nombreFichier 14
 #define tailleMaxFichiers 50
+
+#define nbrImageSpriteFini 10
 
 int main(int argc, char *argv[])
 {
@@ -96,11 +99,19 @@ int main(int argc, char *argv[])
 
     SDL_bool program_on = SDL_TRUE; // Booléen pour dire que le programme doit continuer
     SDL_Event event;                // c'est le type IMPORTANT !!
-
+/*
     SDL_Point 
                 indicesSprite1 = {0},
                 indicesSprite2 = {0},
                 indicesFond = {0};
+*/
+    SDL_Texture *sprite1;
+    SDL_Texture *sprite2;
+    SDL_Texture *textureFond;
+
+    int nbrImageSprite1;
+    int nbrImageSprite2;
+    int animationFinieTerminee = 1;
 
     int ETATJEU = ACCUEIL;
     int i = 0;
@@ -112,8 +123,9 @@ int main(int argc, char *argv[])
     {
         // Voilà la boucle des évènements
         int interessant = 0;
-        int changerEtat = 0;
+        //int changerEtat = 0;
         int choixFait = 0;
+        int etatPrec;
 
         while ((interessant == 0) && (SDL_PollEvent(&event)))
         {   // tant que la file d'évènements n'est pas vide : défiler l'élément en tête et l'on a pas d'évènements interessants à traiter
@@ -136,31 +148,42 @@ int main(int argc, char *argv[])
                     interessant = 1;
                     break;
                 case SDLK_q:
+                if(animationFinieTerminee ==1){
                     if (ETATJEU == JEU)
                     {
                         ETATJEU = ACCUEIL;
                     }
                     interessant = 1;
+                }
                     break;
                 case SDLK_e:
+                    if(animationFinieTerminee ==1){
                     etat[0] = 0;
                     choixFait = 1;
                     interessant = 1;
+                    }
                     break;
                 case SDLK_f:
+                    if(animationFinieTerminee ==1){
                     etat[0] = 1;
                     choixFait = 1;
                     interessant = 1;
+                    }
                     break;
                 case SDLK_t:
+                    if(animationFinieTerminee ==1){
                     etat[0] = 2;
                     choixFait = 1;
                     interessant = 1;
+                    }
                     break;
                 case SDLK_d:
+                    if(animationFinieTerminee ==1){
+                    etatPrec = etat[0];
                     etat[0] = 3;
                     choixFait = 1;
                     interessant = 1;
+                    }
                     break;
                 default:
                     break;
@@ -200,11 +223,48 @@ int main(int argc, char *argv[])
             //SDL_Texture *sprite2 = texture[0][2];
             //SDL_Texture *fond = texture[0][3];
             if(choixFait ==1){
-                
+                printf(" debut\n");
+                changementEtatEnnemi(etat);
+                printf(" changementEtatEnnemi fait\n");
+                reussitedefense(etat, etatPrec);
+                printf(" reussiteDefense fait\n");
+                int resultat = gagnant(etat);
+                printf(" gagnant fait\n");
+                resolutionPV(PV, resultat, etat);
+                printf(" resolutionPV fait\n");
+                sprite1 = textureAttaque(texture,0, etat, resultat);
+                printf(" textureAttaqueSprite1 fait\n");
+                sprite2 = textureAttaque(texture,1, etat, resultat);
+                printf(" textureAttaqueSprite2 fait\n");
+                nbrImageSprite1 = nbrImageSpriteFini;
+                nbrImageSprite2 = nbrImageSpriteFini;
+
                 choixFait = 0;
+                animationFinieTerminee = 0;
+                i=0;
             }
 
+            if(i >= nbrImageSpriteFini && animationFinieTerminee == 0){
+                animationFinieTerminee = 1;
+                i=0;
+            }
 
+            if(animationFinieTerminee == 1){
+                sprite1 = texture[0][1];
+                sprite2 = texture[0][2];
+
+                nbrImageSprite1 = 2;
+                nbrImageSprite2 = 2;
+            }
+
+            
+
+            textureFond= texture[0][3];
+
+            Animation(sprite1, sprite2, textureFond, renderer, window, 400, 400, 200, 1300, 500, nbrImageSprite1,nbrImageSprite2, i);
+            i++;
+
+/*
             indicesSprite1.x = 0;
             indicesSprite1.y = 1;
             indicesSprite2.x = 0;
@@ -219,6 +279,7 @@ int main(int argc, char *argv[])
 
             Animation(texture[indicesSprite1.x][indicesSprite1.y], texture[indicesSprite2.x][indicesSprite2.y], texture[indicesFond.x][indicesFond.y], renderer, window, 400, 400, 200, 1300, 500, nbrImageSprite1,nbrImageSprite2, i);
             i++;
+            */
            
             /*SDL_RenderClear(renderer);
             creationImage("fond.jpg", renderer, 1920, 1080, 0, 0);*/
