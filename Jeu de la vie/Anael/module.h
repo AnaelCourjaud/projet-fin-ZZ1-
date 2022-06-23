@@ -42,7 +42,7 @@ int chargerConfigInit(int[HAUTEUR][LARGEUR], int, char *);
 void creationTexte(char texte[], SDL_Renderer *renderer, int taille, int x, int y, int opacite);
 void initGrille(int grille[HAUTEUR][LARGEUR]);
 int nouvgengrille(int grille[HAUTEUR][LARGEUR], int nouvgrille[HAUTEUR][LARGEUR], int );
-int nouvgen(int, int, int grille[HAUTEUR][LARGEUR], int nouvgrille[HAUTEUR][LARGEUR], int );
+int nouvgen(int, int, int grille[HAUTEUR][LARGEUR], int nouvgrille[HAUTEUR][LARGEUR], int , int[9], in[9]);
 int nb_voisins(int , int , int grille[HAUTEUR][LARGEUR], int );
 void affichage(int grille[HAUTEUR][LARGEUR], SDL_Renderer *);
 

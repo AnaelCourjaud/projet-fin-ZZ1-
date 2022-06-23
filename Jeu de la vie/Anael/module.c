@@ -1,6 +1,7 @@
 #include "module.h"
 
-
+int survie[9] = {0, 0, 1, 1, 0, 0, 0, 0, 0};
+int naissance[9] = {0, 0, 0, 1, 0, 0, 0, 0, 0};
 
 void sauvegarder(int grille[HAUTEUR][LARGEUR])
 {
@@ -78,7 +79,6 @@ int loadConfig(int grille[HAUTEUR][LARGEUR], char nom_fic[100])
     return erreur;
 }
 
-
 void affichage(int grille[HAUTEUR][LARGEUR], SDL_Renderer *renderer)
 {
     int i;
@@ -87,9 +87,8 @@ void affichage(int grille[HAUTEUR][LARGEUR], SDL_Renderer *renderer)
     {
         for (j = 0; j < LARGEUR; j++)
         {
-            
 
-    SDL_Rect rect = {TAILLECELLULES * j , TAILLECELLULES * i, TAILLECELLULES - 2, TAILLECELLULES - 2};
+            SDL_Rect rect = {TAILLECELLULES * j, TAILLECELLULES * i, TAILLECELLULES - 2, TAILLECELLULES - 2};
             if (grille[i][j] == 0)
             {
                 SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
@@ -102,7 +101,7 @@ void affichage(int grille[HAUTEUR][LARGEUR], SDL_Renderer *renderer)
             }
         }
     }
-    //SDL_RenderPresent(renderer);
+    // SDL_RenderPresent(renderer);
 }
 
 int nb_voisins(int i, int j, int grille[HAUTEUR][LARGEUR], int monde)
@@ -152,7 +151,7 @@ int nb_voisins(int i, int j, int grille[HAUTEUR][LARGEUR], int monde)
     return voisins;
 }
 
-int nouvgen(int i, int j, int grille[HAUTEUR][LARGEUR], int nouvgrille[HAUTEUR][LARGEUR], int monde)
+int nouvgen(int i, int j, int grille[HAUTEUR][LARGEUR], int nouvgrille[HAUTEUR][LARGEUR], int monde,int survie[9], int naissance[9])
 {
     int voisins = nb_voisins(i, j, grille, monde);
     int modif = 0;
@@ -192,7 +191,7 @@ int nouvgengrille(int grille[HAUTEUR][LARGEUR], int nouvgrille[HAUTEUR][LARGEUR]
     for (int i = 0; i < HAUTEUR; i++)
     {
         for (int j = 0; j < LARGEUR; j++)
-            nb_modif = nb_modif + nouvgen(i, j, grille, nouvgrille, monde);
+            nb_modif = nb_modif + nouvgen(i, j, grille, nouvgrille, monde,survie,naissance);
     }
     return nb_modif;
 }
