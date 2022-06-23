@@ -50,3 +50,51 @@ void creationImage(char nom[], SDL_Renderer *renderer, int longueur, int largeur
 
     SDL_RenderCopy(renderer, texture, NULL, &rect);
 }
+
+void Animation(char nom[], char fond[], SDL_Renderer *renderer, SDL_Window *window, int longueur, int largeur, int x, int y,int nbimage, int ite)
+{
+    SDL_Texture  *texture;
+    SDL_Surface *image = NULL;
+
+    SDL_Rect
+        source = {0},                             // Rectangle définissant la zone de la texture à récupérer
+        window_dimensions = {0},                  // Rectangle définissant la fenêtre, on  n'utilisera que largeur et hauteur
+        destination = {0};                        // Rectangle définissant où la zone_source doit être déposée dans le renderer
+
+
+    image=IMG_Load(nom);
+
+    texture = SDL_CreateTextureFromSurface(renderer, image);
+    SDL_FreeSurface(image);
+
+    SDL_Rect state[nbimage];                         // Tableau qui stocke les vignettes dans le bon ordre pour l'animation
+
+    SDL_QueryTexture(texture, NULL, NULL, &source.w, &source.h); 
+    int offset_x = source.w / nbimage,                // La largeur d'une vignette de l'image
+        offset_y = source.h;
+
+    /* construction des différents rectangles autour de chacune des vignettes de la planche */
+    int i = 0;                                   
+    for (int y = 0; y < source.h ; y += offset_y) {
+    for (int x = 0; x < source.w; x += offset_x) {
+      state[i].x = x;
+      state[i].y = y;
+      state[i].w = offset_x;
+      state[i].h = offset_y;
+      ++i;
+    } 
+    }
+
+    for(; i< nbimage ; ++i){                  // reprise du début de l'animation en sens inverse  
+        state[i] = state[nbimage-1-i];
+    }
+    destination.w = largeur;           // Largeur du sprite à l'écran
+    destination.h = longueur;            // Hauteur du sprite à l'écran
+    destination.x = x; // Position en x pour l'affichage du sprite
+    destination.y = y;  // Position en y pour l'affichage du sprite
+
+    ite = ite % nbimage;   
+    creationImage(fond, renderer, 1920, 1080, 0, 0);
+    SDL_RenderCopy(renderer, texture, &state[ite], &destination);
+
+}

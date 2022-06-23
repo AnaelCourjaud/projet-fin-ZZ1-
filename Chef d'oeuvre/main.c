@@ -63,6 +63,8 @@ int main(int argc, char *argv[])
     SDL_Event event;                              // c'est le type IMPORTANT !!
 
     int ETATJEU = ACCUEIL;
+    int affichage = 0;
+    int i = 0;
 
     int PV[2] = {10, 6};
     int etat[2] = {EAU, EAU};
@@ -72,7 +74,7 @@ int main(int argc, char *argv[])
         int interessant = 0;
         int changerEtat = 0;
 
-        if ((interessant == 0 )&&(SDL_PollEvent(&event))){                 // si la file d'évènements n'est pas vide : défiler l'élément en tête et l'on a pas d'évènements interessants à traiter
+        while ((interessant == 0 )&&(SDL_PollEvent(&event))){                 // tant que la file d'évènements n'est pas vide : défiler l'élément en tête et l'on a pas d'évènements interessants à traiter
                                                     // de file dans 'event'
             switch(event.type){                       // En fonction de la valeur du type de cet évènement
                 case SDL_QUIT :
@@ -119,47 +121,52 @@ int main(int argc, char *argv[])
                 
                 default:                                  // L'évènement défilé ne nous intéresse pas
                     break;
+            }
         }
         interessant = 0;
 
         switch (ETATJEU)
         {
-        case ERREUR:
-            break;
-        case ACCUEIL:
-            /*SDL_SetRenderDrawColor(renderer, 0, 145, 255, 255);
-            SDL_RenderClear(renderer);*/
-            SDL_RenderClear(renderer);
-            creationImage("./Sprites/fond1.jpg", renderer, 1920, 1080, 0, 0);
+            case ERREUR:
+                break;
+            case ACCUEIL:
+                /*SDL_SetRenderDrawColor(renderer, 0, 145, 255, 255);
+                SDL_RenderClear(renderer);*/
+                SDL_RenderClear(renderer);
+                creationImage("./Sprites/fond1.jpg", renderer, 1920, 1080, 0, 0);
 
-            creationTexte("Bienvenue :", "normal", "./fonts/font.ttf", renderer, 100, 600, 100, 255);
-            creationTexte("Commandes :", "surligne", "./fonts/font2.ttf", renderer, 90, 400, 300, 255);
-            creationTexte("E pour attaque eau", "normal", "./fonts/font2.ttf", renderer, 90, 500, 450, 255);
-            creationTexte("F pour attaque feu", "normal", "./fonts/font2.ttf", renderer, 90, 500, 550, 255);
-            creationTexte("T pour attaque terre", "normal", "./fonts/font2.ttf", renderer, 90, 500, 650, 255);
-            creationTexte("D pour defense", "normal", "./fonts/font2.ttf", renderer, 90, 500, 750, 255);
-            creationTexte("Q pour revenir ici", "normal", "./fonts/font2.ttf", renderer, 90, 500, 850, 255);
-            
-            break;
-        case JEU:
-            SDL_RenderClear(renderer);
-            creationImage("./Sprites/fond2.jpg", renderer, 1920, 1080, 0, 0);
-            /*SDL_RenderClear(renderer);
-            creationImage("fond.jpg", renderer, 1920, 1080, 0, 0);*/
-            
+                creationTexte("Bienvenue :", "normal", "./fonts/font.ttf", renderer, 100, 600, 100, 255);
+                creationTexte("Commandes :", "surligne", "./fonts/font2.ttf", renderer, 90, 400, 300, 255);
+                creationTexte("E pour attaque eau", "normal", "./fonts/font2.ttf", renderer, 90, 500, 450, 255);
+                creationTexte("F pour attaque feu", "normal", "./fonts/font2.ttf", renderer, 90, 500, 550, 255);
+                creationTexte("T pour attaque terre", "normal", "./fonts/font2.ttf", renderer, 90, 500, 650, 255);
+                creationTexte("D pour defense", "normal", "./fonts/font2.ttf", renderer, 90, 500, 750, 255);
+                creationTexte("Q pour revenir ici", "normal", "./fonts/font2.ttf", renderer, 90, 500, 850, 255);
+                
+                break;
+            case JEU:
+                //SDL_RenderClear(renderer);
+                //creationImage("./Sprites/fond2.jpg", renderer, 1920, 1080, 0, 0);
+                affichage = 1;
+                /*SDL_RenderClear(renderer);
+                creationImage("fond.jpg", renderer, 1920, 1080, 0, 0);*/
+                
 
-            
-            break;
-        case FINJEU:
-            break;
-        default:
-            ETATJEU = ERREUR;
-            break;
+                
+                break;
+            case FINJEU:
+                break;
+            default:
+                ETATJEU = ERREUR;
+                break;
         }
-
+        if (affichage == 1){
+        Animation("./Sprites/persobase.png", "./Sprites/fond2.jpg", renderer, window, 400, 400, 200, 500, 2, i);
+        i++;
+        }
         SDL_RenderPresent(renderer);
-        SDL_Delay(20); // Petite pause
-        }
+
+        SDL_Delay(150);
     }
 
     SDL_DestroyRenderer(renderer);  

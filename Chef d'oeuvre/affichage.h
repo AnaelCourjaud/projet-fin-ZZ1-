@@ -22,5 +22,6 @@
 
 void creationTexte(char texte[], char style[], char police[], SDL_Renderer *renderer, int taille, int x, int y, int opacite);
 void creationImage(char nom[], SDL_Renderer *renderer, int longueur, int largeur, int x, int y);
+void Animation(char nom[], char fond[], SDL_Renderer *renderer, SDL_Window *window, int longueur, int largeur, int x, int y,int nbimage, int ite);
 
 #endif
