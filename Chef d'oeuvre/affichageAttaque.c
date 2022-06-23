@@ -9,11 +9,11 @@ SDL_Texture * textureAttaque(SDL_Texture *texture[ligneTexture][colonneTexture],
         if (joueur == 0)
             textureperso = texture[0][etat[0]];
         else
-            textureperso = texture[1][5];
+            textureperso = texture[1][4];
         break;
     case 1: // victoire ennemi
         if (joueur == 0)
-            textureperso = texture[0][5];
+            textureperso = texture[0][4];
         else
             textureperso = texture[1][etat[1]];
         break;
