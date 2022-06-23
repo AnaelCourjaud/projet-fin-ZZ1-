@@ -11,19 +11,10 @@ case Jeu:
     int resultat = gagnant(int etatperso, int etatennemi) *resultat = 0 si le joueur gagne, resultat = 1 si l'ennemi gagne, resultat = 2 si aucun ne gagne           
                                                          (etatperso=etatennemi), resultat = 3 l'un des deux se denfend : on affiche les deux animations* FONCTION (gagnant codé jeanne resolution.c)  
     resolutionPV() *ATENTION au cas ou le joeur se defend* FONCTION (resolutionPV code par Jeanne resolution.c)
-    si resultat = 0 ou resultat = 1
-        char nomsprite = spriteaenvoyer(resultat,etatperso,etatennemi)
-        affichageAttaque(nomsprite)
-    si resultat = 2
-        Tant que ((compteur1<10)&&(compteur2<10))
-            char nomsprite1 = spriteaenvoyer(0,etat)
-            char nomsprite2 = spriteaenvoyer(1,etat)
-            affichageAttaque()
-            compteur1++ 
-            compteur2++
-    si resultat = 3
-        char nomsprite1(3,etat)
-        char nomsprite2(4,etat)
+    SLD_Texture * textureperso = textureAttaque(animation,0,etat,resultat) (textureperso codée Jeanne affichageAttaque.c)
+    SLD_Texture * textureEnnemi = textureAttaque(animation,1,etat,resultat)
+    affichageAttaque(nomsprite)
+    
     verifier Pvennemi != 0 et PVperso!= 0
     sinon etat jeu devient fin de jeu
 

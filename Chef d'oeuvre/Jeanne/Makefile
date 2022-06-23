@@ -1,4 +1,4 @@
-SRC=affichageAttaque.h affichageAttaque.c 
+SRC=affichageAttaque.h affichageAttaque.c  resolution.c resolution.h
 #SRC+=world.c etc1.c etc2.c
 #SRC=$(wildcard *.c)  # en commentaire, je ne suis pas un grand amateur
 EXE=exe.out
