@@ -51,50 +51,91 @@ void creationImage(char nom[], SDL_Renderer *renderer, int longueur, int largeur
     SDL_RenderCopy(renderer, texture, NULL, &rect);
 }
 
-void Animation(char nom[], char fond[], SDL_Renderer *renderer, SDL_Window *window, int longueur, int largeur, int x, int y,int nbimage, int ite)
+void Animation(char nom1[], char nom2[], char fond[], SDL_Renderer *renderer, SDL_Window *window, int longueur, int largeur, int x1,  int x2, int y,int nbimage, int ite)
 {
-    SDL_Texture  *texture;
-    SDL_Surface *image = NULL;
+    SDL_Texture  *texture1;
+    SDL_Surface *image1 = NULL;
 
     SDL_Rect
-        source = {0},                             // Rectangle définissant la zone de la texture à récupérer
-        window_dimensions = {0},                  // Rectangle définissant la fenêtre, on  n'utilisera que largeur et hauteur
-        destination = {0};                        // Rectangle définissant où la zone_source doit être déposée dans le renderer
+        source1 = {0},                             // Rectangle définissant la zone de la texture à récupérer
+        window_dimensions1 = {0},                  // Rectangle définissant la fenêtre, on  n'utilisera que largeur et hauteur
+        destination1 = {0};                        // Rectangle définissant où la zone_source doit être déposée dans le renderer
+
+    SDL_Texture  *texture2;
+    SDL_Surface *image2 = NULL;
+
+    SDL_Rect
+        source2 = {0},                             // Rectangle définissant la zone de la texture à récupérer
+        window_dimensions2 = {0},                  // Rectangle définissant la fenêtre, on  n'utilisera que largeur et hauteur
+        destination2 = {0};
 
 
-    image=IMG_Load(nom);
+    image1=IMG_Load(nom1);
+    image2=IMG_Load(nom2);
 
-    texture = SDL_CreateTextureFromSurface(renderer, image);
-    SDL_FreeSurface(image);
+    texture1 = SDL_CreateTextureFromSurface(renderer, image1);
+    SDL_FreeSurface(image1);
 
-    SDL_Rect state[nbimage];                         // Tableau qui stocke les vignettes dans le bon ordre pour l'animation
+    texture2 = SDL_CreateTextureFromSurface(renderer, image2);
+    SDL_FreeSurface(image2);
 
-    SDL_QueryTexture(texture, NULL, NULL, &source.w, &source.h); 
-    int offset_x = source.w / nbimage,                // La largeur d'une vignette de l'image
-        offset_y = source.h;
+    SDL_Rect state1[nbimage];                         // Tableau qui stocke les vignettes dans le bon ordre pour l'animation
+    SDL_Rect state2[nbimage]; 
+
+    SDL_QueryTexture(texture1, NULL, NULL, &source1.w, &source1.h); 
+    int offset_x1 = source1.w / nbimage,                // La largeur d'une vignette de l'image
+        offset_y1 = source1.h;
 
     /* construction des différents rectangles autour de chacune des vignettes de la planche */
-    int i = 0;                                   
-    for (int y = 0; y < source.h ; y += offset_y) {
-    for (int x = 0; x < source.w; x += offset_x) {
-      state[i].x = x;
-      state[i].y = y;
-      state[i].w = offset_x;
-      state[i].h = offset_y;
-      ++i;
+    int i1 = 0;                                   
+    for (int y1 = 0; y1 < source1.h ; y1 += offset_y1) {
+    for (int x1 = 0; x1 < source1.w; x1 += offset_x1) {
+      state1[i1].x = x1;
+      state1[i1].y = y1;
+      state1[i1].w = offset_x1;
+      state1[i1].h = offset_y1;
+      ++i1;
     } 
     }
 
-    for(; i< nbimage ; ++i){                  // reprise du début de l'animation en sens inverse  
-        state[i] = state[nbimage-1-i];
+    for(; i1< nbimage ; ++i1){                  // reprise du début de l'animation en sens inverse  
+        state1[i1] = state1[nbimage-1-i1];
     }
-    destination.w = largeur;           // Largeur du sprite à l'écran
-    destination.h = longueur;            // Hauteur du sprite à l'écran
-    destination.x = x; // Position en x pour l'affichage du sprite
-    destination.y = y;  // Position en y pour l'affichage du sprite
+
+    SDL_QueryTexture(texture2, NULL, NULL, &source2.w, &source2.h); 
+    int offset_x2 = source2.w / nbimage,                // La largeur d'une vignette de l'image
+        offset_y2 = source2.h;
+
+    /* construction des différents rectangles autour de chacune des vignettes de la planche */
+    int i2 = 0;                                   
+    for (int y2 = 0; y2 < source2.h ; y2 += offset_y2) {
+    for (int x2 = 0; x2 < source2.w; x2 += offset_x2) {
+      state2[i2].x = x2;
+      state2[i2].y = y2;
+      state2[i2].w = offset_x2;
+      state2[i2].h = offset_y2;
+      ++i2;
+    } 
+    }
+
+    for(; i2< nbimage ; ++i2){                  // reprise du début de l'animation en sens inverse  
+        state2[i2] = state2[nbimage-1-i2];
+    }
+
+    destination1.w = largeur;           // Largeur du sprite à l'écran
+    destination1.h = longueur;            // Hauteur du sprite à l'écran
+    destination1.x = x1; // Position en x pour l'affichage du sprite
+    destination1.y = y;  // Position en y pour l'affichage du sprite
+
+    destination2.w = largeur;           // Largeur du sprite à l'écran
+    destination2.h = longueur;            // Hauteur du sprite à l'écran
+    destination2.x = x2; // Position en x pour l'affichage du sprite
+    destination2.y = y;  // Position en y pour l'affichage du sprite
+
 
     ite = ite % nbimage;   
     creationImage(fond, renderer, 1920, 1080, 0, 0);
-    SDL_RenderCopy(renderer, texture, &state[ite], &destination);
+    SDL_RenderCopy(renderer, texture1, &state1[ite], &destination1);
+    SDL_RenderCopy(renderer, texture2, &state2[ite], &destination2);
 
 }

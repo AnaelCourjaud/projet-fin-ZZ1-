@@ -63,8 +63,7 @@ int main(int argc, char *argv[])
     SDL_Event event;                              // c'est le type IMPORTANT !!
 
     int ETATJEU = ACCUEIL;
-    int affichage = 0;
-    int i = 0;
+    int i = 0; 
 
     int PV[2] = {10, 6};
     int etat[2] = {EAU, EAU};
@@ -73,6 +72,7 @@ int main(int argc, char *argv[])
                                      // Voilà la boucle des évènements 
         int interessant = 0;
         int changerEtat = 0;
+        int affichage = 0;
 
         while ((interessant == 0 )&&(SDL_PollEvent(&event))){                 // tant que la file d'évènements n'est pas vide : défiler l'élément en tête et l'on a pas d'évènements interessants à traiter
                                                     // de file dans 'event'
@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
                     break;
             }
         }
-        interessant = 0;
+
 
         switch (ETATJEU)
         {
@@ -147,7 +147,10 @@ int main(int argc, char *argv[])
             case JEU:
                 //SDL_RenderClear(renderer);
                 //creationImage("./Sprites/fond2.jpg", renderer, 1920, 1080, 0, 0);
-                affichage = 1;
+                
+                if (interessant == 0){
+                    affichage = 1;
+                }
                 /*SDL_RenderClear(renderer);
                 creationImage("fond.jpg", renderer, 1920, 1080, 0, 0);*/
                 
@@ -160,8 +163,10 @@ int main(int argc, char *argv[])
                 ETATJEU = ERREUR;
                 break;
         }
+        interessant = 0;
+
         if (affichage == 1){
-        Animation("./Sprites/persobase.png", "./Sprites/fond2.jpg", renderer, window, 400, 400, 200, 500, 2, i);
+        Animation("./Sprites/persobase.png", "./Sprites/ennemibase.png", "./Sprites/fond2.jpg", renderer, window, 400, 400, 200, 1300, 500, 2, i);
         i++;
         }
         SDL_RenderPresent(renderer);
