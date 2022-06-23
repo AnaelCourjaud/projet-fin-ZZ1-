@@ -1,5 +1,5 @@
-#ifndef __RESOLUTION_H__
-#define __RESOLUTION_H__
+#ifndef __AFFICHAGEATTAQUE_H__
+#define __AFFICHAGEATTAQUE_H__
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -11,8 +11,5 @@
 #define TERRE 2
 #define DEFENSE 3
 
-
-int gagnant(int []);
-void resolutionPV(int [], int , int []);
-void changement(int []);
+char spriteaenvoyer(int , int [2]);
 #endif
