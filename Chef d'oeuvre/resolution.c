@@ -32,6 +32,58 @@ void changementEtatEnnemi(int etat[])
     etat[1] = i; //on change l'etat de l'ennemi
 }
 
+int defaite(int etat[2])
+{
+    // renvoie l'etat contre lequel gagne l'ennemi
+    int etatperdant;
+    printf("etatEnnemi:"
+           "%d\n",
+           etat[1]);
+    switch (etat[1])
+    {
+    case EAU:
+        etatperdant = FEU;
+        break;
+    case FEU:
+        etatperdant = TERRE;
+        break;
+    case TERRE:
+        etatperdant = EAU;
+        break;
+    case DEFENSE:
+        etatperdant = DEFENSE;
+        break;
+    }
+    return etatperdant;
+}
+
+void reussitedefense(int etat[2], int etatprec)
+{
+    srand(time(NULL));
+    int pourcentEtat = rand() % 100;
+    printf("%d\n", pourcentEtat);
+    if (etat[0] == 3)
+    { // si le perso tente une defense
+        switch (etatprec)
+        {
+        case TERRE:
+            if (pourcentEtat < 50)
+                etat[0] = defaite(etat);
+            break;
+        case EAU:
+            if (pourcentEtat < 40)
+                etat[0] = defaite(etat);
+            break;
+        case FEU:
+            if (pourcentEtat < 30)
+                etat[0] = defaite(etat);
+            break;
+        case DEFENSE:
+            etat[0] = defaite(etat);
+        }
+    }
+}
+
 void end_sdl(char ok,            // fin anormale : ok = 0 ; normale ok = 1
              char const *msg,    // message à afficher
              SDL_Window *window, // fenêtre à fermer

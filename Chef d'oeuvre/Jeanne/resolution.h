@@ -15,4 +15,8 @@
 int gagnant(int []);
 void resolutionPV(int [], int , int []);
 void changement(int []);
+int defaite(int[]);
+void reussitedefense(int [], int );
+
+
 #endif
