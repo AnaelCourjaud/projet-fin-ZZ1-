@@ -21,6 +21,46 @@ void resolutionPV(int PV[], int resultat, int etat[])
     // si meme attaque ou si defense, pas de changemement de PV
 }
 
+int defaite(etat)
+{
+    // renvoie l'etat contre lequel gagne l'ennemi
+    int etatperdant;
+    switch (etat[1])
+    {
+    case EAU:
+        etatperdant = FEU;
+    case FEU:
+        etatperdant = TERRE;
+    case TERRE:
+        etatperdant = EAU;
+    case DEFENSE:
+        etatperdant = DEFENSE;
+    }
+}
+
+void reussitedefense(int etat[2], int etatprec)
+{
+    srand(time(NULL));
+    int pourcentEtat = rand() % 100;
+    if (etat[0][3])
+    { // si le perso tente une defense
+        switch (etatprec)
+        {
+        case EAU:
+            if (pourcentEtat < 50)
+                etat[0] = defaite(etat);
+        case FEU:
+            if (pourcentEtat < 40)
+                etat[0] = defaite(etat);
+        case TERRE:
+            if (pourcentEtat < 30)
+                etat[0] = defaite(etat);
+        case DEFENSE:
+            etat[0] = defaite(etat);
+        }
+    }
+}
+
 void changement(int etat[])
 {
     srand(time(NULL));
