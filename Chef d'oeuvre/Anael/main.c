@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     tailleFenetre.y = screen.h * 0.66;
     printf("Résolution écran\n\tw : %d\n\th : %d\n",
            screen.w, screen.h);
-    printf("Pour fermer : cliquer sur la croix, ou alors 'q' ou alors 'ESCAPE'. Bon trip !\n");
+    //printf("Pour fermer : cliquer sur la croix, ou alors 'q' ou alors 'ESCAPE'. Bon trip !\n");
 
     /* Création de la fenêtre */
     window = SDL_CreateWindow("Premier dessin",

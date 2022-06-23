@@ -60,7 +60,11 @@ void end_sdl(char ok,            // fin anormale : ok = 0 ; normale ok = 1
         window = NULL;
     }
 
+ SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    TTF_Quit();
     SDL_Quit();
+    IMG_Quit();
 
     if (!ok)
     { // On quitte si cela ne va pas
