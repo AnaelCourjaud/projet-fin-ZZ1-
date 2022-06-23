@@ -18,6 +18,20 @@ void resolutionPV(int PV[], int resultat, int etat[]){
     // si meme attaque ou si defense, pas de changemement de PV
 }
 
+void changementEtatEnnemi(int etat[])
+{
+    srand(time(NULL));
+    int changementEtat[4][3] = {{10, 45, 80}, // tableaux des transitions de Markov
+                                {50, 60, 90}, //chaque ligne correspond à un état
+                                {40, 60, 70}, // chaque colonne correspond à la proba (sommée avec les probas des états des colonnes précédentes) d'un état à venir
+                                {33, 66, 100}};
+    int pourcentEtat = rand() % 100; //on détermine aléatoirement un pourcentage
+    int i = 0;
+    while ((changementEtat[etat[1]][i] < pourcentEtat) && (i < 3)) //on regarde à quelle transition correspond le pourcentage obtenu
+        i++;
+    etat[1] = i; //on change l'etat de l'ennemi
+}
+
 void end_sdl(char ok,            // fin anormale : ok = 0 ; normale ok = 1
              char const *msg,    // message à afficher
              SDL_Window *window, // fenêtre à fermer

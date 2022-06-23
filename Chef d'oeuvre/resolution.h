@@ -23,6 +23,7 @@
 
 int gagnant(int []);
 void resolutionPV(int [], int , int []);
+void changementEtatEnnemi(int []);
 void end_sdl(char ok, char const *msg, SDL_Window *window, SDL_Renderer *renderer);
 
 #endif
