@@ -261,8 +261,7 @@ SDL_SetRenderDrawColor(renderer, 0,255,255,255);
     SDL_RenderCopy(renderer, fond, &stateFond[courantFond], &destinationFond);
 printf("juste avant le bloc renderCopy etc...\n");
     SDL_RenderCopy(renderer, texture1, &state1[courant1], &destination1);
-    printf("entre les deux : %d\n",&state2[courant2]==NULL);
     SDL_RenderCopy(renderer, texture2, &state2[courant2], &destination2);
-    printf("juste après le bloc renderCopy etc...\n");
+
 
 }
