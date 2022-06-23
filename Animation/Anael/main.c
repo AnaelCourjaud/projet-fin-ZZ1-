@@ -42,30 +42,41 @@ int main(int argc, char *argv[])
     /**********************************************************************************************************************/
 
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-    SDL_RenderClear(renderer);
+    //SDL_RenderClear(renderer);
 
     SDL_Texture *my_texture;
     my_texture = IMG_LoadTexture(renderer, "./panther.png");
     if (my_texture == NULL)
         end_sdl(0, "Echec du chargement de l'image dans la texture", window, renderer);
 
+        SDL_Texture *my_texture2;
+    my_texture2 = IMG_LoadTexture(renderer, "./background_jungle.png");
+    if (my_texture2 == NULL)
+        end_sdl(0, "Echec du chargement de l'image dans la texture", window, renderer);
+
     SDL_Rect
-        source = {0},            // Rectangle définissant la zone de la texture à récupérer
+        source = {0},
+        source2 = {0},           // Rectangle définissant la zone de la texture à récupérer
         window_dimensions = {0}, // Rectangle définissant la fenêtre, on n'utilisera que largeur et hauteur
         destination = {0},       // Rectangle définissant où la zone_source doit être déposée dans le renderer
-        state = {0};             // Rectangle de la vignette en cours dans la planche
+        state = {0},  
+        destination2 = {0},       // Rectangle définissant où la zone_source doit être déposée dans le renderer
+        state3 = {0},
+        destination3 = {0};            // Rectangle de la vignette en cours dans la planche
 
     int xImage1 = 0, xImage2 = 242, xImage3 = 444, xImage4 = 690;
     int wImage1 = 242, wImage2 = 202, wImage3 = 246, wImage4 = 228;
 
-    int xImages[4] = {xImage1, xImage2, xImage3, xImage4};
-    int wImages[4] = {wImage1, wImage2, wImage3, wImage4};
+    int xImages[5] = {xImage1, xImage2, xImage3, xImage4, xImage4};
+    int wImages[5] = {wImage1, wImage2, wImage3, wImage4, wImage4};
 
     SDL_GetWindowSize(
         window, &window_dimensions.w,
         &window_dimensions.h); // Récupération des dimensions de la fenêtre
     SDL_QueryTexture(my_texture, NULL, NULL,
-                     &source.w, &source.h); // Récupération des dimensions de l'image
+                     &source.w, &source.h); 
+      SDL_QueryTexture(my_texture2, NULL, NULL,
+                     &source2.w, &source2.h);// Récupération des dimensions de l'image
                                             /*
                                                 int nb_images = 4;                   // Il y a 8 vignette dans la ligne de l'image qui nous intéresse
                                                 float zoom = 2;                      // zoom, car ces images sont un peu petites
@@ -80,24 +91,29 @@ int main(int argc, char *argv[])
                                                 destination.w = offset_x * zoom; // Largeur du sprite à l'écran
                                                 destination.h = offset_y * zoom; // Hauteur du sprite à l'écran
                                             */
-
+destination2 = window_dimensions;
     destination.y = // La course se fait en milieu d'écran (en vertical)
-        (window_dimensions.h - destination.h) / 2;
+        (window_dimensions.h) / 2;
     destination.x = // La course se fait en milieu d'écran (en vertical)
         0;
+
+        destination3.x = (window_dimensions.w) / 2;
+        destination3.y = 0;
 
     int speed = 9;
     int nb_it = 0;
     float zoom = 1.0;
     int attaque =1;
 
-    while(nb_it <=120)
+    while(nb_it <=60)
 
     {int courant;
 destination.x += speed;
         
         state.y = 0;
-        
+        if(nb_it == 30){
+            attaque =0;
+        }
         state.h = source.h;
 
         if(attaque == 0){
@@ -106,7 +122,7 @@ destination.x += speed;
             state.w = wImages[courant];
 
         }else if(attaque ==1){
-            courant = nb_it % 4;
+            courant = nb_it % 5;
             state.x = xImages[courant];
             state.w = wImages[courant];
 
@@ -116,12 +132,48 @@ destination.x += speed;
         destination.w = state.w * zoom; // Largeur du sprite à l'écran
         destination.h = state.h * zoom; // Hauteur du sprite à l'écran
 
+///////////////////////////////////////
+int courant3;
+destination3.y += speed;
+        
+        state3.y = 0;
+        if(nb_it == 30){
+            attaque =0;
+        }
+        state3.h = source.h;
+
+        if(attaque == 0){
+            courant3 = (nb_it+1) % 3;
+            state3.x = xImages[courant3];
+            state3.w = wImages[courant3];
+
+        }else if(attaque ==1){
+            courant3 = (nb_it+1) % 5;
+            state3.x = xImages[courant3];
+            state3.w = wImages[courant3];
+
+        }
+        
+
+        destination3.w = state3.w * zoom; // Largeur du sprite à l'écran
+        destination3.h = state3.h * zoom; // Hauteur du sprite à l'écran
+
+
+
+
+
+//////////////////////////////////////////
+
         SDL_RenderClear(renderer);           // Effacer l'image précédente avant de dessiner la nouvelle
+        SDL_RenderCopy(renderer, my_texture2, &source2, &destination2);
         SDL_RenderCopy(renderer, my_texture, // Préparation de l'affichage
                        &state,
                        &destination);
+                       SDL_RenderCopy(renderer, my_texture, // Préparation de l'affichage
+                       &state3,
+                       &destination3);
         SDL_RenderPresent(renderer); // Affichage
-        if(courant == 3){
+        if(courant == 10000){
             SDL_Delay(500);
         }else{
         SDL_Delay(150);
