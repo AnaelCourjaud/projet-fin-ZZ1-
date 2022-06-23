@@ -150,13 +150,21 @@ int main(int argc, char *argv[])
                     interessant = 1;
                     break;
                 case SDLK_q:
-                if(animationFinieTerminee ==1){
-                    if (ETATJEU == JEU)
-                    {
-                        ETATJEU = ACCUEIL;
+                    if(animationFinieTerminee ==1){
+                        if (ETATJEU == JEU)
+                        {
+                            ETATJEU = ACCUEIL;
+                        }
+                        interessant = 1;
                     }
-                    interessant = 1;
-                }
+                case SDLK_r:
+                    if(animationFinieTerminee ==1){
+                        if (ETATJEU == FINJEU)
+                        {
+                            ETATJEU = ACCUEIL;
+                        }
+                        interessant = 1;
+                    }
                     break;
                 case SDLK_e:
                     if(animationFinieTerminee ==1){
@@ -226,19 +234,12 @@ int main(int argc, char *argv[])
             //SDL_Texture *sprite2 = texture[0][2];
             //SDL_Texture *fond = texture[0][3];
             if(choixFait ==1){
-                printf(" debut\n");
                 changementEtatEnnemi(etat);
-                printf(" changementEtatEnnemi fait\n");
                 reussitedefense(etat, etatPrec);
-                printf(" reussiteDefense fait\n");
                 int resultat = gagnant(etat);
-                printf(" gagnant fait\n");
                 resolutionPV(PV, resultat, etat);
-                printf(" resolutionPV fait\n");
                 sprite1 = textureAttaque(texture,0, etat, resultat);
-                printf(" textureAttaqueSprite1 fait\n");
                 sprite2 = textureAttaque(texture,1, etat, resultat);
-                printf(" textureAttaqueSprite2 fait\n");
 
                 choixFait = 0;
                 animationFinieTerminee = 0;
@@ -276,31 +277,21 @@ int main(int argc, char *argv[])
                             nbrImageSprite2=3;
                         }
                     }
-
-<<<<<<< HEAD
-            textureFond= texture[1][8];
-=======
-                }
+               }
             }
->>>>>>> main
 
 
             textureFond= texture[1][8];
 
-            printf("justeAvant animation\n");
-            printf(" textures égales : %d\n", texture[0][5] == texture[0][4]);
             Animation(sprite1, sprite2, textureFond, renderer, window, 400, 400, 200, 1300, 500, nbrImageSprite1,nbrImageSprite2, i);
 
-            printf("justeAprès animation\n");
             i++;
+
+            if(((PV[0] <= 0)||(PV[1] <= 0))&&(animationFinieTerminee == 1 )){
+                ETATJEU = FINJEU;
+            }
             
-/*
-            indicesSprite1.x = 0;
-            indicesSprite1.y = 1;
-            indicesSprite2.x = 0;
-            indicesSprite2.y = 2;
-            indicesFond.x = 0;
-            indicesFond.y = 3;
+            /*animationFinieTerminee = 0;
          
 
             int nbrImageSprite1 = 2;
@@ -316,6 +307,20 @@ int main(int argc, char *argv[])
 
             break;
         case FINJEU:
+            if(PV[1] <=0 ){
+                sprite1 = texture[0][6];
+                sprite2 = texture[1][7];
+                nbrImageSprite1=2;
+                nbrImageSprite2=3;
+            }
+            if(PV[0] <=0 ){
+                sprite1 = texture[1][7];
+                sprite2 = texture[0][6];
+                nbrImageSprite1=3;
+                nbrImageSprite2=2;
+            }
+            Animation(sprite1, sprite2, textureFond, renderer, window, 400, 400, 200, 1300, 500, nbrImageSprite1,nbrImageSprite2, i);
+            i++;
             break;
         default:
             ETATJEU = ERREUR;
@@ -325,7 +330,7 @@ int main(int argc, char *argv[])
           //  }
         
         SDL_RenderPresent(renderer);
-        SDL_Delay(120);
+        SDL_Delay(150);
     }
 
    end_sdl(1, "FIN NORMALE", window, renderer);

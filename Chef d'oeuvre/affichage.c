@@ -226,13 +226,9 @@ void Animation(SDL_Texture * texture1, SDL_Texture *texture2, SDL_Texture *fond,
     int courant1 = ite % nbimage1;
     int courant2 = ite % nbimage2;
 
-    printf("juste avant le bloc creationImage et renderCopy etc...\n");
-
     creationImage(fond, window, renderer, 1920, 1080, 0, 0);
-printf("juste avant le bloc renderCopy etc...\n");
     SDL_RenderCopy(renderer, texture1, &state1[courant1], &destination1);
-    printf("entre les deux : %d\n",&state2[courant2]==NULL);
     SDL_RenderCopy(renderer, texture2, &state2[courant2], &destination2);
-    printf("juste après le bloc renderCopy etc...\n");
+
 
 }
