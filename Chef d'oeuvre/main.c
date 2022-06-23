@@ -4,8 +4,8 @@
 
 
 #define ligneTexture 2
-#define colonneTexture 8
-#define nombreFichier 14
+#define colonneTexture 9
+#define nombreFichier 18
 #define tailleMaxFichiers 50
 
 #define nbrImageSpriteFini 10
@@ -82,8 +82,8 @@ int main(int argc, char *argv[])
 
 /////////////// récupération des textures et stockage dans tableau
    SDL_Texture *texture[ligneTexture][colonneTexture];
-    char nomFichiers[ligneTexture][colonneTexture][tailleMaxFichiers] = {{"./Sprites/attaqueeau.png", "./Sprites/attaquefeu.png", "./Sprites/attaqueterre.png", "./Sprites/defense.png","./Sprites/attente.png","./Sprites/normal.png","./Sprites/victoire.png","./Sprites/defaite.png","./Sprites/fond1.jpg"},
-                                                                        {"./Sprites/attaqueeauennemi.png", "./Sprites/attaquefeuennemi.png", "./Sprites/attaqueterreennemi.png", "./Sprites/defenseennemi.png","./Sprites/attenteennemi.png","./Sprites/normalennemi.png","./Sprites/victoireennemi.png","./Sprites/defaiteennemi.png","./Sprites/fond2.jpg"}};
+    char nomFichiers[ligneTexture][colonneTexture][tailleMaxFichiers] = {{"./Sprites/attaqueeau.png", "./Sprites/attaquefeu.png", "./Sprites/attaquepierre.png", "./Sprites/defense.png","./Sprites/attente.png","./Sprites/persobase.png","./Sprites/victoire.png","./Sprites/defaite.png","./Sprites/fond1.jpg"},
+    {"./Sprites/attaqueeauennemi.png", "./Sprites/attaquefeuennemi.png", "./Sprites/attaquepierreennemi.png", "./Sprites/defenseennemi.png","./Sprites/attenteennemi.png","./Sprites/ennemibase.png","./Sprites/victoireennemi.png","./Sprites/defaiteennemi.png","./Sprites/fond2.jpg"}};
 
     for (int i = 0; i < ligneTexture; i++)
     {
@@ -97,6 +97,8 @@ int main(int argc, char *argv[])
 
 ////////:::////
 
+   // int nbCycleMax=10;
+    //int cycleActuel=0;
 
     SDL_bool program_on = SDL_TRUE; // Booléen pour dire que le programme doit continuer
     SDL_Event event;                // c'est le type IMPORTANT !!
@@ -195,7 +197,8 @@ int main(int argc, char *argv[])
             }
         }
         interessant = 0;
-
+           // cycleActuel++;
+            //if(cycleActuel>nbCycleMax){
         switch (ETATJEU)
         {
         case ERREUR:
@@ -258,13 +261,16 @@ int main(int argc, char *argv[])
                 nbrImageSprite2 = 2;
             }
 
-            
 
             textureFond= texture[0][3];
 
-            Animation(sprite1, sprite2, textureFond, renderer, window, 400, 400, 200, 1300, 500, nbrImageSprite1,nbrImageSprite2, i);
-            i++;
+            printf("justeAvant animation\n");
 
+            Animation(sprite1, sprite2, textureFond, renderer, window, 400, 400, 200, 1300, 500, nbrImageSprite1,nbrImageSprite2, i);
+
+            printf("justeAprès animation\n");
+            i++;
+            
 /*
             indicesSprite1.x = 0;
             indicesSprite1.y = 1;
@@ -292,9 +298,11 @@ int main(int argc, char *argv[])
             ETATJEU = ERREUR;
             break;
         }
+        //cycleActuel=0;
+          //  }
         
         SDL_RenderPresent(renderer);
-        SDL_Delay(150);
+        SDL_Delay(120);
     }
 
    end_sdl(1, "FIN NORMALE", window, renderer);
