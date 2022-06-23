@@ -21,9 +21,9 @@ void resolutionPV(int PV[], int resultat, int etat[]){
 void changementEtatEnnemi(int etat[])
 {
     srand(time(NULL));
-    int changementEtat[4][3] = {{10, 45, 80}, // tableaux des transitions de Markov
-                                {50, 60, 90}, //chaque ligne correspond à un état
-                                {40, 60, 70}, // chaque colonne correspond à la proba (sommée avec les probas des états des colonnes précédentes) d'un état à venir
+    int changementEtat[4][3] = {{20, 70, 90}, // tableaux des transitions de Markov
+                                {20, 70, 90}, //chaque ligne correspond à un état
+                                {20, 70, 90}, // chaque colonne correspond à la proba (sommée avec les probas des états des colonnes précédentes) d'un état à venir
                                 {33, 66, 100}};
     int pourcentEtat = rand() % 100; //on détermine aléatoirement un pourcentage
     int i = 0;

@@ -117,6 +117,7 @@ int main(int argc, char *argv[])
 
     int ETATJEU = ACCUEIL;
     int i = 0;
+    int j=0;
 
     int PV[2] = {10, 6};
     int etat[2] = {EAU, EAU};
@@ -146,6 +147,8 @@ int main(int argc, char *argv[])
                     if (ETATJEU == ACCUEIL)
                     {
                         ETATJEU = JEU;
+                        i=0;
+                        j=0;
                     }
                     interessant = 1;
                     break;
@@ -282,13 +285,15 @@ int main(int argc, char *argv[])
 
 
             textureFond= texture[1][8];
+            int nbrImageFond = 4;
 
             printf("justeAvant animation\n");
             printf(" textures égales : %d\n", texture[0][5] == texture[0][4]);
-            Animation(sprite1, sprite2, textureFond, renderer, window, 400, 400, 200, 1300, 500, nbrImageSprite1,nbrImageSprite2, i);
-
+            //Animation(sprite1, sprite2, textureFond, renderer, window, 400, 400, 200, 1300, 500, nbrImageSprite1,nbrImageSprite2, i);
+            Animation(sprite1, sprite2, textureFond, renderer, window, 400, 400, 200, 1300, 500, nbrImageSprite1,nbrImageSprite2, nbrImageFond, i, j);
             printf("justeAprès animation\n");
             i++;
+            j++;
             
 /*
             indicesSprite1.x = 0;
