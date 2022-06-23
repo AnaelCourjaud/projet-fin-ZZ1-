@@ -1,8 +1,8 @@
 #include "affichageAttaque.h"
 
-/*SLD_Texture **/ int textureAttaque(int animation[2][7], int joueur, int etat[2], int resultat)
+SLD_Texture * textureAttaque(int animation[2][7], int joueur, int etat[2], int resultat)
 {
-    /*SLD_Texture **/ int texture;
+    SLD_Texture * texture;
     switch (resultat)
     {
     case 0: // victoire perso
@@ -26,7 +26,7 @@
     return texture;
 }
 
-int main()
+/*int main()
 {
     int PV[2] = {10, 6};
     int etat[2] = {FEU, FEU};
@@ -44,4 +44,4 @@ int main()
            "%d\n",
            textureennemi);
     return 0;
-}
+}*/
