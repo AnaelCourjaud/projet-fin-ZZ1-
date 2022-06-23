@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
     int i = 0;
     int j=0;
 
-    int PV[2] = {10, 6};
+    int PV[2] = {1, 1};
     int etat[2] = {EAU, EAU};
 
     while (program_on)
@@ -190,7 +190,7 @@ int main(int argc, char *argv[])
                     interessant = 1;
                     }
                     break;
-                case SDLK_d:
+                case SDLK_d:            Animation(sprite1, sprite2, textureFond, renderer, window, 400, 400, 200, 1300, 500, nbrImageSprite1,nbrImageSprite2, i);
                     if(animationFinieTerminee ==1){
                     etatPrec = etat[0];
                     etat[0] = 3;
@@ -329,7 +329,7 @@ int main(int argc, char *argv[])
                 nbrImageSprite1=3;
                 nbrImageSprite2=2;
             }
-            Animation(sprite1, sprite2, textureFond, renderer, window, 400, 400, 200, 1300, 500, nbrImageSprite1,nbrImageSprite2, i);
+            Animation(sprite1, sprite2, textureFond, renderer, window, 400, 400, 200, 1300, 500, nbrImageSprite1,nbrImageSprite2,1, i,j);
             i++;
             break;
         default:
