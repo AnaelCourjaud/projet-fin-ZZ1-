@@ -37,8 +37,8 @@ void creationTexte(char texte[], char style[], char police[], SDL_Renderer *rend
     SDL_RenderCopy(renderer, text_texture, NULL, &pos);
     SDL_DestroyTexture(text_texture);
 }
-
-void creationFond(SDL_Texture *my_texture,SDL_Window *window, SDL_Renderer *renderer, int x, int y){
+/*
+void creationImage(SDL_Texture *my_texture,SDL_Window *window, SDL_Renderer *renderer, int longueur, int largeur, int x, int y){
 
     SDL_Rect
         source = {0},           // Rectangle définissant la zone de la texture à récupérer
@@ -48,8 +48,8 @@ void creationFond(SDL_Texture *my_texture,SDL_Window *window, SDL_Renderer *rend
     SDL_GetWindowSize(window, &window_dimensions.w, &window_dimensions.h); // Récupération des dimensions de la fenêtre
     SDL_QueryTexture(my_texture, NULL, NULL, &source.w, &source.h);
     
-    destination.x = window_dimensions.w;
-    destination.y = window_dimensions.h;
+    destination.x = x;
+    destination.y = y;
     destination.w = longueur;
     destination.h = largeur;
 
@@ -57,7 +57,7 @@ void creationFond(SDL_Texture *my_texture,SDL_Window *window, SDL_Renderer *rend
 
 }
 
-/*
+
 void Animation(SDL_Texture * texture1, SDL_Texture *texture2, SDL_Texture *fond, SDL_Renderer *renderer, SDL_Window *window, int longueur, int largeur, int x1,  int x2, int y,int nbimage1,int nbimage2, int nbimageFond, int ite, int iteFond)
 {
     SDL_Rect

@@ -69,7 +69,10 @@ init(window, renderer, texture, tabPolices);
 
 printf("avant copy\n");
 SDL_RenderCopy(renderer, fond.textureSprite, &fond.source, &fond.destination);
-
+SDL_SetRenderDrawColor(renderer, 255,255, 0, 255);
+  SDL_RenderDrawLine(renderer,                                      
+                     0, 0,                                          // x,y du point de la première extrémité
+                     400, 400);
 
     SDL_RenderPresent(renderer);
     printf("avant délai\n");
