@@ -51,6 +51,7 @@ int main(int argc, char *argv[])
     // ********************************************************************************
 
 
+    sprite_t fon
 
 
     SDL_SetRenderDrawColor(renderer, 50, 0, 0, 255);// mode Red, Green, Blue (tous dans 0..255)

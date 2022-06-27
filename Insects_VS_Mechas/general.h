@@ -30,6 +30,11 @@
 
 #define coefReducEcran 0.8
 
+
+#define indiceFond 3
+
+
+
 typedef struct sprite {
 
     SDL_Texture * textureSprite;
@@ -46,7 +51,7 @@ typedef struct sprite {
     //int PV;
     //int mortTerminee;
 
-}attaquant_t;
+}sprite_t;
 
 
 #endif
