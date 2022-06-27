@@ -64,6 +64,10 @@ case FinduJeu:
 
 
 
+Perceptions :
+    Nb etatennemis
+    Type d'ennemis (tir, cac, mixte)
+
 
 
 
