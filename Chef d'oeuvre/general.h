@@ -22,7 +22,9 @@
 
 #define ligneTexture 2
 #define colonneTexture 10
+#define nombreFichier 18
+#define tailleMaxFichiers 50
 
-
+#define nbrImageSpriteFini 10 //toutes les animations finies sont des sprites avec 10 images
 
 #endif

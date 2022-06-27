@@ -1,5 +1,4 @@
 #include "affichageAttaque.h"
-//#include "general.h"
 
 SDL_Texture * textureAttaque(SDL_Texture *texture[ligneTexture][colonneTexture], int joueur, int etat[2], int resultat)
 {

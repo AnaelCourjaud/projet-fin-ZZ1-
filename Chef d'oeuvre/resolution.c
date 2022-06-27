@@ -1,5 +1,4 @@
 #include "resolution.h"
-//#include "general.h"
 
 
 int gagnant(int etat[2]){
