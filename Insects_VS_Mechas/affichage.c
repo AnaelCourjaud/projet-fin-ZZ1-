@@ -9,10 +9,16 @@ void creationTexte(char texte[], char style[], char police[], SDL_Renderer *rend
         fprintf(stderr, "Can't load font  %s\n", SDL_GetError());
     
     if(strcmp(style,"normal") == 0){ //si on veut le texte en style normal
-    TTF_SetFontStyle(font, TTF_STYLE_NORMAL); }// en italique, gras TTF_STYLE_ITALIC | TTF_STYLE_BOLD
+    TTF_SetFontStyle(font, TTF_STYLE_NORMAL); }
 
     if(strcmp(style,"surligne") == 0){ //si on veut le texte surligné
     TTF_SetFontStyle(font, TTF_STYLE_UNDERLINE); }
+
+    if(strcmp(style,"italique") == 0){ //si on veut le texte en italique
+    TTF_SetFontStyle(font, TTF_STYLE_ITALIC); }
+
+    if(strcmp(style,"gras") == 0){ //si on veut le texte en gras
+    TTF_SetFontStyle(font, TTF_STYLE_BOLD); }
 
     SDL_Color color = {0, 0, 0, opacite};
     SDL_Surface *text_surface = NULL;                          // la surface  (uniquement transitoire)

@@ -13,84 +13,47 @@ int main(int argc, char *argv[])
     SDL_Rect tailleFenetre;
 
     SDL_Texture *texture[nbrTextures];
-    // char nomFichiers[ligneTexture][colonneTexture][tailleMaxFichiers] = {{"./Sprites/attaqueeau.png", "./Sprites/attaquefeu.png", "./Sprites/attaquepierre.png", "./Sprites/defense.png","./Sprites/attente.png","./Sprites/persobase.png","./Sprites/victoire.png","./Sprites/defaite.png","./Sprites/fond1.jpg","./Sprites/winner.png"},{"./Sprites/attaqueeauennemi.png", "./Sprites/attaquefeuennemi.png", "./Sprites/attaquepierreennemi.png", "./Sprites/defenseennemi.png","./Sprites/attenteennemi.png","./Sprites/ennemibase.png","./Sprites/victoireennemi.png","./Sprites/defaiteennemi.png","./Sprites/fond2.jpg","./Sprites/loser.png"}};
-
     TTF_Font *tabPolices[nbrPolices];
 
-    //init(window, renderer, screen, tailleFenetre, texture, tabPolices);
-
-        /************** Initialisation de la SDL  + gestion de l'échec possible *********/
-    /*                                                                              */
-    /********************************************************************************/
+    // ************** Initialisation de la SDL  + gestion de l'échec possible *********
+    // ********************************************************************************
 
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
-        SDL_Log("Error : SDL initialisation - %s\n",
-                SDL_GetError()); // l'initialisation de la SDL a échoué
+        SDL_Log("Error : SDL initialisation - %s\n", SDL_GetError()); // l'initialisation de la SDL a échoué
         exit(EXIT_FAILURE);
     }
 
-    /***************************** Texte ********************************************/
-    /*                                                                              */
-    /********************************************************************************/
+    // ***************************** Texte ********************************************
 
     if (TTF_Init() < 0)
         fprintf(stderr, "Unable to initialize TTF:  %s\n", SDL_GetError());
 
-    /*************************  Gestion des fenetres   *****************************/
-    /*                                                                             */
-    /*******************************************************************************/
+    // *************************  Gestion des fenetres   *****************************
 
     SDL_GetCurrentDisplayMode(0, &screen);
     tailleFenetre.w = screen.w * coefReducEcran; // réduction fenetre
     tailleFenetre.h = screen.h * coefReducEcran;
 
-    /* Création de la fenêtre */
-    window = SDL_CreateWindow("Jeu de l'ambiance",
-                              SDL_WINDOWPOS_CENTERED,
-                              SDL_WINDOWPOS_CENTERED,
-                              tailleFenetre.w, tailleFenetre.h,
-                              SDL_WINDOW_OPENGL);
+    //  ************************* Création de la fenêtre *************************
+
+    window = SDL_CreateWindow("Insects_VS_Mechas", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, tailleFenetre.w, tailleFenetre.h, SDL_WINDOW_OPENGL);
     if (window == NULL)
         end_sdl(0, "ERROR WINDOW CREATION", window, renderer);
 
-    /* Création du renderer */
-    renderer = SDL_CreateRenderer(window, -1,
-                                  SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    //  ************************* Création du renderer *************************
 
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (renderer == NULL)
         end_sdl(0, "ERROR RENDERER CREATION", window, renderer);
 
-/*
-    ///////////// Chargement des polices et des textures et stockage des pointeurs dans les tableaux
+    // ********************************************************************************
+    // ********************************************************************************
 
-    char nomFichiers[nbrTextures][tailleMaxFichiers] = {"./Sprites/goblin.png", "./Sprites/goblin.png"};
 
-    char nomPolices[nbrPolices][tailleMaxFichiers] = {"./fonts/font.ttf", "./fonts/font2.ttf"};
-    int taillePolices[nbrPolices] = {100, 50};
 
-    /////////////// récupération des textures et stockage dans tableau texture et test de réussite de chargement
-    for (int i = 0; i < nbrTextures; i++)
-    {
-        texture[i] = IMG_LoadTexture(renderer, nomFichiers[i]);
-        if (texture[i] == NULL)
-            end_sdl(0, "Echec du chargement de l'image dans la texture", window, renderer);
-    }
-    //////////////////////////
 
-    /////////////// récupération des textures et stockage dans tableau texture et test de réussite de chargement
-    for (int i = 0; i < nbrPolices; i++)
-    {
-        tabPolices[i] = TTF_OpenFont(nomPolices[i], taillePolices[i]);
-        if (tabPolices[i] == NULL)
-            end_sdl(0, "Echec du chargement de l'image dans la texture", window, renderer);
-    }
-    //////////////////////////
-
-*/
-    SDL_SetRenderDrawColor(renderer,
-                           50, 0, 0, // mode Red, Green, Blue (tous dans 0..255)
-                           255);
+    SDL_SetRenderDrawColor(renderer, 50, 0, 0, 255);// mode Red, Green, Blue (tous dans 0..255)
     SDL_RenderClear(renderer);
 
 
@@ -100,68 +63,7 @@ int main(int argc, char *argv[])
     SDL_Delay(10000);
     printf("après délai\n");
 
-    // char nomPolices[nbrPolices] = {"./fonts/font.ttf","./fonts/font2.ttf"};
-    /*
-        // ************** Initialisation de la SDL  + gestion de l'échec possible ********
-        //
-        // *******************************************************************************
 
-        if (SDL_Init(SDL_INIT_VIDEO) != 0)
-        {
-            SDL_Log("Error : SDL initialisation - %s\n",
-                    SDL_GetError()); // l'initialisation de la SDL a échoué
-            exit(EXIT_FAILURE);
-        }
-
-        // ***************************** Texte *******************************************
-        //
-        // *******************************************************************************
-
-        if (TTF_Init() < 0)
-         fprintf(stderr, "Unable to initialize TTF:  %s\n", SDL_GetError());
-
-        // ************************  Gestion des fenetres   *****************************
-
-        // ******************************************************************************
-
-        SDL_GetCurrentDisplayMode(0, &screen);
-        tailleFenetre.w = screen.w * 1.0; //réduction fenetre
-        tailleFenetre.h = screen.h * 1.0;
-        printf("Résolution écran\n\tw : %d\n\th : %d\n",
-               screen.w, screen.h);
-        printf("Résolution fenetre\n\tw : %d\n\th : %d\n",
-               tailleFenetre.w, tailleFenetre.h);
-
-        // Création de la fenêtre
-        window = SDL_CreateWindow("Jeu de l'ambiance",
-                                  SDL_WINDOWPOS_CENTERED,
-                                  SDL_WINDOWPOS_CENTERED,
-                                  tailleFenetre.w, tailleFenetre.h,
-                                  SDL_WINDOW_OPENGL);
-        if (window == NULL)
-            end_sdl(0, "ERROR WINDOW CREATION", window, renderer);
-
-        // Création du renderer
-        renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-
-        if (renderer == NULL)
-            end_sdl(0, "ERROR RENDERER CREATION", window, renderer);
-
-
-
-    /////////////// récupération des textures et stockage dans tableau
-       for (int i = 0; i < ligneTexture; i++)
-        {
-            for (int j = 0; j < colonneTexture; j++)
-            {
-                texture[i][j] = IMG_LoadTexture(renderer, nomFichiers[i][j]);
-                if (texture[i][j] == NULL)
-                    end_sdl(0, "Echec du chargement de l'image dans la texture", window, renderer);
-            }
-        }
-    //////////////////////////
-
-    */
     /*
         SDL_bool program_on = SDL_TRUE; // Booléen pour dire que le programme doit continuer
         SDL_Event event;                // c'est le type IMPORTANT !!
@@ -242,7 +144,8 @@ int main(int argc, char *argv[])
                         break;
                     case SDLK_t:
                         etat[0] = 2;
-                        choixFait = 1;
+                        choixFait = 1
+                           255);;
                         interessant = 1;
                         break;
                     case SDLK_d:

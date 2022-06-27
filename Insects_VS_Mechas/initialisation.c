@@ -26,7 +26,7 @@ void init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture *texture[nbrTe
     {
         tabPolices[i] = TTF_OpenFont(nomPolices[i], taillePolices[i]);
         if (tabPolices[i] == NULL)
-            end_sdl(0, "Echec du chargement de l'image dans la texture", window, renderer);
+            end_sdl(0, "Echec du chargement de la police", window, renderer);
     }
     //////////////////////////
 }

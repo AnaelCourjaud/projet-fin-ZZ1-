@@ -30,4 +30,23 @@
 
 #define coefReducEcran 0.8
 
+typedef struct sprite {
+
+    SDL_Texture * textureSprite;
+    int wSource;
+    int hSource;
+    int xDestination;
+    int yDestination;
+    int wDestination;
+    int hDestination;
+    int animation;
+    int nbrImages;
+    int ralenti;
+    //int personnage;
+    //int PV;
+    //int mortTerminee;
+
+}attaquant_t;
+
+
 #endif
