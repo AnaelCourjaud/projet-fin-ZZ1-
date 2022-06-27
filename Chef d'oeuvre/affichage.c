@@ -1,4 +1,5 @@
 #include "affichage.h"
+//#include "general.h"
 
 void creationTexte(char texte[], char style[], char police[], SDL_Renderer *renderer, int taille, int x, int y, int opacite)
 {

@@ -1,9 +1,6 @@
-#ifndef RESOLUTION_H
-#define RESOLUTION_H
+#ifndef GENERAL_H
+#define GENERAL_H
 
-#include "general.h"
-
-/*
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
@@ -22,13 +19,10 @@
 #define FEU 1
 #define TERRE 2
 #define DEFENSE 3
-*/
 
-int gagnant(int []);
-void resolutionPV(int [], int , int []);
-void changementEtatEnnemi(int []);
-int defaite(int[]);
-void reussitedefense(int [], int );
-void end_sdl(char ok, char const *msg, SDL_Window *window, SDL_Renderer *renderer);
+#define ligneTexture 2
+#define colonneTexture 10
+
+
 
 #endif

@@ -1,4 +1,6 @@
 #include "resolution.h"
+//#include "general.h"
+
 
 int gagnant(int etat[2]){
     //0: perso gagne; 1:ennemi gagne; 2: meme attaque; 3 : au moins une defense

@@ -1,6 +1,8 @@
 #ifndef AFFICHAGE_H
 #define AFFICHAGE_H
 
+#include "general.h"
+/*
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
@@ -19,6 +21,7 @@
 #define FEU 1
 #define TERRE 2
 #define DEFENSE 3
+*/
 
 void creationTexte(char texte[], char style[], char police[], SDL_Renderer *renderer, int taille, int x, int y, int opacite);
 void creationImage(SDL_Texture *my_texture, SDL_Window *window, SDL_Renderer *renderer, int longueur, int largeur, int x, int y);

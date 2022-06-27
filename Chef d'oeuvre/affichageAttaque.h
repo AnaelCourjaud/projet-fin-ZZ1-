@@ -1,6 +1,8 @@
 #ifndef __AFFICHAGEATTAQUE_H__
 #define __AFFICHAGEATTAQUE_H__
 
+#include "general.h"
+/*
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
@@ -10,6 +12,7 @@
 #include <SDL2/SDL_ttf.h>
 #include "resolution.h"
 
+
 #define EAU 0
 #define FEU 1
 #define TERRE 2
@@ -17,6 +20,7 @@
 
 #define ligneTexture 2
 #define colonneTexture 10
+*/
 
 SDL_Texture * textureAttaque(SDL_Texture * [ligneTexture][colonneTexture], int , int [2], int );
 

@@ -3,6 +3,7 @@
 #include "affichageAttaque.h"
 
 
+
 #define ligneTexture 2
 #define colonneTexture 10
 #define nombreFichier 18
