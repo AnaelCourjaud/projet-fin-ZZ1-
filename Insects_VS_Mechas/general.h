@@ -34,7 +34,7 @@
 #define indiceBatiment2 1
 #define indiceBatiment2coupe 2
 #define indiceFond 3
-#define indiceFondaccueil 4
+#define indiceFondAccueil 4
 #define indiceLore1 5
 #define indiceLore2 6
 #define indiceLore3 7 
