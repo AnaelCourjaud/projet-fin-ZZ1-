@@ -12,8 +12,11 @@
 
 #define ERREUR 10
 #define ACCUEIL 20
-#define JEU 30
-#define FINJEU 40
+#define LORE1 30
+#define LORE2 40
+#define LORE3 50
+#define JEU 60
+#define FINJEU 70
 
 
 #define nbrTextures 26

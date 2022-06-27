@@ -37,8 +37,8 @@ void creationTexte(char texte[], char style[], char police[], SDL_Renderer *rend
     SDL_RenderCopy(renderer, text_texture, NULL, &pos);
     SDL_DestroyTexture(text_texture);
 }
-/*
-void creationImage(SDL_Texture *my_texture,SDL_Window *window, SDL_Renderer *renderer, int longueur, int largeur, int x, int y){
+
+void creationFond(SDL_Texture *my_texture,SDL_Window *window, SDL_Renderer *renderer, int x, int y){
 
     SDL_Rect
         source = {0},           // Rectangle définissant la zone de la texture à récupérer
@@ -56,7 +56,7 @@ void creationImage(SDL_Texture *my_texture,SDL_Window *window, SDL_Renderer *ren
     SDL_RenderCopy(renderer, my_texture , &source, &destination);
 
 }
-
+/*
 
 void Animation(SDL_Texture * texture1, SDL_Texture *texture2, SDL_Texture *fond, SDL_Renderer *renderer, SDL_Window *window, int longueur, int largeur, int x1,  int x2, int y,int nbimage1,int nbimage2, int nbimageFond, int ite, int iteFond)
 {
