@@ -15,8 +15,11 @@
 #define LORE1 30
 #define LORE2 40
 #define LORE3 50
-#define JEU 60
-#define FINJEU 70
+#define VAGUE 60
+#define ATTENTERIPOSTE 70
+#define RIPOSTE 80
+#define FINDEVAGUE 90
+#define FINJEU 100
 
 
 #define nbrTextures 26
@@ -28,6 +31,8 @@
 #define nbrImageSpriteFini 10 //toutes les animations finies sont des sprites avec 10 images
 
 #define coefReducEcran 0.8
+
+#define TAILLEMAX 4
 
 
 

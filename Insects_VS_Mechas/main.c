@@ -176,49 +176,45 @@ SDL_RenderCopy(renderer, tabInsectes[i]->spriteInsecte.textureSprite, &tabInsect
 
 
 
-        while (program_on)
-        {
-            // Voilà la boucle des évènements
-            int interessant = 0;
-            int choixFait = 0;
+    while (program_on)
+    {
+        // Voilà la boucle des évènements
+        int interessant = 0;
+        int choixFait = 0;
 
-            // *************************  Gestion des evenements *****************************
-            //
-            // *******************************************************************************
+        // *************************  Gestion des evenements *****************************
+        //                                                                             
+        // *******************************************************************************
 
-            while ((interessant == 0) && (SDL_PollEvent(&event)))
-            {   // tant que la file d'évènements n'est pas vide : défiler l'élément en tête et l'on a pas d'évènements interessants à traiter
-                // de file dans 'event'
-                switch (event.type)
-                {
-                case SDL_QUIT:
-                    interessant = 1;        // Un évènement simple, on a cliqué sur la x de la fenêtre
-                    program_on = SDL_FALSE; // Il est temps d'arrêter le programme
-                    break;
-                case SDL_KEYUP: // Le type de event est : une touche lachée
+        while ((interessant == 0) && (SDL_PollEvent(&event)))
+        {   // tant que la file d'évènements n'est pas vide : défiler l'élément en tête et l'on a pas d'évènements interessants à traiter
+            // de file dans 'event'
+            switch (event.type)
+            { 
+            case SDL_QUIT:
+                interessant = 1;        // Un évènement simple, on a cliqué sur la x de la fenêtre
+                program_on = SDL_FALSE; // Il est temps d'arrêter le programme
+                break;
+            case SDL_KEYUP: // Le type de event est : une touche lachée
 
-                    switch (event.key.keysym.sym)
-                    { // la touche appuyée est ...
-                    case SDLK_SPACE:
-                        if (ETATJEU == ACCUEIL)
-                        {
-                            ETATJEU = LORE1;
-                        }
-                        else if (ETATJEU == LORE1)
-                        {
-                            ETATJEU = LORE2;
-                        }
-                        else if (ETATJEU == LORE2)
-                        {
-                            ETATJEU = LORE3;
-                        }
-                        else if (ETATJEU == LORE3)
-                        {
-                            ETATJEU = JEU;
-                        }
-                        interessant = 1;
-                    default:
-                        break;
+                switch (event.key.keysym.sym)
+                { // la touche appuyée est ...
+                case SDLK_SPACE:
+                    if (ETATJEU == ACCUEIL)
+                    {
+                        ETATJEU = LORE1;
+                    }
+                    else if (ETATJEU == LORE1)
+                    {
+                        ETATJEU = LORE2;
+                    }
+                    else if (ETATJEU == LORE2)
+                    {
+                        ETATJEU = LORE3;
+                    }
+                    else if (ETATJEU == LORE3)
+                    {
+                        ETATJEU = VAGUE;
                     }
 
                 default: // L'évènement défilé ne nous intéresse pas
@@ -227,43 +223,57 @@ SDL_RenderCopy(renderer, tabInsectes[i]->spriteInsecte.textureSprite, &tabInsect
             }
             interessant = 0;
 
-            switch (ETATJEU)
-            {
-            case ERREUR:
-                break;
-            case ACCUEIL:
+            
 
-                fondAccueil.textureSprite = texture[indiceFondAccueil];
-                creationFond(fondAccueil.textureSprite, window, renderer, 0, 0);
-                break;
-            case LORE1:
-                lore1.textureSprite = texture[indiceLore1];
-                creationFond(lore1.textureSprite, window, renderer, 0, 0);
+        switch (ETATJEU)
+        {
+        case ERREUR:
+            break;
+        case ACCUEIL:
 
-                break;
-            case LORE2:
-                lore2.textureSprite = texture[indiceLore2];
-                creationFond(lore2.textureSprite, window, renderer, 0, 0);
+            fondAccueil.textureSprite = texture[indiceFondAccueil];
+            creationFond(fondAccueil.textureSprite, window, renderer, 0, 0);
+            break;
+        case LORE1:
+            lore1.textureSprite = texture[indiceLore1];
+            creationFond(lore1.textureSprite, window, renderer, 0, 0);
 
-                break;
-            case LORE3:
-                lore3.textureSprite = texture[indiceLore3];
-                creationFond(lore3.textureSprite, window, renderer, 0, 0);
+            break;
+        case LORE2:
+            lore2.textureSprite = texture[indiceLore2];
+            creationFond(lore2.textureSprite, window, renderer, 0, 0);
+
+            break;
+        case LORE3:
+            lore3.textureSprite = texture[indiceLore3];
+            creationFond(lore3.textureSprite, window, renderer, 0, 0);
 
 
-                break;
-            case JEU:
-                printf("Jeu en route");
+            break;
+        case VAGUE:
+            printf("Jeu en route");
+           
+            break;
+        case ATTENTERIPOSTE:
+            
+            break;
+        case RIPOSTE:
+            
+            break;
+        case FINDEVAGUE:
+           
+            break;
+        case FINJEU:
+           
+            break;
+        default:
+            ETATJEU = ERREUR;
+            break;
+        }
 
-                break;
-            default:
-                ETATJEU = ERREUR;
-                break;
-            }
-
-            SDL_RenderPresent(renderer);
-            SDL_Delay(150);
-        }*/
+        SDL_RenderPresent(renderer);
+        SDL_Delay(150);
+    }
 
     end_sdl(1, "FIN NORMALE", window, renderer);
     return 0;
