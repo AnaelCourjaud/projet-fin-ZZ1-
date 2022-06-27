@@ -48,10 +48,10 @@ void creationFond(SDL_Texture *my_texture,SDL_Window *window, SDL_Renderer *rend
     SDL_GetWindowSize(window, &window_dimensions.w, &window_dimensions.h); // Récupération des dimensions de la fenêtre
     SDL_QueryTexture(my_texture, NULL, NULL, &source.w, &source.h);
     
-    destination.x = window_dimensions.w;
-    destination.y = window_dimensions.h;
-    destination.w = longueur;
-    destination.h = largeur;
+    destination.x = x;
+    destination.y = y;
+    destination.w = window_dimensions.w;
+    destination.h = window_dimensions.h;
 
     SDL_RenderCopy(renderer, my_texture , &source, &destination);
 
