@@ -15,10 +15,6 @@
 #define JEU 30
 #define FINJEU 40
 
-#define EAU 0
-#define FEU 1
-#define TERRE 2
-#define DEFENSE 3
 
 #define nbrTextures 26
 #define nbrPolices 2
@@ -31,8 +27,35 @@
 #define coefReducEcran 0.8
 
 
-#define indiceFond 3
 
+
+
+#define indiceBatiment1 0
+#define indiceBatiment2 1
+#define indiceBatiment2coupe 2
+#define indiceFond 3
+#define indiceFondaccueil 4
+#define indiceLore1 5
+#define indiceLore2 6
+#define indiceLore3 7 
+#define indiceBugfirewalk 8
+#define indiceBugfireattaque 9
+#define indiceBugfiremort 10
+#define indiceFlyvollant 11
+#define indiceFlyattaque 12 
+#define indiceFlymort 13
+#define indiceMantiswalk 14
+#define indiceMantismort 15
+#define indiceRobot 16
+#define indiceRobotattaque 17
+#define indiceRobotmort 18 
+#define indiceRobotmetal 19
+#define indiceRobotmetalattaquedeb 20
+#define indiceRobotmetalattaque 21
+#define indiceRobotmetalmort 22 
+#define indiceRobotpetit 23
+#define indiceRobotpetitattaque 24
+#define indiceRobotpetitmort 25
 
 
 typedef struct sprite {
