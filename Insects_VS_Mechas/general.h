@@ -20,7 +20,7 @@
 #define TERRE 2
 #define DEFENSE 3
 
-#define nbrTextures 2
+#define nbrTextures 26
 #define nbrPolices 2
 
 #define nombreFichier 18
