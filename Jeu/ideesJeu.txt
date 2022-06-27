@@ -1,0 +1,133 @@
+Etats Jeu :
+    - Accueil *message de bienvenue +choix IA/joueur + explication des commandes*
+    - Jeu *gameplay*
+    - Ecran de fin de jeu *en cas de victoire ; cas de defaite *
+
+Gestion Etat Jeux
+
+case Accueil
+    afficher ecran Accueil 
+    -->Lore1
+    nbvague = NB_VAGUE_TOT
+
+case Lore1  
+    son Lore1
+    afficher ecran Lore1
+    --> Lore2
+
+case Lore2 
+    son Lore2
+    afficher ecran Lore2
+    --> Lore3
+
+case Lore3
+    son Lore3
+    afficher ecran Lore3
+    --> Vague
+
+case Vague:
+    choix vague attaque --> sortie  = liste attaque
+    animation(arriveeattaque)
+    calcul total type attaque (cac/tir) FONCTION
+    nbriposte = NB_RIPOSTE_VAGUE
+
+case AttenteRiposte:
+    affichage(attente)
+    si PV = 0 --> case FinduJeu
+    choix une riposte --> case riposte
+    choix ensemble des defenses pour ce tour (ia = markov, joueur = touche)
+        entrée = liste des attaques
+        compte nb attaque
+        sortie =  liste defense quand taille liste defense = taille listeattaque
+    
+case Riposte
+    nb riposte ++
+    calcul degat infligé sur stat total
+    calcul ennemi tués (modif liste attaque : entièrement tué = mise à 0/ partiellement tué = modif) --> sortie = liste attaque
+    affiche(attaque, defense, resolution) --> ennemi à 0 = tué/ affichage riposte (zone)
+    suppression des attaquants tués
+    -->retour sur case AttenteRiposte sauf si nbriposte = 0 --> case FindeVague
+
+case FindeVague
+    resolution PV pour chauqe monstre restant
+    affichage(attaque)
+    modif(Markov) (si IA)
+    nbvague --
+    -->retour sur Vague sauf si vague = 0 --> case FinduJeu
+
+case FinduJeu:
+    si vague = 0 : afficherfond(victoire)
+    si PV = 0 : afficher fond defaite
+    
+
+
+
+
+
+Perceptions :
+    Nb etatennemis
+    Type d'ennemis (tir, cac, mixte)
+
+
+
+
+
+
+Etats :
+events
+    touches 
+        SDLK_E
+            etatperso = 0
+        SDLK_F
+            etatperso = 1
+        SDLK_T
+            etatperso = 2
+        SDLK_D
+            etatperso = 3
+
+Variables :
+int PV[2] //PV[0] = Pvperso; PV[1] = PVennemi
+int etat[2] //etat[0] = etatperso; etat[1] = etatennemi
+int compteur1 et compteur2
+#define EAU 0
+#define FEU 1
+#define TERRE 2
+#define DEFENSE 3
+int changementEtat [4][3] *tableaux des transitions de Markov*
+    {[10][45][80]
+    [50][60][90]
+    [40][60][70]
+    [33][66][100]}
+
+Fonctions :
+
+int changemenEtatEnnemi(etatennemi) FONCTION
+switch(etatennemi)
+case 0 :
+    r random entre 0 et 100
+    if(tab[etat][0] < r =< tab[etat][1])
+        etatennemis = 1
+    if(tab[etat][1] < r =< tab[etat][2])
+        etatennemis = 2
+    if(tab[etat][2] < r)
+        etatennemis = 3
+        ...
+
+char spriteaenvoyer(resultat,etatperso,etatennemi)
+switch(resultat)
+    case 0 :
+        switch(etatperso)
+            case 0:
+              c = "attaque eau"
+            case 1:
+              c = "attaque feu"
+            ...
+    case 1 :
+        switch(etatennemi)
+        case 0:
+              c = "attaque eau ennemi"
+        case 1:
+             c = "attaque feu ennemi"
+            ...
+
+

@@ -5,7 +5,9 @@ void init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture *texture[nbrTe
 
     ///////////// Chargement des polices et des textures et stockage des pointeurs dans les tableaux
 
-    char nomFichiers[nbrTextures][tailleMaxFichiers] = {"./Sprites/goblin.png", "./Sprites/goblin.png"};
+    char nomFichiers[nbrTextures][tailleMaxFichiers] = {"./Sprites/batiment1.png", "./Sprites/batiment2.png", "./Sprites/batiment2coupe.png", "./Sprites/fond.png", "./Sprites/fondaccueil.png", "./Sprites/lore1.png", "./Sprites/lore2.png", "./Sprites/lore3.png", "./Sprites/bugfirewalk.png", "./Sprites/bugfireattaque.png", "./Sprites/bugfiremort.png", "./Sprites/flyvollant.png", "./Sprites/flyattaque.png", "./Sprites/flymort.png", "./Sprites/mantiswalk.png", "./Sprites/mantismort.png", "./Sprites/robot.png", "./Sprites/robotattaque.png", "./Sprites/robotmort.png", "./Sprites/robotmetal.png", "./Sprites/robotmetalattaquedeb.png", "./Sprites/robotmetalattaque.png", "./Sprites/robotmetalmort.png", "./Sprites/robotpetit.png", "./Sprites/robotpetitattaque.png", "./Sprites/robotpetitmort.png",};
+
+    // 0 : premier batiment | 1 et 2 : deuxieme batiment avec en 2 celui coupé | 3 : fond du jeu animé | 4 : fond d'accueil | 5 à 7 : fond du Lore |||
 
     char nomPolices[nbrPolices][tailleMaxFichiers] = {"./fonts/font.ttf", "./fonts/font2.ttf"};
     int taillePolices[nbrPolices] = {100, 50};
