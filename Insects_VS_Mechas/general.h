@@ -60,7 +60,7 @@
 #define indiceRobotpetitattaque 24
 #define indiceRobotpetitmort 25
 
-typedef enum typeI {SCARAB, FLY, MANTIS}typesInsectes;
+typedef enum typeI {BUGFIRE, FLY, MANTIS}typesInsectes;
 
 
 typedef struct sprite {
@@ -82,6 +82,8 @@ typedef struct insecte {
 
     struct sprite spriteInsecte;
     enum typeI typeInsecte;
+    int statPhysique;
+    int statMagie;
 
 }insecte_t;
 
