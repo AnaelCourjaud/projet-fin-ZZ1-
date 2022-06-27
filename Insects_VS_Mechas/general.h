@@ -15,10 +15,6 @@
 #define JEU 30
 #define FINJEU 40
 
-#define EAU 0
-#define FEU 1
-#define TERRE 2
-#define DEFENSE 3
 
 #define nbrTextures 26
 #define nbrPolices 2
@@ -29,6 +25,8 @@
 #define nbrImageSpriteFini 10 //toutes les animations finies sont des sprites avec 10 images
 
 #define coefReducEcran 0.8
+
+
 
 
 
