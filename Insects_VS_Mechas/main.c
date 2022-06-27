@@ -50,69 +50,7 @@ int main(int argc, char *argv[])
     // ********************************************************************************
     // ********************************************************************************
 
-init(window, renderer, texture, tabPolices);
-
-
-
-    sprite_t fond;
-    insecte_t scarabe1;
-
-    
-    //fond.source = {0};
-    //fond.destination ={0};
-    fond.textureSprite = texture[indiceFondAccueil+1];
-    SDL_QueryTexture(fond.textureSprite, NULL, NULL,
-                     &fond.source.w, &fond.source.h);
-    
-    fond.destination.x = 20;
-    fond.destination.y = 20;
-    fond.destination.w = 200;
-    fond.destination.h = 200;
- fond.source.x = 20;
-    fond.source.y = 20;
-
-
-
-/*
-SDL_Texture * textureSprite = IMG_LoadTexture(renderer, "./Sprites/fondaccueil.png");
-    SDL_Rect source ={0} ,destination = {0};
-
-     SDL_QueryTexture(textureSprite, NULL, NULL,
-                     &source.w, &source.h);
-
-                     source.x = 20;
-    source.y = 20;
-    //source.w = 1000;
-    //source.h = 1000;
-    destination.x = 20;
-    destination.y = 20;
-    destination.w = 200;
-    destination.h = 200;
-*/
-    SDL_SetRenderDrawColor(renderer, 50, 0, 0, 255);// mode Red, Green, Blue (tous dans 0..255)
-    //SDL_RenderClear(renderer);
-
-printf("avant copy\n");
-//SDL_RenderCopy(renderer, textureSprite, &source, &destination);
-SDL_SetRenderDrawColor(renderer, 255,255, 0, 255);
-  SDL_RenderDrawLine(renderer,                                      
-                     0, 0,                                          // x,y du point de la première extrémité
-                     400, 400);
-SDL_RenderCopy(renderer, fond.textureSprite, &fond.source, &fond.destination);
-
-    SDL_RenderPresent(renderer);
-    printf("avant délai\n");
-    SDL_Delay(3000);
-    printf("après délai\n");
-SDL_DestroyTexture(textureSprite);
-
-
-SDL_bool program_on = SDL_TRUE; // Booléen pour dire que le programme doit continuer
-    SDL_Event event;                // c'est le type IMPORTANT !!
-
-    SDL_Texture *sprite1;
-    SDL_Texture *sprite2;
-    SDL_Texture *textureFond;
+    init(window, renderer, texture, tabPolices);
 
     SDL_bool program_on = SDL_TRUE; // Booléen pour dire que le programme doit continuer
     SDL_Event event;                // c'est le type IMPORTANT !!
@@ -166,7 +104,7 @@ SDL_bool program_on = SDL_TRUE; // Booléen pour dire que le programme doit cont
                     }
                     else if (ETATJEU == LORE3)
                     {
-                        ETATJEU = JEU;
+                        ETATJEU = VAGUE;
                     }
                     interessant = 1;
                 default:
@@ -204,8 +142,20 @@ SDL_bool program_on = SDL_TRUE; // Booléen pour dire que le programme doit cont
 
 
             break;
-        case JEU:
+        case VAGUE:
             printf("Jeu en route");
+           
+            break;
+        case ATTENTERIPOSTE:
+            
+            break;
+        case RIPOSTE:
+            
+            break;
+        case FINDEVAGUE:
+           
+            break;
+        case FINJEU:
            
             break;
         default:
