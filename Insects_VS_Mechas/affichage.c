@@ -50,8 +50,13 @@ void creationImage(SDL_Texture *my_texture,SDL_Window *window, SDL_Renderer *ren
     
     destination.x = x;
     destination.y = y;
+<<<<<<< HEAD
     destination.w = longueur;
     destination.h = largeur;
+=======
+    destination.w = window_dimensions.w;
+    destination.h = window_dimensions.h;
+>>>>>>> 904624cf7b2c147710bc521d18f36194d9d13a45
 
     SDL_RenderCopy(renderer, my_texture , &source, &destination);
 
