@@ -1,6 +1,7 @@
 #include "resolution.h"
 #include "affichage.h"
 #include "affichageAttaque.h"
+#include "general.h"
 
 
 int main(int argc, char *argv[])
@@ -37,8 +38,8 @@ int main(int argc, char *argv[])
     /*******************************************************************************/
 
     SDL_GetCurrentDisplayMode(0, &screen);
-    tailleFenetre.w = screen.w * 1.0; //réduction fenetre
-    tailleFenetre.h = screen.h * 1.0;
+    tailleFenetre.w = screen.w * coefReducEcran; //réduction fenetre
+    tailleFenetre.h = screen.h * coefReducEcran;
     printf("Résolution écran\n\tw : %d\n\th : %d\n",
            screen.w, screen.h);
     printf("Résolution fenetre\n\tw : %d\n\th : %d\n",
@@ -306,7 +307,6 @@ int main(int argc, char *argv[])
 
         SDL_RenderPresent(renderer);
         SDL_Delay(150);
-        printf("PV perso %d  PV ennemi : %d\n",PV[0], PV[1]);
     }
 
    end_sdl(1, "FIN NORMALE", window, renderer);

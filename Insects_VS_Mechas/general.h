@@ -20,13 +20,14 @@
 #define TERRE 2
 #define DEFENSE 3
 
-#define ligneTexture 2
-#define colonneTexture 10
+#define nbrTextures 2
+#define nbrPolices 2
+
 #define nombreFichier 18
 #define tailleMaxFichiers 50
 
 #define nbrImageSpriteFini 10 //toutes les animations finies sont des sprites avec 10 images
 
-#define coefReducEcran 1.0
+#define coefReducEcran 0.8
 
 #endif
