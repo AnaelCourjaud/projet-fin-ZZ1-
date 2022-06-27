@@ -55,9 +55,12 @@ init(window, renderer, texture, tabPolices);
 
 
     sprite_t fond;
+    insecte_t scarabe1;
+
+    
     //fond.source = {0};
     //fond.destination ={0};
-    fond.textureSprite = texture[indiceFondAccueil];
+    fond.textureSprite = texture[indiceFondAccueil+1];
     SDL_QueryTexture(fond.textureSprite, NULL, NULL,
                      &fond.source.w, &fond.source.h);
     
@@ -68,6 +71,9 @@ init(window, renderer, texture, tabPolices);
  fond.source.x = 20;
     fond.source.y = 20;
 
+
+
+/*
 SDL_Texture * textureSprite = IMG_LoadTexture(renderer, "./Sprites/fondaccueil.png");
     SDL_Rect source ={0} ,destination = {0};
 
@@ -82,7 +88,7 @@ SDL_Texture * textureSprite = IMG_LoadTexture(renderer, "./Sprites/fondaccueil.p
     destination.y = 20;
     destination.w = 200;
     destination.h = 200;
-
+*/
     SDL_SetRenderDrawColor(renderer, 50, 0, 0, 255);// mode Red, Green, Blue (tous dans 0..255)
     //SDL_RenderClear(renderer);
 
@@ -96,10 +102,11 @@ SDL_RenderCopy(renderer, fond.textureSprite, &fond.source, &fond.destination);
 
     SDL_RenderPresent(renderer);
     printf("avant délai\n");
-    SDL_Delay(1000);
+    SDL_Delay(3000);
     printf("après délai\n");
 SDL_DestroyTexture(textureSprite);
 
+/*
 SDL_bool program_on = SDL_TRUE; // Booléen pour dire que le programme doit continuer
     SDL_Event event;                // c'est le type IMPORTANT !!
 
@@ -126,9 +133,9 @@ SDL_bool program_on = SDL_TRUE; // Booléen pour dire que le programme doit cont
         int choixFait = 0;
         int etatPrec; //sert à l'utilisation de la chaîne de Markov
 
-    /*************************  Gestion des evenements *****************************/
-    /*                                                                             */
-    /*******************************************************************************/
+    // *************************  Gestion des evenements *****************************
+    //                                                                             
+    // *******************************************************************************
 
         while ((interessant == 0) && (SDL_PollEvent(&event)))
         {   // tant que la file d'évènements n'est pas vide : défiler l'élément en tête et l'on a pas d'évènements interessants à traiter
@@ -198,7 +205,7 @@ SDL_bool program_on = SDL_TRUE; // Booléen pour dire que le programme doit cont
         SDL_RenderPresent(renderer);
         SDL_Delay(150);
     }
-
+*/
     end_sdl(1, "FIN NORMALE", window, renderer);
     return 0;
 }
