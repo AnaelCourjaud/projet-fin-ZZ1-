@@ -50,13 +50,25 @@ int main(int argc, char *argv[])
     // ********************************************************************************
     // ********************************************************************************
 
+init(window, renderer, texture, tabPolices);
 
-    sprite_t fon
+
+    sprite_t fond;
+    fond.textureSprite = texture[indiceFond +1];
+    SDL_QueryTexture(fond.textureSprite, NULL, NULL,
+                     &fond.source.w, &fond.source.h);
+    
+    fond.destination.x = 20;
+    fond.destination.y = 20;
+    fond.destination.w = 200;
+    fond.destination.h = 200;
 
 
     SDL_SetRenderDrawColor(renderer, 50, 0, 0, 255);// mode Red, Green, Blue (tous dans 0..255)
     SDL_RenderClear(renderer);
 
+printf("avant copy\n");
+SDL_RenderCopy(renderer, fond.textureSprite, &fond.source, &fond.destination);
 
 
     SDL_RenderPresent(renderer);

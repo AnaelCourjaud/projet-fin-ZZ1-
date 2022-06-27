@@ -38,12 +38,9 @@
 typedef struct sprite {
 
     SDL_Texture * textureSprite;
-    int wSource;
-    int hSource;
-    int xDestination;
-    int yDestination;
-    int wDestination;
-    int hDestination;
+    SDL_Rect source;
+    SDL_Rect destination;
+    
     int animation;
     int nbrImages;
     int ralenti;
