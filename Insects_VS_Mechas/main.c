@@ -237,7 +237,7 @@ listeCourants[1] = malloc(sizeof(spriteCourant_t));
         SDL_RenderPresent(renderer);
         SDL_Delay(150);
     }
-*/
+    }
     end_sdl(1, "FIN NORMALE", window, renderer, listeCourants);
     return 0;
 }
