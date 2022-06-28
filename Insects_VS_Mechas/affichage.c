@@ -92,7 +92,9 @@ void animation(SDL_Window *window, SDL_Renderer *renderer, spriteCourant_t *list
 }
 
 
-void creerCombattant(spriteCourant_t *listeCourants[tailleMaxSpritesCourants])
+void creerCombattant(spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *listeCombattants[NBRMAXCOMBATTANTS], indicesPNGs indicePNG){
+    
+}
 
 /*
 
