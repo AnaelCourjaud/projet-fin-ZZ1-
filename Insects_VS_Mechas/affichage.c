@@ -93,8 +93,21 @@ void animation(SDL_Window *window, SDL_Renderer *renderer, spriteCourant_t *list
 
 
 void creerCombattant(spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *listeCombattants[NBRMAXCOMBATTANTS], indicesPNGs indicePNG){
-    
+
+    int indiceEndroit;
+    if(indicePNG >= indiceRobot && indicePNG <= indiceRobotpetitmort){
+        indiceEndroit = NBENNEMIVAGUE;
+    }else {
+        for(int i = NBENNEMIVAGUE-1 ; i >= 0; i--){
+            if(listeCombattants[i] == NULL){
+                indiceEndroit = i;
+            }
+        }
+    }
+
 }
+
+void supprCombattant(spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *listeCombattants[NBRMAXCOMBATTANTS], )
 
 /*
 
