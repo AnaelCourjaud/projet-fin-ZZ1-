@@ -14,7 +14,8 @@ int main(int argc, char *argv[])
 
     TTF_Font *tabPolices[nbrPolices];
 
-    spriteBase_t *spritesDeBase[nbrTextures];
+    spriteBase_t *spritesDeBase[NBRTEXTURES];
+    spriteCourant_t *listeCourants[tailleMaxSpritesCourants]; // le maximum de sprites courants à afficher
 
     // ************** Initialisation de la SDL  + gestion de l'échec possible *********
     // ********************************************************************************
@@ -40,96 +41,94 @@ int main(int argc, char *argv[])
 
     window = SDL_CreateWindow("Insects_VS_Mechas", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, tailleFenetre.w, tailleFenetre.h, SDL_WINDOW_RESIZABLE);
     if (window == NULL)
-        end_sdl(0, "ERROR WINDOW CREATION", window, renderer);
+        end_sdl(0, "ERROR WINDOW CREATION", window, renderer, listeCourants);
 
     //  ************************* Création du renderer *************************
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (renderer == NULL)
-        end_sdl(0, "ERROR RENDERER CREATION", window, renderer);
+        end_sdl(0, "ERROR RENDERER CREATION", window, renderer, listeCourants);
 
     // ********************************************************************************
     // ********************************************************************************
 
-    init(window, renderer, tabPolices, spritesDeBase);
+    init(window, renderer, tabPolices, spritesDeBase, listeCourants);
+/*
+    for (int i = 0; i < tailleMaxSpritesCourants; i++)
+    {
+        spriteCourant_t *courant = malloc(sizeof(spriteCourant_t));
+        listeCourants[i] = courant;
+    }
+    */
 
-spriteCourant_t *listeCourants[20];// le maximum de sprites courants à afficher
+    // on va initialiser que les deux premiers car trop long sinon
 
-for(int i=0; i < 20; i++){
-    spriteCourant_t *courant = malloc(sizeof(spriteCourant_t));
-    listeCourants[i] = courant;
-}
+listeCourants[0] = malloc(sizeof(spriteCourant_t));
+listeCourants[1] = malloc(sizeof(spriteCourant_t));
 
-//on va initialiser que les deux premiers car trop long sinon
-listeCourants[0]->spriteDeBase = spritesDeBase[indiceFond];
-listeCourants[0]->numImageEnCours = 0;
-listeCourants[0]->retardateurRalenti = listeCourants[0]->spriteDeBase->ralenti;
+    listeCourants[0]->spriteDeBase = spritesDeBase[indiceFond];
+    listeCourants[0]->numImageEnCours = 0;
+    listeCourants[0]->retardateurRalenti = listeCourants[0]->spriteDeBase->ralenti;
 
-listeCourants[1]->spriteDeBase = spritesDeBase[indicePasserelleFinie];
+    listeCourants[1]->spriteDeBase = spritesDeBase[indicePasserelleFinie];
 
-SDL_Rect window_dimensions = {0}; 
-SDL_GetWindowSize(window, &window_dimensions.w, &window_dimensions.h); // Récupération des dimensions de la fenêtre
-    
-        listeCourants[0]->source.x = 0; 
-        listeCourants[0]->source.y = 0; 
-        listeCourants[0]->source.w = 0; 
-        listeCourants[0]->source.h = 0;           // Rectangle définissant la zone de la texture à récupérer
-        // Rectangle définissant la fenêtre, on n'utilisera que largeur et hauteur
-        listeCourants[0]->destination.x = 0; 
-        listeCourants[0]->destination.y = 0; 
-        listeCourants[0]->destination.w = window_dimensions.w; 
-        listeCourants[0]->destination.h = window_dimensions.h;      // Rectangle définissant où la zone_source doit être déposée dans le renderer
+    SDL_Rect window_dimensions = {0};
+    SDL_GetWindowSize(window, &window_dimensions.w, &window_dimensions.h); // Récupération des dimensions de la fenêtre
 
-SDL_QueryTexture(listeCourants[0]->spriteDeBase->textureSprite, NULL, NULL, &listeCourants[0]->source.w, &listeCourants[0]->source.h);
-    
+    listeCourants[0]->source.x = 0;
+    listeCourants[0]->source.y = 0;
+    listeCourants[0]->source.w = 0;
+    listeCourants[0]->source.h = 0; // Rectangle définissant la zone de la texture à récupérer
+    // Rectangle définissant la fenêtre, on n'utilisera que largeur et hauteur
+    listeCourants[0]->destination.x = 0;
+    listeCourants[0]->destination.y = 0;
+    listeCourants[0]->destination.w = window_dimensions.w;
+    listeCourants[0]->destination.h = window_dimensions.h; // Rectangle définissant où la zone_source doit être déposée dans le renderer
+
+    SDL_QueryTexture(listeCourants[0]->spriteDeBase->textureSprite, NULL, NULL, &listeCourants[0]->source.w, &listeCourants[0]->source.h);
+
     listeCourants[0]->source.w = listeCourants[0]->source.w / listeCourants[0]->spriteDeBase->nbrImagesHorizontales;
     listeCourants[0]->source.h = listeCourants[0]->source.h / listeCourants[0]->spriteDeBase->nbrImagesVerticales;
-    
 
-        listeCourants[1]->source.x = 0; 
-        listeCourants[1]->source.y = 0; 
-        listeCourants[1]->source.w = 0; 
-        listeCourants[1]->source.h = 0;           // Rectangle définissant la zone de la texture à récupérer
-        // Rectangle définissant la fenêtre, on n'utilisera que largeur et hauteur
-        listeCourants[1]->destination.x = 0; 
-        listeCourants[1]->destination.y = 0; 
-        listeCourants[1]->destination.w = window_dimensions.w; 
-        listeCourants[1]->destination.h = window_dimensions.h;      // Rectangle définissant où la zone_source doit être déposée dans le renderer
+    listeCourants[1]->source.x = 0;
+    listeCourants[1]->source.y = 0;
+    listeCourants[1]->source.w = 0;
+    listeCourants[1]->source.h = 0; // Rectangle définissant la zone de la texture à récupérer
+    // Rectangle définissant la fenêtre, on n'utilisera que largeur et hauteur
+    listeCourants[1]->destination.x = 0;
+    listeCourants[1]->destination.y = 0;
+    listeCourants[1]->destination.w = window_dimensions.w;
+    listeCourants[1]->destination.h = window_dimensions.h; // Rectangle définissant où la zone_source doit être déposée dans le renderer
 
-SDL_QueryTexture(listeCourants[1]->spriteDeBase->textureSprite, NULL, NULL, &listeCourants[1]->source.w, &listeCourants[1]->source.h);
-    
-    //listeCourants[1]->source.w = listeCourants[1]->source.w / listeCourants[1]->spriteDeBase->nbrImagesHorizontales;
-    //listeCourants[1]->source.h = listeCourants[1]->source.h / listeCourants[1]->spriteDeBase->nbrImagesVerticales;
-    
-    
-    
-    
-    
-    int repet =0;
-while(repet < 200){
-repet++;
+    SDL_QueryTexture(listeCourants[1]->spriteDeBase->textureSprite, NULL, NULL, &listeCourants[1]->source.w, &listeCourants[1]->source.h);
 
-animation(window, renderer,listeCourants);
+    // listeCourants[1]->source.w = listeCourants[1]->source.w / listeCourants[1]->spriteDeBase->nbrImagesHorizontales;
+    // listeCourants[1]->source.h = listeCourants[1]->source.h / listeCourants[1]->spriteDeBase->nbrImagesVerticales;
+/*
+    int repet = 0;
+    while (repet < 200)
+    {
+        repet++;
 
-SDL_RenderPresent(renderer);
- SDL_RenderClear(renderer);
-    printf("avant délai\n");
-    SDL_Delay(30);
-    //printf("après délai %d\n",fond->numImageEnCours);
+        animation(window, renderer, listeCourants);
 
-}
-
-
-
+        SDL_RenderPresent(renderer);
+        SDL_RenderClear(renderer);
+        printf("avant délai\n");
+        SDL_Delay(30);
+        // printf("après délai %d\n",fond->numImageEnCours);
+    }
+*/
     /*
         SDL_Texture *sprite1;
         SDL_Texture *sprite2;
         SDL_Texture *textureFond;
-
+*/
         SDL_bool program_on = SDL_TRUE; // Booléen pour dire que le programme doit continuer
         SDL_Event event;                // c'est le type IMPORTANT !!
 
         int ETATJEU = ACCUEIL;
+        /*
         int i = 0;
         int j=0;
 
@@ -138,7 +137,7 @@ SDL_RenderPresent(renderer);
         sprite_t lore2;
         sprite_t lore3;
 
-
+*/
 
     while (program_on)
     {
@@ -147,14 +146,14 @@ SDL_RenderPresent(renderer);
         int choixFait = 0;
 
         // *************************  Gestion des evenements *****************************
-        //                                                                             
+        //
         // *******************************************************************************
 
         while ((interessant == 0) && (SDL_PollEvent(&event)))
         {   // tant que la file d'évènements n'est pas vide : défiler l'élément en tête et l'on a pas d'évènements interessants à traiter
             // de file dans 'event'
             switch (event.type)
-            { 
+            {
             case SDL_QUIT:
                 interessant = 1;        // Un évènement simple, on a cliqué sur la x de la fenêtre
                 program_on = SDL_FALSE; // Il est temps d'arrêter le programme
@@ -184,17 +183,17 @@ SDL_RenderPresent(renderer);
                 default: // L'évènement défilé ne nous intéresse pas
                     break;
                 }
-            }
             interessant = 0;
-
+                }
             
+
 
         switch (ETATJEU)
         {
         case ERREUR:
             break;
         case ACCUEIL:
-
+            spr
             fondAccueil.textureSprite = texture[indiceFondAccueil];
             creationFond(fondAccueil.textureSprite, window, renderer, 0, 0);
             break;
@@ -216,19 +215,19 @@ SDL_RenderPresent(renderer);
             break;
         case VAGUE:
             printf("Jeu en route");
-           
+
             break;
         case ATTENTERIPOSTE:
-            
+
             break;
         case RIPOSTE:
-            
+
             break;
         case FINDEVAGUE:
-           
+
             break;
         case FINJEU:
-           
+
             break;
         default:
             ETATJEU = ERREUR;
@@ -239,6 +238,6 @@ SDL_RenderPresent(renderer);
         SDL_Delay(150);
     }
 */
-    end_sdl(1, "FIN NORMALE", window, renderer);
+    end_sdl(1, "FIN NORMALE", window, renderer, listeCourants);
     return 0;
 }

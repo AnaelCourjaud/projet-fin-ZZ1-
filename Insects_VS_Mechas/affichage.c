@@ -65,7 +65,7 @@ void creationFond(SDL_Texture *my_texture, SDL_Window *window, SDL_Renderer *ren
     SDL_RenderCopy(renderer, my_texture, &source, &destination);
 }
 
-void animation(SDL_Window *window, SDL_Renderer *renderer, spriteCourant_t *listeCourants[20])
+void animation(SDL_Window *window, SDL_Renderer *renderer, spriteCourant_t *listeCourants[tailleMaxSpritesCourants])
 {
     for (int i = 0; i < 2; i++)
     {

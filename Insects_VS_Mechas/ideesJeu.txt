@@ -29,9 +29,9 @@ case Vague:
     choix vague attaque : sortie  = liste attaque
     animation(arriveeattaque)
     calcul total type attaque (cac/tir) FONCTION
-    nbriposte = NB_RIPOSTE_VAGUE
+    //nbriposte = NB_RIPOSTE_VAGUE
     --> sortie = case AttenteRiposte
-        sauf si PV = 0 --> case FinduJeu
+    //    sauf si PV = 0 --> case FinduJeu
 
 case AttenteRiposte:
     affichage(attente) FONCTION

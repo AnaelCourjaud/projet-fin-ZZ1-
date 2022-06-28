@@ -1,11 +1,11 @@
 #include "initialisation.h"
 
-void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPolices], spriteBase_t *spritesDeBase[nbrTextures])
+void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPolices], spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants])
 {
 
     ///////////// Chargement des polices et des textures et stockage des pointeurs dans les tableaux
 
-    char nomFichiers[nbrTextures][tailleMaxFichiers] = {"./Sprites/passerellefinie.png", "./Sprites/batiment2.png", "./Sprites/batiment2coupe.png", "./Sprites/fond.png", "./Sprites/fondaccueil.png", "./Sprites/lore1.png", "./Sprites/lore2.png", "./Sprites/lore3.png", "./Sprites/bugfirewalk.png", "./Sprites/bugfireattaque.png", "./Sprites/bugfiremort.png", "./Sprites/flyvolant.png", "./Sprites/flyattaque.png", "./Sprites/flymort.png", "./Sprites/mantiswalk.png", "./Sprites/mantismort.png", "./Sprites/robot.png", "./Sprites/robotattaque.png", "./Sprites/robotmort.png", "./Sprites/robotmetal.png", "./Sprites/robotmetalattaquedeb.png", "./Sprites/robotmetalattaque.png", "./Sprites/robotmetalmort.png", "./Sprites/robotpetitwalk.png", "./Sprites/robotpetitattaque.png", "./Sprites/robotpetitmort.png"};
+    char nomFichiers[NBRTEXTURES][tailleMaxFichiers] = {"./Sprites/passerellefinie.png", "./Sprites/batiment2.png", "./Sprites/batiment2coupe.png", "./Sprites/fond.png", "./Sprites/fondaccueil.png", "./Sprites/lore1.png", "./Sprites/lore2.png", "./Sprites/lore3.png", "./Sprites/bugfirewalk.png", "./Sprites/bugfireattaque.png", "./Sprites/bugfiremort.png", "./Sprites/flyvolant.png", "./Sprites/flyattaque.png", "./Sprites/flymort.png", "./Sprites/mantiswalk.png", "./Sprites/mantismort.png", "./Sprites/robot.png", "./Sprites/robotattaque.png", "./Sprites/robotmort.png", "./Sprites/robotmetal.png", "./Sprites/robotmetalattaquedeb.png", "./Sprites/robotmetalattaque.png", "./Sprites/robotmetalmort.png", "./Sprites/robotpetitwalk.png", "./Sprites/robotpetitattaque.png", "./Sprites/robotpetitmort.png"};
 
     // 0 : premier batiment | 1 et 2 : deuxieme batiment avec en 2 celui coupé | 3 : fond du jeu animé | 4 : fond d'accueil | 5 à 7 : fond du Lore |||
 
@@ -13,7 +13,7 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
     int taillePolices[nbrPolices] = {100, 50};
     /*
         /////////////// récupération des textures et stockage dans tableau texture et test de réussite de chargement
-        for (int i = 0; i < nbrTextures; i++)
+        for (int i = 0; i < NBRTEXTURES; i++)
         {
             texture[i] = IMG_LoadTexture(renderer, nomFichiers[i]);
             if (texture[i] == NULL)
@@ -21,12 +21,16 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
         }
         //////////////////////////
     */
-    for (int i = 0; i < nbrTextures; i++)
+
+    // *******************************Initialisation de la liste de sprites de base**********************
+    // **************************************************************************************************
+
+    for (int i = 0; i < NBRTEXTURES; i++)
     {
         spritesDeBase[i] = malloc(sizeof(spriteBase_t));
         spritesDeBase[i]->textureSprite = IMG_LoadTexture(renderer, nomFichiers[i]);
         if (spritesDeBase[i]->textureSprite == NULL)
-            end_sdl(0, "Echec du chargement de l'image dans la texture", window, renderer);
+            end_sdl(0, "Echec du chargement de l'image dans la texture", window, renderer, listeCourants);
 
         spritesDeBase[i]->indicePNG = i;
         spritesDeBase[i]->animation = 1;
@@ -82,21 +86,29 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
             spritesDeBase[i]->animation = 0;
         }
     }
+    // *******************************Initialisation de la liste de sprites courants ********************
+    // **************************************************************************************************
 
-    /////////////// récupération des textures et stockage dans tableau texture et test de réussite de chargement
+    for (int i = 0; i < tailleMaxSpritesCourants; i++)
+    {
+        listeCourants[i] = NULL;
+    }
+
+    // ******************************* récupération des polices + stockage + test  *********************
+    // **************************************************************************************************
+
     for (int i = 0; i < nbrPolices; i++)
     {
         tabPolices[i] = TTF_OpenFont(nomPolices[i], taillePolices[i]);
         if (tabPolices[i] == NULL)
-            end_sdl(0, "Echec du chargement de la police", window, renderer);
+            end_sdl(0, "Echec du chargement de la police", window, renderer, listeCourants);
     }
-    //////////////////////////
 }
 
 void end_sdl(char ok,            // fin anormale : ok = 0 ; normale ok = 1
              char const *msg,    // message à afficher
              SDL_Window *window, // fenêtre à fermer
-             SDL_Renderer *renderer)
+             SDL_Renderer *renderer, spriteCourant_t *listeCourants[tailleMaxSpritesCourants])
 { // renderer à fermer
     char msg_formated[255];
     int l;
@@ -119,6 +131,22 @@ void end_sdl(char ok,            // fin anormale : ok = 0 ; normale ok = 1
     {                              // Destruction si nécessaire de la fenêtre
         SDL_DestroyWindow(window); // Attention : on suppose que les NULL sont maintenus !!
         window = NULL;
+    }
+
+    // ******************************* free du tableau sprites courants *********************************
+    // **************************************************************************************************
+
+    for (int i = 0; i < tailleMaxSpritesCourants; i++)
+    {
+        free(listeCourants[i]);
+    }
+
+    // ******************************* free du tableau sprites de base  *********************************
+    // **************************************************************************************************
+
+    for (int i = 0; i < tailleMaxSpritesCourants; i++)
+    {
+        free(listeCourants[i]);
     }
 
     SDL_DestroyRenderer(renderer);
