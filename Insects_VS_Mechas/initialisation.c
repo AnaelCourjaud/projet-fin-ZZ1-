@@ -36,11 +36,11 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
         spritesDeBase[i]->animation = 1;
         spritesDeBase[i]->nbrImagesHorizontales = 7;
         spritesDeBase[i]->nbrImagesVerticales = 4;
-        spritesDeBase[i]->ralenti = 4;
- //       spritesDeBase[i]->typeSprite = DECOR;
-   //     spritesDeBase[i]->vitesseX = 5;
-      //  spritesDeBase[i]->statPhysique = 5;
-        //spritesDeBase[i]->statMagie = 6;
+        spritesDeBase[i]->ralenti = 0;
+        //       spritesDeBase[i]->typeSprite = DECOR;
+        //     spritesDeBase[i]->vitesseX = 5;
+        //  spritesDeBase[i]->statPhysique = 5;
+        // spritesDeBase[i]->statMagie = 6;
 
         if (i == indiceBatiment2coupe)
         {
@@ -64,7 +64,23 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
             spritesDeBase[i]->animation = 0;
         }
         else if (i >= indiceBugfirewalk)
-        {/*
+        {
+            if (i == indiceBugfirewalk)
+            {
+                spritesDeBase[i]->nbrImagesHorizontales = 3;
+                spritesDeBase[i]->nbrImagesVerticales = 1;
+            }
+            else if (i == indiceFlyvolant)
+            {
+                spritesDeBase[i]->nbrImagesHorizontales = 4;
+                spritesDeBase[i]->nbrImagesVerticales = 1;
+            }
+            else if (i == indiceMantiswalk)
+            {
+                spritesDeBase[i]->nbrImagesHorizontales = 3;
+                spritesDeBase[i]->nbrImagesVerticales = 1;
+            }
+            /*
             if (i <= indiceBugfiremort)
                 spritesDeBase[i]->typeSprite = BUGFIRE;
             else if (i <= indiceFlymort)
