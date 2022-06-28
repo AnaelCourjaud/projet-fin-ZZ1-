@@ -4,7 +4,7 @@
 #include "general.h"
 
 int main(int argc, char *argv[])
-{ 
+{
 
     SDL_Window *window = NULL;
     SDL_Renderer *renderer = NULL;
@@ -237,7 +237,8 @@ listeCourants[1] = malloc(sizeof(spriteCourant_t));
         SDL_RenderPresent(renderer);
         SDL_Delay(150);
     }
-*/
+    }
+
     end_sdl(1, "FIN NORMALE", window, renderer, listeCourants);
     return 0;
 }
