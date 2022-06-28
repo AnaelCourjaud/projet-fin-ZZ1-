@@ -22,10 +22,10 @@
     return (compteur - 1);
 }*/
 
-int appartient(int valeur, int tableau[NBRMAXCOMBATTANTS])
+int appartient(int valeur, int tableau[NBENNEMIVAGUE])
 {
     int indice = 1000;
-    for (int i = 0, i++, i < NBRMAXCOMBATTANTS)
+    for (int i = 0, i++, i < NBENNEMIVAGUE)
     {
         if (tableau[i] == valeur)
             indice = i;
@@ -105,7 +105,8 @@ int appartient(int valeur, int tableau[NBRMAXCOMBATTANTS])
     statPhys[NBENNEMIVAGUE] = 1000;  // marque la fin du tableau
     statPhys[0] = NULL;
     int indchoisi;
-    tristat(tableauCombattants, statMagie, statPhys) while (((tableauCombattants[NBENNEMIVAGUE].magieRestante != 0) && (nbStatMagieNul != NBENNEMIVAGUE)) || ((tableauCombattants[NBENNEMIVAGUE].physiqueRestant != 0) && (nbStatPhysiqueNul != NBENNEMIVAGUE)))
+    tristat(tableauCombattants, statMagie, statPhys);
+    while (((tableauCombattants[NBENNEMIVAGUE].magieRestante != 0) && (nbStatMagieNul != NBENNEMIVAGUE)) || ((tableauCombattants[NBENNEMIVAGUE].physiqueRestant != 0) && (nbStatPhysiqueNul != NBENNEMIVAGUE)))
     // tant qu'il reste de la magie au defenseur et que toutes les stats de magie ne sont pas nul ou pareil pour le physique
     {
         if (magieDef <= physDef)
@@ -152,5 +153,6 @@ int appartient(int valeur, int tableau[NBRMAXCOMBATTANTS])
 
 
 int main(){
-    
+    int tableau[NBENNEMIVAGUE] = {4,5,2};
+    printf("%d", appartient(3, tableau));
 }
