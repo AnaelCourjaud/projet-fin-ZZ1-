@@ -22,10 +22,11 @@
     return (compteur - 1);
 }*/
 
-int appartient(int valeur, int tableau[NBRMAXCOMBATTANTS])
+int appartient(int valeur, int tableau[NBENNEMIVAGUE])
 {
     int indice = 1000;
-    for (int i = 0, i++, i < NBRMAXCOMBATTANTS)
+    int i = 0;
+    for (i = 0; i < NBENNEMIVAGUE; i++)
     {
         if (tableau[i] == valeur)
             indice = i;
@@ -33,38 +34,45 @@ int appartient(int valeur, int tableau[NBRMAXCOMBATTANTS])
     return indice;
 }
 
-/*void tristat(combattant_t tableauCombattants[NBRMAXCOMBATTANTS], int statMagie[NBRMAXCOMBATTANTS], int statPhys[NBRMAXCOMBATTANTS])
+void tristat(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], int statMagie[NBRMAXCOMBATTANTS], int statPhys[NBRMAXCOMBATTANTS])
 // tri les indices des combattants par valeur decroissante de leur stat magie et physique.
 {
-    int magieDef = tableauCombattants[NBENNEMIVAGUE].magieRestante;
-    int physDef = tableauCombattants[NBENNEMIVAGUE].physiqueRestant;
-    int indmin = 0;
-    int cour = NBENNEMIVAGUE - 1;
-    while (statPhys[0] == NULL)
+    printf("AAAAAAAAAAAA llleme valeur Phys: %d\n", tableauCombattants[0]->physiqueRestant);
+    //int magieDef = tableauCombattants[NBENNEMIVAGUE]->magieRestante;
+    //int physDef = tableauCombattants[NBENNEMIVAGUE]->physiqueRestant;
+    int indmax = 0;
+    int cour = 0;
+
+    while (statPhys[NBENNEMIVAGUE - 1] == 999)
     // on trie la liste des indices par valeur des stats
     {
-        for (int i = 0, i++, i < NBENNEMIVAGUE)
+        printf("%d\n", indmax);
+        for (int i = 0; i < NBENNEMIVAGUE; i++)
         {
-            if ((tableauCombattants[i].physiqueRestant < tableauCombattants[indmin].physiqueRestant) && (appartient(i, physDef) == 1000))
-                // si la valeur est plus petite que le min, et n'est pas déjà dans le tableau
-                indmin = i;
+            printf("%deme valeur Phys: %d\n", i, tableauCombattants[i]->physiqueRestant);
+            if ((tableauCombattants[i]->physiqueRestant < tableauCombattants[indmax]->physiqueRestant) && (appartient(i, statPhys) == 1000))
+                // si la valeur est plus grande que le max, et n'est pas déjà dans le tableau
+                indmax = i;
         }
-        statPhys[cour] = indmin;
+        statPhys[cour] = indmax;
+        printf("%d\n", statPhys[cour]);
         cour++;
     }
+    indmax = 0;
+    cour = 0;
     while (statMagie[0] == NULL)
     // de même avec la magie
     {
-        for (int i = 0, i++, i < NBENNEMIVAGUE) // on parcoure tous les attaquants
+        for (int i = 0; i < NBENNEMIVAGUE; i++) // on parcoure tous les attaquants
         {
-            if ((tableauCombattants[i].magieRestante < tableauCombattants[indmin].magieRestante) && (appartient(i, magieDef) == 1000))
+            if ((tableauCombattants[i]->magieRestante < tableauCombattants[indmax]->magieRestante) && (appartient(i, statMagie) == 1000))
                 // si la valeur est plus petite que le min, et n'est pas déjà dans le tableau
-                indmin = i;
+                indmax = i;
         }
-        statMagie[cour] = indmin;
+        statMagie[cour] = indmax;
         cour++;
     }
-}*/
+}
 
 /*int rechercheIndPhysInf(int tableau[NBRMAXCOMBATTANTS], int valeur, combattant_t tableauCombattants[NBRMAXCOMBATTANTS])
 // on cherche le dernier indice de l'indice du tableau de stat physique dont la stat physique est strictement inferieur à valeur, sinon on renvoie celui de la plus petite
@@ -105,7 +113,8 @@ int appartient(int valeur, int tableau[NBRMAXCOMBATTANTS])
     statPhys[NBENNEMIVAGUE] = 1000;  // marque la fin du tableau
     statPhys[0] = NULL;
     int indchoisi;
-    tristat(tableauCombattants, statMagie, statPhys) while (((tableauCombattants[NBENNEMIVAGUE].magieRestante != 0) && (nbStatMagieNul != NBENNEMIVAGUE)) || ((tableauCombattants[NBENNEMIVAGUE].physiqueRestant != 0) && (nbStatPhysiqueNul != NBENNEMIVAGUE)))
+    tristat(tableauCombattants, statMagie, statPhys);
+    while (((tableauCombattants[NBENNEMIVAGUE].magieRestante != 0) && (nbStatMagieNul != NBENNEMIVAGUE)) || ((tableauCombattants[NBENNEMIVAGUE].physiqueRestant != 0) && (nbStatPhysiqueNul != NBENNEMIVAGUE)))
     // tant qu'il reste de la magie au defenseur et que toutes les stats de magie ne sont pas nul ou pareil pour le physique
     {
         if (magieDef <= physDef)
@@ -150,7 +159,27 @@ int appartient(int valeur, int tableau[NBRMAXCOMBATTANTS])
     }
 }*/
 
+int main()
+{
+    int tableau[NBENNEMIVAGUE] = {4, 5, 2};
+    int indice = appartient(3, tableau);
+    printf("%d\n", indice);
 
-int main(){
-    
+    combattant_t *tableauCombattants[NBRMAXCOMBATTANTS];
+    creerAttaquant(tableauCombattants, indiceMantiswalk, 0);
+    creerAttaquant(tableauCombattants, indiceBugfirewalk, 1);
+    creerAttaquant(tableauCombattants, indiceFlyvolant, 2);
+    int statMagie[NBRMAXCOMBATTANTS];
+    int statPhys[NBRMAXCOMBATTANTS];
+    statMagie[NBENNEMIVAGUE - 1] = 999;
+    statMagie[NBENNEMIVAGUE] = 1000; // marque la fin du tableau
+    statPhys[NBENNEMIVAGUE] = 1000;  // marque la fin du tableau
+    statPhys[NBENNEMIVAGUE - 1] = 999;
+    printf("Stat mantis : %d %d \n", tableauCombattants[0]->physiqueRestant, tableauCombattants[0]->magieRestante);
+    printf("Stat Bugfire : %d %d \n", tableauCombattants[1]->physiqueRestant, tableauCombattants[1]->magieRestante);
+    printf("Stat Fly : %d %d \n", tableauCombattants[2]->physiqueRestant, tableauCombattants[2]->magieRestante);
+    tristat(tableauCombattants, statMagie, statPhys);
+    printf("Valeur de magie %d %d %d\n", statMagie[0], statMagie[1], statMagie[2]);
+    printf("Valeur de physique %d %d %d\n", statPhys[0], statPhys[1], statPhys[2]);
+    return 0;
 }

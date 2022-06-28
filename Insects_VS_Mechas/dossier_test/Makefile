@@ -1,7 +1,7 @@
-SRC=riposte.c riposte.h general.h
+SRC=riposte.c riposte.h general.h affichage.c affichage.h
 #SRC+=world.c etc1.c etc2.c
 #SRC=$(wildcard *.c)  # en commentaire, je ne suis pas un grand amateur
-EXE=Insects_VS_Mechas.out
+EXE=exe.out
 
 CC=gcc
 CFLAGS:=-Wall -Wextra -MMD -Og -g $(sdl2-config --cflags)
