@@ -1,6 +1,6 @@
 #include "initialisation.h"
 
-void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPolices], spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *listeCombattants[NBRMAXCOMBATTANTS];)
+void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPolices], spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *listeCombattants[NBRMAXCOMBATTANTS])
 {
 
     ///////////// Chargement des polices et des textures et stockage des pointeurs dans les tableaux
@@ -37,10 +37,10 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
         spritesDeBase[i]->nbrImagesHorizontales = 7;
         spritesDeBase[i]->nbrImagesVerticales = 4;
         spritesDeBase[i]->ralenti = 4;
-        spritesDeBase[i]->typeSprite = DECOR;
-        spritesDeBase[i]->vitesseX = 5;
-        spritesDeBase[i]->statPhysique = 5;
-        spritesDeBase[i]->statMagie = 6;
+ //       spritesDeBase[i]->typeSprite = DECOR;
+   //     spritesDeBase[i]->vitesseX = 5;
+      //  spritesDeBase[i]->statPhysique = 5;
+        //spritesDeBase[i]->statMagie = 6;
 
         if (i == indiceBatiment2coupe)
         {
@@ -64,7 +64,7 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
             spritesDeBase[i]->animation = 0;
         }
         else if (i >= indiceBugfirewalk)
-        {
+        {/*
             if (i <= indiceBugfiremort)
                 spritesDeBase[i]->typeSprite = BUGFIRE;
             else if (i <= indiceFlymort)
@@ -77,6 +77,7 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
                 spritesDeBase[i]->typeSprite = ROBOTMETAL;
             else if (i <= indiceRobotpetitmort)
                 spritesDeBase[i]->typeSprite = ROBOTPETIT;
+                */
 
             spritesDeBase[i]->prioriteAffichage = DEVANT;
         }

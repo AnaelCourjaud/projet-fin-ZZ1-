@@ -67,10 +67,12 @@ void creationFond(SDL_Texture *my_texture, SDL_Window *window, SDL_Renderer *ren
 
 void animation(SDL_Window *window, SDL_Renderer *renderer, spriteCourant_t *listeCourants[tailleMaxSpritesCourants])
 {
+    printf("debut animation\n");
     for (int i = 0; i < 2; i++)
-    {
+    {printf("%d\n",i);
         if (listeCourants[i]->spriteDeBase->animation == 1)
         {
+            printf("animation\n");
             if (listeCourants[i]->retardateurRalenti <= 0)
             {
                 listeCourants[i]->source.x = (listeCourants[i]->numImageEnCours % listeCourants[i]->spriteDeBase->nbrImagesHorizontales) * listeCourants[i]->source.w;
@@ -88,26 +90,67 @@ void animation(SDL_Window *window, SDL_Renderer *renderer, spriteCourant_t *list
         }
 
         SDL_RenderCopy(renderer, listeCourants[i]->spriteDeBase->textureSprite, &listeCourants[i]->source, &listeCourants[i]->destination);
+        printf("apres copy\n");
     }
 }
 
 
-void creerCombattant(spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *listeCombattants[NBRMAXCOMBATTANTS], indicesPNGs indicePNG){
+void creerAttaquant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], indicesPNGs indicePNG, int indiceEmplacement){
+    
+    printf("début créer attaquant\n");
+    combattant_t *emplacementAttaquant = malloc(sizeof(combattant_t));
+    emplacementAttaquant->spriteCourant = malloc(sizeof(spriteCourant_t));
+    emplacementAttaquant->spriteCourant->spriteDeBase = spritesDeBase[indicePNG];
 
-    int indiceEndroit;
-    if(indicePNG >= indiceRobot && indicePNG <= indiceRobotpetitmort){
-        indiceEndroit = NBENNEMIVAGUE;
-    }else {
-        for(int i = NBENNEMIVAGUE-1 ; i >= 0; i--){
-            if(listeCombattants[i] == NULL){
-                indiceEndroit = i;
-            }
-        }
+    emplacementAttaquant->spriteCourant->source.x = 0;
+    emplacementAttaquant->spriteCourant->source.y = 0;
+    emplacementAttaquant->spriteCourant->source.w = 200;
+    emplacementAttaquant->spriteCourant->source.h = 200;
+
+    emplacementAttaquant->spriteCourant->destination.x = 0;
+    emplacementAttaquant->spriteCourant->destination.y = 0;
+    emplacementAttaquant->spriteCourant->destination.w = 200;
+    emplacementAttaquant->spriteCourant->destination.h = 200;
+
+    emplacementAttaquant->spriteCourant->numImageEnCours = 0;
+    emplacementAttaquant->spriteCourant->retardateurRalenti = emplacementAttaquant->spriteCourant->spriteDeBase->ralenti;
+    if(indicePNG == indiceBugfirewalk){
+        emplacementAttaquant->typeCombattant = BUGFIRE;
+        emplacementAttaquant->physiqueRestant = 3;
+        emplacementAttaquant->magieRestante = 4;
+    }else if(indicePNG == indiceFlyvolant){
+        emplacementAttaquant->typeCombattant = FLY;
+        emplacementAttaquant->physiqueRestant = 2;
+        emplacementAttaquant->magieRestante = 2;
+    }else if(indicePNG == indiceMantiswalk){
+        emplacementAttaquant->typeCombattant = MANTIS;
+        emplacementAttaquant->physiqueRestant = 5;
+        emplacementAttaquant->magieRestante = 0;
+    }else{
+        printf("Erreur dans la création de l'attaquant\n");
     }
+    
+    int i=0;
+    while(listeCourants[i] != NULL){
+        i++;
+    }
+    listeCourants[i] = emplacementAttaquant->spriteCourant;
+    printf("listeCourants[%d] == NULL : %d\n", i, listeCourants[i] == NULL);
 
+    tableauCombattants[indiceEmplacement] = emplacementAttaquant;
+    printf("attaquant créé ! indiceEmplacement = %d et indicePNG = %d et emplacement dans listeCourants : %d\n", indiceEmplacement, indicePNG, i);
+/*
+    int j=0;
+    while(listeCourants[j] != NULL){
+        j++
+    }
+    listeCourants[i] = emplacementAttaquant->spriteCourant;
+*/
 }
 
-void supprCombattant(spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *listeCombattants[NBRMAXCOMBATTANTS], )
+
+
+//void supprCombattant(spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *listeCombattants[NBRMAXCOMBATTANTS], )
 
 /*
 

@@ -2,6 +2,7 @@
 #include "affichage.h"
 //#include "affichageAttaque.h"
 #include "general.h"
+#include "vague.h"
 
 int main(int argc, char *argv[])
 { 
@@ -17,6 +18,12 @@ int main(int argc, char *argv[])
     spriteBase_t *spritesDeBase[NBRTEXTURES];
     spriteCourant_t *listeCourants[tailleMaxSpritesCourants]; // le maximum de sprites courants à afficher
     combattant_t *listeCombattants[NBRMAXCOMBATTANTS];
+
+    int listeCompo[20][3] = {{BUGFIRE,NULL,NULL}, {FLY, NULL, NULL}, {MANTIS, NULL, NULL},
+    {BUGFIRE,BUGFIRE,NULL}, {FLY, FLY, NULL}, {MANTIS, MANTIS, NULL}, {BUGFIRE,FLY,NULL}, {BUGFIRE,MANTIS,NULL}, {FLY, MANTIS, NULL},
+    {BUGFIRE,BUGFIRE,BUGFIRE}, {FLY, FLY, FLY}, {MANTIS, MANTIS, MANTIS},
+    {BUGFIRE,BUGFIRE,FLY}, {BUGFIRE,BUGFIRE,MANTIS}, {FLY, FLY, BUGFIRE}, {FLY, FLY, MANTIS}, {MANTIS, MANTIS, BUGFIRE}, {MANTIS, MANTIS, FLY}, {BUGFIRE,FLY,MANTIS}};
+
 
     // ************** Initialisation de la SDL  + gestion de l'échec possible *********
     // ********************************************************************************
@@ -53,7 +60,7 @@ int main(int argc, char *argv[])
     // ********************************************************************************
     // ********************************************************************************
 
-    init(window, renderer, tabPolices, spritesDeBase, listeCourants);
+    init(window, renderer, tabPolices, spritesDeBase, listeCourants, listeCombattants);
 /*
     for (int i = 0; i < tailleMaxSpritesCourants; i++)
     {
@@ -105,7 +112,22 @@ listeCourants[1] = malloc(sizeof(spriteCourant_t));
 
     // listeCourants[1]->source.w = listeCourants[1]->source.w / listeCourants[1]->spriteDeBase->nbrImagesHorizontales;
     // listeCourants[1]->source.h = listeCourants[1]->source.h / listeCourants[1]->spriteDeBase->nbrImagesVerticales;
-/*
+
+//creationVague(spritesDeBase, listeCombattants, listeCourants);
+printf("fin creation vague\n");
+
+printf("0 == 0 : %d\n", 0 == 0);
+
+for(int i=0;i<tailleMaxSpritesCourants;i++){
+    printf("listeCourrants[%d] == NULL : %d\n",i,listeCourants[i]==NULL);
+}
+
+int azer=0;
+while(listeCourants[azer] != NULL){
+    printf("%d\n",azer);
+    azer++;
+}
+
     int repet = 0;
     while (repet < 200)
     {
@@ -118,13 +140,14 @@ listeCourants[1] = malloc(sizeof(spriteCourant_t));
         printf("avant délai\n");
         SDL_Delay(30);
         // printf("après délai %d\n",fond->numImageEnCours);
+        printf(" repet : %d",repet);
     }
-*/
+
     /*
         SDL_Texture *sprite1;
         SDL_Texture *sprite2;
         SDL_Texture *textureFond;
-*/
+
         SDL_bool program_on = SDL_TRUE; // Booléen pour dire que le programme doit continuer
         SDL_Event event;                // c'est le type IMPORTANT !!
 
@@ -139,7 +162,7 @@ listeCourants[1] = malloc(sizeof(spriteCourant_t));
         sprite_t lore3;
 
 */
-
+/*
     while (program_on)
     {
         // Voilà la boucle des évènements
@@ -238,6 +261,8 @@ listeCourants[1] = malloc(sizeof(spriteCourant_t));
         SDL_Delay(150);
     }
     }
+*/
+
     end_sdl(1, "FIN NORMALE", window, renderer, listeCourants);
     return 0;
 }
