@@ -7,6 +7,6 @@
 
 #include "general.h"
 
-appartient(int , int [])
+int appartient(int , int []);
 
 #endif
