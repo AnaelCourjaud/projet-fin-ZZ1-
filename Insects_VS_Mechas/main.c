@@ -4,7 +4,7 @@
 #include "general.h"
 
 int main(int argc, char *argv[])
-{
+{ 
 
     SDL_Window *window = NULL;
     SDL_Renderer *renderer = NULL;
@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
 
     spriteBase_t *spritesDeBase[NBRTEXTURES];
     spriteCourant_t *listeCourants[tailleMaxSpritesCourants]; // le maximum de sprites courants à afficher
+    combattant_t *listeCombattants[NBRMAXCOMBATTANTS];
 
     // ************** Initialisation de la SDL  + gestion de l'échec possible *********
     // ********************************************************************************
@@ -193,7 +194,6 @@ listeCourants[1] = malloc(sizeof(spriteCourant_t));
         case ERREUR:
             break;
         case ACCUEIL:
-            spr
             fondAccueil.textureSprite = texture[indiceFondAccueil];
             creationFond(fondAccueil.textureSprite, window, renderer, 0, 0);
             break;
