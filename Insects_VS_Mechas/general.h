@@ -81,11 +81,7 @@ typedef struct spriteBase {
     int nbrImagesVerticales;
     int ralenti;
 
-    enum typeS typeSprite;
     int vitesseX;
-    int statPhysique;
-    int statMagie;
-
 
     //int personnage;
     //int PV;
@@ -102,20 +98,21 @@ typedef struct spriteCourant{
     int numImageEnCours;
     int retardateurRalenti;
 
+}spriteCourant_t;
+
+typedef struct combattant {
+
+    struct spriteCourant *spriteCourant;
+
+    enum typeS typeSprite;
+
+    //int statPhysique;
+    //int statMagie;
+
     int physiqueRestant;
     int magieRestante;
 
+}combattant_t;
 
-}spriteCourant_t;
-/*
-typedef struct insecte {
-
-    struct sprite spriteInsecte;
-    enum typeI typeInsecte;
-    int statPhysique;
-    int statMagie;
-
-}insecte_t;
-*/
 
 #endif
