@@ -68,6 +68,12 @@ indiceRobotpetitmort} indicesPNGs;
 typedef enum typeS {DECOR, BUGFIRE, FLY, MANTIS, ROBOT, ROBOTPETIT, ROBOTMETAL}typesSprites;
 typedef enum typePA {TOUTDEVANT, DEVANT, MILIEU, DERRIERE, TOUTDERRIERE}typesPrioritesaffichage;
 
+int listeCompo[20][3] = {{BUGFIRE,NULL,NULL}, {FLY, NULL, NULL}, {MANTIS, NULL, NULL},
+    {BUGFIRE,BUGFIRE,NULL}, {FLY, FLY, NULL}, {MANTIS, MANTIS, NULL}, {BUGFIRE,FLY,NULL}, {BUGFIRE,MANTIS,NULL}, {FLY, MANTIS, NULL},
+    {BUGFIRE,BUGFIRE,BUGFIRE}, {FLY, FLY, FLY}, {MANTIS, MANTIS, MANTIS},
+    {BUGFIRE,BUGFIRE,FLY}, {BUGFIRE,BUGFIRE,MANTIS}, {FLY, FLY, BUGFIRE}, {FLY, FLY, MANTIS}, {MANTIS, MANTIS, BUGFIRE}, {MANTIS, MANTIS, FLY}, {BUGFIRE,FLY,MANTIS}};
+
+
 
 typedef struct spriteBase {
 
@@ -80,10 +86,16 @@ typedef struct spriteBase {
     int nbrImagesVerticales;
     int ralenti;
 
-    enum typeS typeSprite;
     int vitesseX;
+<<<<<<< HEAD
     int statPhysique;
     int statMagie;
+=======
+
+    //int personnage;
+    //int PV;
+    //int mortTerminee;
+>>>>>>> a216cb0289c82c76c175c246afa661b3c96dfcf5
 
 }spriteBase_t;
 
@@ -96,19 +108,27 @@ typedef struct spriteCourant{
     int numImageEnCours;
     int retardateurRalenti;
 
-    int physiqueRestant;
-    int magieRestante;
+}spriteCourant_t;
 
+<<<<<<< HEAD
 }spriteCourant_t;
 /*
 typedef struct insecte {
+=======
+typedef struct combattant {
 
-    struct sprite spriteInsecte;
-    enum typeI typeInsecte;
-    int statPhysique;
-    int statMagie;
+    struct spriteCourant *spriteCourant;
 
-}insecte_t;
-*/
+    enum typeS typeSprite;
+
+    //int statPhysique;
+    //int statMagie;
+
+    int physiqueRestant;
+    int magieRestante;
+>>>>>>> a216cb0289c82c76c175c246afa661b3c96dfcf5
+
+}combattant_t;
+
 
 #endif
