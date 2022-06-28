@@ -35,6 +35,8 @@
 #define TAILLEMAX 4
 #define tailleMaxSpritesCourants 20
 
+#define NBENNEMIVAGUE 3 //nb d'ennemis au debut de la vague
+
 
 
 typedef enum typePNG{
@@ -65,7 +67,7 @@ indiceRobotpetitwalk,
 indiceRobotpetitattaque,
 indiceRobotpetitmort} indicesPNGs;
 
-typedef enum typeS {DECOR, BUGFIRE, FLY, MANTIS, ROBOT, ROBOTPETIT, ROBOTMETAL}typesSprites;
+typedef enum typeC {BUGFIRE, FLY, MANTIS, ROBOT, ROBOTPETIT, ROBOTMETAL}typesCombattants;
 typedef enum typePA {TOUTDEVANT, DEVANT, MILIEU, DERRIERE, TOUTDERRIERE}typesPrioritesaffichage;
 
 int listeCompo[20][3] = {{BUGFIRE,NULL,NULL}, {FLY, NULL, NULL}, {MANTIS, NULL, NULL},
@@ -109,7 +111,7 @@ typedef struct combattant {
 
     struct spriteCourant *spriteCourant;
 
-    enum typeS typeSprite;
+    enum typeC typeCombattant;
 
     //int statPhysique;
     //int statMagie;

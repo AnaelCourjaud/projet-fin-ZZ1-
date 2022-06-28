@@ -90,6 +90,10 @@ void animation(SDL_Window *window, SDL_Renderer *renderer, spriteCourant_t *list
         SDL_RenderCopy(renderer, listeCourants[i]->spriteDeBase->textureSprite, &listeCourants[i]->source, &listeCourants[i]->destination);
     }
 }
+
+
+void creerCombattant(spriteCourant_t *listeCourants[tailleMaxSpritesCourants])
+
 /*
 
 void Animation(SDL_Texture * texture1, SDL_Texture *texture2, SDL_Texture *fond, SDL_Renderer *renderer, SDL_Window *window, int longueur, int largeur, int x1,  int x2, int y,int nbimage1,int nbimage2, int nbimageFond, int ite, int iteFond)
