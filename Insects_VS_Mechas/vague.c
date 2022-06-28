@@ -16,7 +16,7 @@ void creationVague(combattant_t *tableauCombattants[NBENNEMIVAGUE], spriteCouran
 
     int r ;
     for (i=0; i < NBENNEMIVAGUE ;i++){
-        rand() % NBENNEMIVAGUE;
+        rand() % 3;
         if(r == 0){
             creerCombattant(tableauCombattants[NBENNEMIVAGUE],listeCourant[tailleMaxSpritesCourants], indiceBugfirewalk);
         }
