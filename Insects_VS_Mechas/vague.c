@@ -1,14 +1,33 @@
-#include "vague.h"
-
-void TotalAttaque(insecte_t tableauAttaque[TAILLEMAX], int *totalphysique, int *totalmagie, int nbrEnnemis)
+# include "vague.h"
+/*
+void TotalAttaque(insecte_t tableauAttaque[TAILLEMAX], int *totalphysique, int *totalmagie, int nbrEnnemis) 
 {
     int i = 0;
 
-    for (; i < nbrEnnemis; i++)
-    {
+    for (; i < nbrEnnemis; i++){
         *totalphysique += tableauAttaque[i].statPhysique;
         *totalmagie += tableauAttaque[i].statMagie;
     }
+}*/
+
+void creationVague(combattant_t *tableauCombattants[NBENNEMIVAGUE], spriteCourant_t *listeCourant[tailleMaxSpritesCourants])
+{
+    srand(time(NULL));
+
+    int r ;
+    for (i=0; i < NBENNEMIVAGUE ;i++){
+        rand() % NBENNEMIVAGUE;
+        if(r == 0){
+            creerCombattant(tableauCombattants[NBENNEMIVAGUE],listeCourant[tailleMaxSpritesCourants], indiceBugfirewalk);
+        }
+        if(r == 1){
+            creerCombattant(tableauCombattants[NBENNEMIVAGUE],listeCourant[tailleMaxSpritesCourants],indiceFlyvolant);
+        }
+        if(r == 2){
+            creerCombattant(tableauCombattants[NBENNEMIVAGUE],listeCourant[tailleMaxSpritesCourants],indiceMantiswalk);
+        }
+    }
+
 }
 
 /*
@@ -31,7 +50,7 @@ void extractionEnnemisVivants(spriteCourant_t *listeCourants[tailleMaxSpritesCou
     }
 }*/
 
-// utilisation de pointeurs !!!!! on appelle donc la fonction de cette maniere : TotalAttaque(tableauAttaque, &totalphysique, &totalmagie, nbrEnnemis);
+//utilisation de pointeurs !!!!! on appelle donc la fonction de cette maniere : TotalAttaque(tableauAttaque, &totalphysique, &totalmagie, nbrEnnemis);
 
 /*
 int main()

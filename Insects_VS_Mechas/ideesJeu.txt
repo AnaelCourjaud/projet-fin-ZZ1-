@@ -49,8 +49,8 @@ case Riposte
     -->retour sur case AttenteRiposte sauf si nbriposte = 0 --> case FindeVague
 
 case FindeVague
-    resolution PV pour chauqe monstre restant FONCTION
-    affichage(attaque) FONCTION
+    resolution PV pour chauqe monstre restant FONCTION //normalement pas de montre restant
+    affichage(attaque) FONCTION //noramlement pas de monstre restant
     modif(Markov) (si IA) FONCTIONS
     nbvague --
     -->retour sur Vague sauf si vague = 0 --> case FinduJeu

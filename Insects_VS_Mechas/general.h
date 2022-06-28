@@ -22,7 +22,7 @@
 #define FINJEU 100
 
 
-#define NBRTEXTURES 26
+#define nbrTextures 26
 #define nbrPolices 2
 
 //#define nombreFichier 18
@@ -33,9 +33,9 @@
 #define coefReducEcran 0.8
 
 #define TAILLEMAX 4
-#define tailleMaxSpritesCourants 20
 
 #define NBENNEMIVAGUE 3 //nb d'ennemis au debut de la vague
+#define NBRMAXCOMBATTANTS 10
 
 
 
@@ -75,12 +75,12 @@ int listeCompo[20][3] = {{BUGFIRE,NULL,NULL}, {FLY, NULL, NULL}, {MANTIS, NULL, 
     {BUGFIRE,BUGFIRE,BUGFIRE}, {FLY, FLY, FLY}, {MANTIS, MANTIS, MANTIS},
     {BUGFIRE,BUGFIRE,FLY}, {BUGFIRE,BUGFIRE,MANTIS}, {FLY, FLY, BUGFIRE}, {FLY, FLY, MANTIS}, {MANTIS, MANTIS, BUGFIRE}, {MANTIS, MANTIS, FLY}, {BUGFIRE,FLY,MANTIS}};
 
-
-
 typedef struct spriteBase {
 
     SDL_Texture * textureSprite;
     enum typePNG indicePNG;
+    //SDL_Rect source;
+    //SDL_Rect destination;
     enum typePA prioriteAffichage;
     
     int animation;
@@ -88,7 +88,11 @@ typedef struct spriteBase {
     int nbrImagesVerticales;
     int ralenti;
 
+    enum typeS typeSprite;
     int vitesseX;
+    int statPhysique;
+    int statMagie;
+
 
     //int personnage;
     //int PV;
@@ -119,7 +123,17 @@ typedef struct combattant {
     int physiqueRestant;
     int magieRestante;
 
-}combattant_t;
 
+}spriteCourant_t;
+/*
+typedef struct insecte {
+
+    struct sprite spriteInsecte;
+    enum typeI typeInsecte;
+    int statPhysique;
+    int statMagie;
+
+}insecte_t;
+*/
 
 #endif
