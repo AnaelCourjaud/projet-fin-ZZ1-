@@ -1,6 +1,6 @@
 #include "initialisation.h"
 
-void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPolices], spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants])
+void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPolices], spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *listeCombattants[NBRMAXCOMBATTANTS];)
 {
 
     ///////////// Chargement des polices et des textures et stockage des pointeurs dans les tableaux
@@ -92,6 +92,14 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
     for (int i = 0; i < tailleMaxSpritesCourants; i++)
     {
         listeCourants[i] = NULL;
+    }
+
+    // *******************************Initialisation de la liste des combattants ************************
+    // **************************************************************************************************
+
+    for (int i = 0; i < NBRMAXCOMBATTANTS; i++)
+    {
+        listeCombattants[i] = NULL;
     }
 
     // ******************************* récupération des polices + stockage + test  *********************
