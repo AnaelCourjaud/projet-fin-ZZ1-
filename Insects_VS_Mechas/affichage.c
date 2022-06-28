@@ -3,22 +3,30 @@
 void creationTexte(char texte[], char style[], char police[], SDL_Renderer *renderer, int taille, int x, int y, int opacite)
 {
 
-    TTF_Font *font = NULL;                   // la variable 'police de caractère'
+    TTF_Font *font = NULL;               // la variable 'police de caractère'
     font = TTF_OpenFont(police, taille); // La police à charger, la taille désirée
     if (font == NULL)
         fprintf(stderr, "Can't load font  %s\n", SDL_GetError());
-    
-    if(strcmp(style,"normal") == 0){ //si on veut le texte en style normal
-    TTF_SetFontStyle(font, TTF_STYLE_NORMAL); }
 
-    if(strcmp(style,"surligne") == 0){ //si on veut le texte surligné
-    TTF_SetFontStyle(font, TTF_STYLE_UNDERLINE); }
+    if (strcmp(style, "normal") == 0)
+    { // si on veut le texte en style normal
+        TTF_SetFontStyle(font, TTF_STYLE_NORMAL);
+    }
 
-    if(strcmp(style,"italique") == 0){ //si on veut le texte en italique
-    TTF_SetFontStyle(font, TTF_STYLE_ITALIC); }
+    if (strcmp(style, "surligne") == 0)
+    { // si on veut le texte surligné
+        TTF_SetFontStyle(font, TTF_STYLE_UNDERLINE);
+    }
 
-    if(strcmp(style,"gras") == 0){ //si on veut le texte en gras
-    TTF_SetFontStyle(font, TTF_STYLE_BOLD); }
+    if (strcmp(style, "italique") == 0)
+    { // si on veut le texte en italique
+        TTF_SetFontStyle(font, TTF_STYLE_ITALIC);
+    }
+
+    if (strcmp(style, "gras") == 0)
+    { // si on veut le texte en gras
+        TTF_SetFontStyle(font, TTF_STYLE_BOLD);
+    }
 
     SDL_Color color = {0, 0, 0, opacite};
     SDL_Surface *text_surface = NULL;                          // la surface  (uniquement transitoire)
@@ -38,23 +46,49 @@ void creationTexte(char texte[], char style[], char police[], SDL_Renderer *rend
     SDL_DestroyTexture(text_texture);
 }
 
-void creationFond(SDL_Texture *my_texture,SDL_Window *window, SDL_Renderer *renderer, int x, int y){
+void creationFond(SDL_Texture *my_texture, SDL_Window *window, SDL_Renderer *renderer, int x, int y)
+{
 
     SDL_Rect
-        source = {0},           // Rectangle définissant la zone de la texture à récupérer
+        source = {0},            // Rectangle définissant la zone de la texture à récupérer
         window_dimensions = {0}, // Rectangle définissant la fenêtre, on n'utilisera que largeur et hauteur
         destination = {0};       // Rectangle définissant où la zone_source doit être déposée dans le renderer
 
     SDL_GetWindowSize(window, &window_dimensions.w, &window_dimensions.h); // Récupération des dimensions de la fenêtre
     SDL_QueryTexture(my_texture, NULL, NULL, &source.w, &source.h);
-    
+
     destination.x = x;
     destination.y = y;
     destination.w = window_dimensions.w;
     destination.h = window_dimensions.h;
 
-    SDL_RenderCopy(renderer, my_texture , &source, &destination);
+    SDL_RenderCopy(renderer, my_texture, &source, &destination);
+}
 
+void animation(SDL_Window *window, SDL_Renderer *renderer, spriteCourant_t *listeCourants[20])
+{
+    for (int i = 0; i < 2; i++)
+    {
+        if (listeCourants[i]->spriteDeBase->animation == 1)
+        {
+            if (listeCourants[i]->retardateurRalenti <= 0)
+            {
+                listeCourants[i]->source.x = (listeCourants[i]->numImageEnCours % listeCourants[i]->spriteDeBase->nbrImagesHorizontales) * listeCourants[i]->source.w;
+                listeCourants[i]->source.y = (listeCourants[i]->numImageEnCours / listeCourants[i]->spriteDeBase->nbrImagesHorizontales) * listeCourants[i]->source.h;
+
+                listeCourants[i]->numImageEnCours++;
+                if (listeCourants[i]->numImageEnCours >= listeCourants[i]->spriteDeBase->nbrImagesHorizontales * listeCourants[i]->spriteDeBase->nbrImagesVerticales)
+                {
+                    listeCourants[i]->numImageEnCours = 0;
+                }
+                listeCourants[i]->retardateurRalenti = listeCourants[i]->spriteDeBase->ralenti;
+            }else{
+                listeCourants[i]->retardateurRalenti--;
+            }
+        }
+
+        SDL_RenderCopy(renderer, listeCourants[i]->spriteDeBase->textureSprite, &listeCourants[i]->source, &listeCourants[i]->destination);
+    }
 }
 /*
 
@@ -81,14 +115,14 @@ SDL_Rect
 
     SDL_Rect state1[nbimage1];                         // Tableau qui stocke les vignettes dans le bon ordre pour l'animation
     SDL_Rect state2[nbimage2];
-    SDL_Rect stateFond[nbimageFond]; 
+    SDL_Rect stateFond[nbimageFond];
 
-    SDL_QueryTexture(texture1, NULL, NULL, &source1.w, &source1.h); 
+    SDL_QueryTexture(texture1, NULL, NULL, &source1.w, &source1.h);
     int offset_x1 = source1.w / nbimage1,                // La largeur d'une vignette de l'image
         offset_y1 = source1.h;
 
-    // construction des différents rectangles autour de chacune des vignettes de la planche 
-    int i1 = 0;                                   
+    // construction des différents rectangles autour de chacune des vignettes de la planche
+    int i1 = 0;
     for (int y1 = 0; y1 < source1.h ; y1 += offset_y1) {
     for (int x1 = 0; x1 < source1.w; x1 += offset_x1) {
       state1[i1].x = x1;
@@ -96,15 +130,15 @@ SDL_Rect
       state1[i1].w = offset_x1;
       state1[i1].h = offset_y1;
       ++i1;
-    } 
+    }
     }
 
-    SDL_QueryTexture(texture2, NULL, NULL, &source2.w, &source2.h); 
+    SDL_QueryTexture(texture2, NULL, NULL, &source2.w, &source2.h);
     int offset_x2 = source2.w / nbimage2,                // La largeur d'une vignette de l'image
         offset_y2 = source2.h;
 
-    // construction des différents rectangles autour de chacune des vignettes de la planche 
-    int i2 = 0;                                   
+    // construction des différents rectangles autour de chacune des vignettes de la planche
+    int i2 = 0;
     for (int y2 = 0; y2 < source2.h ; y2 += offset_y2) {
     for (int x2 = 0; x2 < source2.w; x2 += offset_x2) {
       state2[i2].x = x2;
@@ -112,15 +146,15 @@ SDL_Rect
       state2[i2].w = offset_x2;
       state2[i2].h = offset_y2;
       ++i2;
-    } 
+    }
     }
 
-     SDL_QueryTexture(fond, NULL, NULL, &sourceFond.w, &sourceFond.h); 
+     SDL_QueryTexture(fond, NULL, NULL, &sourceFond.w, &sourceFond.h);
     int offset_xFond = sourceFond.w / nbimageFond,                // La largeur d'une vignette de l'image
         offset_yFond = sourceFond.h;
 
-    // construction des différents rectangles autour de chacune des vignettes de la planche 
-    int iFond = 0;                                   
+    // construction des différents rectangles autour de chacune des vignettes de la planche
+    int iFond = 0;
     for (int yFond = 0; yFond < sourceFond.h ; yFond += offset_yFond) {
     for (int xFond = 0; xFond < sourceFond.w; xFond += offset_xFond) {
       stateFond[iFond].x = xFond;
@@ -128,7 +162,7 @@ SDL_Rect
       stateFond[iFond].w = offset_xFond;
       stateFond[iFond].h = offset_yFond;
       ++iFond;
-    } 
+    }
     }
 
 

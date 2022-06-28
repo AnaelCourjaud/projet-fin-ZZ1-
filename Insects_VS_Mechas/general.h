@@ -25,7 +25,7 @@
 #define nbrTextures 26
 #define nbrPolices 2
 
-#define nombreFichier 18
+//#define nombreFichier 18
 #define tailleMaxFichiers 50
 
 #define nbrImageSpriteFini 10 //toutes les animations finies sont des sprites avec 10 images
@@ -36,53 +36,78 @@
 
 
 
+typedef enum typePNG{
+indicePasserelleFinie,
+indiceBatiment2,
+indiceBatiment2coupe,
+indiceFond,
+indiceFondAccueil,
+indiceLore1,
+indiceLore2,
+indiceLore3, 
+indiceBugfirewalk, 
+indiceBugfireattaque,
+indiceBugfiremort,
+indiceFlyvolant,
+indiceFlyattaque, 
+indiceFlymort,
+indiceMantiswalk,
+indiceMantismort,
+indiceRobot,
+indiceRobotattaque,
+indiceRobotMort, 
+indiceRobotmetal,
+indiceRobotmetalattaquedeb,
+indiceRobotmetalattaque,
+indiceRobotmetalmort,
+indiceRobotpetitwalk,
+indiceRobotpetitattaque,
+indiceRobotpetitmort} indicesPNGs;
+
+typedef enum typeS {DECOR, BUGFIRE, FLY, MANTIS, ROBOT, ROBOTPETIT, ROBOTMETAL}typesSprites;
+typedef enum typePA {TOUTDEVANT, DEVANT, MILIEU, DERRIERE, TOUTDERRIERE}typesPrioritesaffichage;
 
 
-#define indiceBatiment1 0
-#define indiceBatiment2 1
-#define indiceBatiment2coupe 2
-#define indiceFond 3
-#define indiceFondAccueil 4
-#define indiceLore1 5
-#define indiceLore2 6
-#define indiceLore3 7 
-#define indiceBugfirewalk 8
-#define indiceBugfireattaque 9
-#define indiceBugfiremort 10
-#define indiceFlyvollant 11
-#define indiceFlyattaque 12 
-#define indiceFlymort 13
-#define indiceMantiswalk 14
-#define indiceMantismort 15
-#define indiceRobot 16
-#define indiceRobotattaque 17
-#define indiceRobotmort 18 
-#define indiceRobotmetal 19
-#define indiceRobotmetalattaquedeb 20
-#define indiceRobotmetalattaque 21
-#define indiceRobotmetalmort 22 
-#define indiceRobotpetit 23
-#define indiceRobotpetitattaque 24
-#define indiceRobotpetitmort 25
-
-typedef enum typeI {BUGFIRE, FLY, MANTIS}typesInsectes;
-
-
-typedef struct sprite {
+typedef struct spriteBase {
 
     SDL_Texture * textureSprite;
-    SDL_Rect source;
-    SDL_Rect destination;
+    enum typePNG indicePNG;
+    //SDL_Rect source;
+    //SDL_Rect destination;
+    enum typePA prioriteAffichage;
     
     int animation;
-    int nbrImages;
+    int nbrImagesHorizontales;
+    int nbrImagesVerticales;
     int ralenti;
+
+    enum typeS typeSprite;
+    int vitesseX;
+    int statPhysique;
+    int statMagie;
+
+
     //int personnage;
     //int PV;
     //int mortTerminee;
 
-}sprite_t;
+}spriteBase_t;
 
+typedef struct spriteCourant{
+
+    struct spriteBase *spriteDeBase;
+    SDL_Rect source;
+    SDL_Rect destination;
+
+    int numImageEnCours;
+    int retardateurRalenti;
+
+    int physiqueRestant;
+    int magieRestante;
+
+
+}spriteCourant_t;
+/*
 typedef struct insecte {
 
     struct sprite spriteInsecte;
@@ -91,5 +116,6 @@ typedef struct insecte {
     int statMagie;
 
 }insecte_t;
+*/
 
 #endif

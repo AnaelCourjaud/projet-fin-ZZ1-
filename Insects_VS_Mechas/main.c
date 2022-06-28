@@ -12,8 +12,9 @@ int main(int argc, char *argv[])
     SDL_DisplayMode screen;
     SDL_Rect tailleFenetre;
 
-    SDL_Texture *texture[nbrTextures];
     TTF_Font *tabPolices[nbrPolices];
+
+    spriteBase_t *spritesDeBase[nbrTextures];
 
     // ************** Initialisation de la SDL  + gestion de l'échec possible *********
     // ********************************************************************************
@@ -50,112 +51,75 @@ int main(int argc, char *argv[])
     // ********************************************************************************
     // ********************************************************************************
 
-    init(window, renderer, texture, tabPolices);
+    init(window, renderer, tabPolices, spritesDeBase);
 
-    sprite_t fond;
-    int nbrInsectesss = 3;
+spriteCourant_t *listeCourants[20];// le maximum de sprites courants à afficher
 
-    // fond.source = {0};
-    // fond.destination ={0};
-
-insecte_t *tabInsectes[nbrInsectesss];
-
-for(int i=0; i<nbrInsectesss;i++){
-    insecte_t *insecte = malloc(sizeof(insecte_t));
-    tabInsectes[i] = insecte;
+for(int i=0; i < 20; i++){
+    spriteCourant_t *courant = malloc(sizeof(spriteCourant_t));
+    listeCourants[i] = courant;
 }
-    tabInsectes[0]->spriteInsecte.textureSprite = texture[indiceBugfirewalk];
+
+//on va initialiser que les deux premiers car trop long sinon
+listeCourants[0]->spriteDeBase = spritesDeBase[indiceFond];
+listeCourants[0]->numImageEnCours = 0;
+listeCourants[0]->retardateurRalenti = listeCourants[0]->spriteDeBase->ralenti;
+
+listeCourants[1]->spriteDeBase = spritesDeBase[indicePasserelleFinie];
+
+SDL_Rect window_dimensions = {0}; 
+SDL_GetWindowSize(window, &window_dimensions.w, &window_dimensions.h); // Récupération des dimensions de la fenêtre
     
-    tabInsectes[0]->spriteInsecte.source.x = 0;
-    tabInsectes[0]->spriteInsecte.source.y = 0;
-SDL_QueryTexture(tabInsectes[0]->spriteInsecte.textureSprite, NULL, NULL,
-                     &tabInsectes[0]->spriteInsecte.source.w, &tabInsectes[0]->spriteInsecte.source.h); 
-        
-  tabInsectes[0]->spriteInsecte.destination.x = 0;
-    tabInsectes[0]->spriteInsecte.destination.y = 0;
-    tabInsectes[0]->spriteInsecte.destination.w = 200;
-    tabInsectes[0]->spriteInsecte.destination.h = 200;
-    tabInsectes[0]->typeInsecte = BUGFIRE;
+        listeCourants[0]->source.x = 0; 
+        listeCourants[0]->source.y = 0; 
+        listeCourants[0]->source.w = 0; 
+        listeCourants[0]->source.h = 0;           // Rectangle définissant la zone de la texture à récupérer
+        // Rectangle définissant la fenêtre, on n'utilisera que largeur et hauteur
+        listeCourants[0]->destination.x = 0; 
+        listeCourants[0]->destination.y = 0; 
+        listeCourants[0]->destination.w = window_dimensions.w; 
+        listeCourants[0]->destination.h = window_dimensions.h;      // Rectangle définissant où la zone_source doit être déposée dans le renderer
 
-      tabInsectes[1]->spriteInsecte.textureSprite = texture[indiceFlyvollant];
-    tabInsectes[1]->spriteInsecte.source.x = 0;
-    tabInsectes[1]->spriteInsecte.source.y = 0;
-SDL_QueryTexture(tabInsectes[1]->spriteInsecte.textureSprite, NULL, NULL,
-                     &tabInsectes[1]->spriteInsecte.source.w, &tabInsectes[1]->spriteInsecte.source.h); 
-  tabInsectes[1]->spriteInsecte.destination.x = 600;
-    tabInsectes[1]->spriteInsecte.destination.y = 600;
-    tabInsectes[1]->spriteInsecte.destination.w = 200;
-    tabInsectes[1]->spriteInsecte.destination.h = 200;
-    tabInsectes[1]->typeInsecte = FLY;
-
-
-  tabInsectes[2]->spriteInsecte.textureSprite = texture[indiceMantiswalk];
-    tabInsectes[2]->spriteInsecte.source.x = 0;
-    tabInsectes[2]->spriteInsecte.source.y = 0;
-SDL_QueryTexture(tabInsectes[2]->spriteInsecte.textureSprite, NULL, NULL,
-                     &tabInsectes[2]->spriteInsecte.source.w, &tabInsectes[2]->spriteInsecte.source.h); 
-  tabInsectes[2]->spriteInsecte.destination.x = 600;
-    tabInsectes[2]->spriteInsecte.destination.y = 0;
-    tabInsectes[2]->spriteInsecte.destination.w = 200;
-    tabInsectes[2]->spriteInsecte.destination.h = 200;
-    tabInsectes[2]->typeInsecte = MANTIS;
-
-    //insecte_t tabInsectes[] = {insecte1, insecte2, insecte3};
-
-    fond.textureSprite = texture[indiceFlyvollant];
-    SDL_QueryTexture(fond.textureSprite, NULL, NULL,
-                     &fond.source.w, &fond.source.h);
-
-    fond.destination.x = 600;
-    fond.destination.y = 600;
-    fond.destination.w = 200;
-    fond.destination.h = 200;
-    fond.source.x = 0;
-    fond.source.y = 0;
-
-    // insecte_t scarabe1;
-    //scarabe1.spriteInsecte = fond;
-    //scarabe1.typeInsecte = BUGFIRE;
-
-    /*
-    SDL_Texture * textureSprite = IMG_LoadTexture(renderer, "./Sprites/fondaccueil.png");
-        SDL_Rect source ={0} ,destination = {0};
-
-         SDL_QueryTexture(textureSprite, NULL, NULL,
-                         &source.w, &source.h);
-
-                         source.x = 20;
-        source.y = 20;
-        //source.w = 1000;
-        //source.h = 1000;
-        destination.x = 20;
-        destination.y = 20;
-        destination.w = 200;
-        destination.h = 200;
-    */
-    SDL_SetRenderDrawColor(renderer, 50, 0, 0, 255); // mode Red, Green, Blue (tous dans 0..255)
-    // SDL_RenderClear(renderer);
-
-    printf("avant copy\n");
-     SDL_RenderCopy(renderer, fond.textureSprite, &fond.source, &fond.destination);
-    SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
-    SDL_RenderDrawLine(renderer,
-                       0, 0, // x,y du point de la première extrémité
-                       400, 400);
-    for(int i=0;i<1;i++){
-SDL_RenderCopy(renderer, tabInsectes[i]->spriteInsecte.textureSprite, &tabInsectes[i]->spriteInsecte.source, &tabInsectes[i]->spriteInsecte.destination);
+SDL_QueryTexture(listeCourants[0]->spriteDeBase->textureSprite, NULL, NULL, &listeCourants[0]->source.w, &listeCourants[0]->source.h);
     
-    }
-    // printf("0==0 : %d  et %d", 0==0, scarabe1.typeInsecte!=SCARAB);
-    //SDL_RenderCopy(renderer, tabInsectes[i].spriteInsecte.textureSprite, &tabInsectes[i].spriteInsecte.source, &tabInsectes[i].spriteInsecte.destination);
-    SDL_RenderPresent(renderer);
+    listeCourants[0]->source.w = listeCourants[0]->source.w / listeCourants[0]->spriteDeBase->nbrImagesHorizontales;
+    listeCourants[0]->source.h = listeCourants[0]->source.h / listeCourants[0]->spriteDeBase->nbrImagesVerticales;
+    
+
+        listeCourants[1]->source.x = 0; 
+        listeCourants[1]->source.y = 0; 
+        listeCourants[1]->source.w = 0; 
+        listeCourants[1]->source.h = 0;           // Rectangle définissant la zone de la texture à récupérer
+        // Rectangle définissant la fenêtre, on n'utilisera que largeur et hauteur
+        listeCourants[1]->destination.x = 0; 
+        listeCourants[1]->destination.y = 0; 
+        listeCourants[1]->destination.w = window_dimensions.w; 
+        listeCourants[1]->destination.h = window_dimensions.h;      // Rectangle définissant où la zone_source doit être déposée dans le renderer
+
+SDL_QueryTexture(listeCourants[1]->spriteDeBase->textureSprite, NULL, NULL, &listeCourants[1]->source.w, &listeCourants[1]->source.h);
+    
+    //listeCourants[1]->source.w = listeCourants[1]->source.w / listeCourants[1]->spriteDeBase->nbrImagesHorizontales;
+    //listeCourants[1]->source.h = listeCourants[1]->source.h / listeCourants[1]->spriteDeBase->nbrImagesVerticales;
+    
+    
+    
+    
+    
+    int repet =0;
+while(repet < 200){
+repet++;
+
+animation(window, renderer,listeCourants);
+
+SDL_RenderPresent(renderer);
+ SDL_RenderClear(renderer);
     printf("avant délai\n");
-    SDL_Delay(3000);
-    printf("après délai\n");
-    // SDL_DestroyTexture(textureSprite);
+    SDL_Delay(30);
+    //printf("après délai %d\n",fond->numImageEnCours);
 
-    // SDL_bool program_on = SDL_TRUE; // Booléen pour dire que le programme doit continuer
-    //   SDL_Event event;                // c'est le type IMPORTANT !!
+}
+
+
 
     /*
         SDL_Texture *sprite1;
@@ -274,7 +238,7 @@ SDL_RenderCopy(renderer, tabInsectes[i]->spriteInsecte.textureSprite, &tabInsect
         SDL_RenderPresent(renderer);
         SDL_Delay(150);
     }
-
+*/
     end_sdl(1, "FIN NORMALE", window, renderer);
     return 0;
 }
