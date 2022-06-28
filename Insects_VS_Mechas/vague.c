@@ -1,16 +1,37 @@
-# include "vague.h"
+#include "vague.h"
 
-void TotalAttaque(insecte_t tableauAttaque[TAILLEMAX], int *totalphysique, int *totalmagie, int nbrEnnemis) 
+void TotalAttaque(insecte_t tableauAttaque[TAILLEMAX], int *totalphysique, int *totalmagie, int nbrEnnemis)
 {
     int i = 0;
 
-    for (; i < nbrEnnemis; i++){
+    for (; i < nbrEnnemis; i++)
+    {
         *totalphysique += tableauAttaque[i].statPhysique;
         *totalmagie += tableauAttaque[i].statMagie;
     }
 }
 
-//utilisation de pointeurs !!!!! on appelle donc la fonction de cette maniere : TotalAttaque(tableauAttaque, &totalphysique, &totalmagie, nbrEnnemis);
+/*
+void extractionEnnemisVivants(spriteCourant_t *listeCourants[tailleMaxSpritesCourants], int nombreEnnemiParType[3][3])
+{
+    for (int i = 0; i < tailleMaxSpritesCourants; i++)
+    {
+        if (listeCourants[i]->spriteDeBase->typeSprite == BUGFIRE)
+        {
+            nombreEnnemiParType[0][0]++;
+        }
+        else if (listeCourants[i]->spriteDeBase->typeSprite == FLY)
+        {
+            nombreEnnemiParType[1]++;
+        }
+        else if (listeCourants[i]->spriteDeBase->typeSprite == MANTIS)
+        {
+            nombreEnnemiParType[2]++;
+        }
+    }
+}*/
+
+// utilisation de pointeurs !!!!! on appelle donc la fonction de cette maniere : TotalAttaque(tableauAttaque, &totalphysique, &totalmagie, nbrEnnemis);
 
 /*
 int main()

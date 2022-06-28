@@ -22,7 +22,7 @@
 #define FINJEU 100
 
 
-#define nbrTextures 26
+#define NBRTEXTURES 26
 #define nbrPolices 2
 
 //#define nombreFichier 18
@@ -33,6 +33,7 @@
 #define coefReducEcran 0.8
 
 #define TAILLEMAX 4
+#define tailleMaxSpritesCourants 20
 
 
 
@@ -72,8 +73,6 @@ typedef struct spriteBase {
 
     SDL_Texture * textureSprite;
     enum typePNG indicePNG;
-    //SDL_Rect source;
-    //SDL_Rect destination;
     enum typePA prioriteAffichage;
     
     int animation;
@@ -85,11 +84,6 @@ typedef struct spriteBase {
     int vitesseX;
     int statPhysique;
     int statMagie;
-
-
-    //int personnage;
-    //int PV;
-    //int mortTerminee;
 
 }spriteBase_t;
 
@@ -104,7 +98,6 @@ typedef struct spriteCourant{
 
     int physiqueRestant;
     int magieRestante;
-
 
 }spriteCourant_t;
 /*
