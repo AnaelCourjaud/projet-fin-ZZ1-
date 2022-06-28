@@ -48,7 +48,7 @@ void extractionEnnemisVivants(spriteCourant_t *listeCourants[tailleMaxSpritesCou
             nombreEnnemiParType[2]++;
         }
     }
-}*/
+}*/ 
 
 //utilisation de pointeurs !!!!! on appelle donc la fonction de cette maniere : TotalAttaque(tableauAttaque, &totalphysique, &totalmagie, nbrEnnemis);
 
