@@ -35,6 +35,7 @@
 #define TAILLEMAX 4
 #define tailleMaxSpritesCourants 20
 
+#define ENNEMIVAGUE 3
 
 
 typedef enum typePNG{
