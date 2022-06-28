@@ -87,15 +87,10 @@ typedef struct spriteBase {
     int ralenti;
 
     int vitesseX;
-<<<<<<< HEAD
-    int statPhysique;
-    int statMagie;
-=======
 
     //int personnage;
     //int PV;
     //int mortTerminee;
->>>>>>> a216cb0289c82c76c175c246afa661b3c96dfcf5
 
 }spriteBase_t;
 
@@ -110,11 +105,6 @@ typedef struct spriteCourant{
 
 }spriteCourant_t;
 
-<<<<<<< HEAD
-}spriteCourant_t;
-/*
-typedef struct insecte {
-=======
 typedef struct combattant {
 
     struct spriteCourant *spriteCourant;
@@ -126,7 +116,6 @@ typedef struct combattant {
 
     int physiqueRestant;
     int magieRestante;
->>>>>>> a216cb0289c82c76c175c246afa661b3c96dfcf5
 
 }combattant_t;
 
