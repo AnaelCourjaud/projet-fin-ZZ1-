@@ -28,7 +28,7 @@ case Lore3
 case Vague:
     choix vague attaque : sortie  = liste attaque
     animation(arriveeattaque)
-    calcul total type attaque (cac/tir) FONCTION
+    //calcul total type attaque (cac/tir) FONCTION
     //nbriposte = NB_RIPOSTE_VAGUE
     --> sortie = case AttenteRiposte
     //    sauf si PV = 0 --> case FinduJeu
@@ -42,14 +42,14 @@ case AttenteRiposte:
     
 case Riposte
     nb riposte ++
-    calcul degat infligé sur stat total FONCTION
+    //calcul degat infligé sur stat total FONCTION
     calcul ennemis tués (modif liste attaque : entièrement tué = mise à 0/ partiellement tué = modif) --> sortie = liste attaque FONCTION
     affiche(attaque, defense, resolution) --> ennemi à 0 = tué/ affichage riposte (zone) FONCTION
     suppression des attaquants tués FONCTION
     -->retour sur case AttenteRiposte sauf si nbriposte = 0 --> case FindeVague
 
 case FindeVague
-    resolution PV pour chauqe monstre restant FONCTION //normalement pas de montre restant
+    //resolution PV pour chauqe monstre restant FONCTION //normalement pas de montre restant
     affichage(attaque) FONCTION //noramlement pas de monstre restant
     modif(Markov) (si IA) FONCTIONS
     nbvague --
