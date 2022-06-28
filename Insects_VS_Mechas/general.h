@@ -22,7 +22,7 @@
 #define FINJEU 100
 
 
-#define nbrTextures 26
+#define NBRTEXTURES 26
 #define nbrPolices 2
 
 //#define nombreFichier 18
@@ -33,9 +33,11 @@
 #define coefReducEcran 0.8
 
 #define TAILLEMAX 4
+#define tailleMaxSpritesCourants 20
 
 #define NBENNEMIVAGUE 3 //nb d'ennemis au debut de la vague
 #define NBRMAXCOMBATTANTS 10
+#define NBRTYPEINSECTES 3
 
 
 
@@ -70,10 +72,6 @@ indiceRobotpetitmort} indicesPNGs;
 typedef enum typeC {BUGFIRE, FLY, MANTIS, ROBOT, ROBOTPETIT, ROBOTMETAL}typesCombattants;
 typedef enum typePA {TOUTDEVANT, DEVANT, MILIEU, DERRIERE, TOUTDERRIERE}typesPrioritesaffichage;
 
-int listeCompo[20][3] = {{BUGFIRE,NULL,NULL}, {FLY, NULL, NULL}, {MANTIS, NULL, NULL},
-    {BUGFIRE,BUGFIRE,NULL}, {FLY, FLY, NULL}, {MANTIS, MANTIS, NULL}, {BUGFIRE,FLY,NULL}, {BUGFIRE,MANTIS,NULL}, {FLY, MANTIS, NULL},
-    {BUGFIRE,BUGFIRE,BUGFIRE}, {FLY, FLY, FLY}, {MANTIS, MANTIS, MANTIS},
-    {BUGFIRE,BUGFIRE,FLY}, {BUGFIRE,BUGFIRE,MANTIS}, {FLY, FLY, BUGFIRE}, {FLY, FLY, MANTIS}, {MANTIS, MANTIS, BUGFIRE}, {MANTIS, MANTIS, FLY}, {BUGFIRE,FLY,MANTIS}};
 
 typedef struct spriteBase {
 
@@ -87,13 +85,13 @@ typedef struct spriteBase {
     int nbrImagesHorizontales;
     int nbrImagesVerticales;
     int ralenti;
-
+/*
     enum typeS typeSprite;
     int vitesseX;
     int statPhysique;
     int statMagie;
 
-
+*/
     //int personnage;
     //int PV;
     //int mortTerminee;
@@ -123,8 +121,7 @@ typedef struct combattant {
     int physiqueRestant;
     int magieRestante;
 
-
-}spriteCourant_t;
+}combattant_t;
 /*
 typedef struct insecte {
 

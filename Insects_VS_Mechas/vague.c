@@ -1,6 +1,7 @@
-# include "vague.h"
+#include "vague.h"
+
 /*
-void TotalAttaque(insecte_t tableauAttaque[TAILLEMAX], int *totalphysique, int *totalmagie, int nbrEnnemis) 
+void TotalAttaque(insecte_t tableauAttaque[TAILLEMAX], int *totalphysique, int *totalmagie, int nbrEnnemis)
 {
     int i = 0;
 
@@ -10,23 +11,37 @@ void TotalAttaque(insecte_t tableauAttaque[TAILLEMAX], int *totalphysique, int *
     }
 }*/
 
-void creationVague(combattant_t *tableauCombattants[NBENNEMIVAGUE], spriteCourant_t *listeCourant[tailleMaxSpritesCourants])
+void creationVague(spriteBase_t *spritesDeBase[NBRTEXTURES], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], spriteCourant_t *listeCourant[tailleMaxSpritesCourants]) // il faut bien que listeCombattants soit vide à l'execution de cette fonction
 {
     srand(time(NULL));
 
-    int r ;
-    for (i=0; i < NBENNEMIVAGUE ;i++){
-        rand() % 3;
-        if(r == 0){
-            creerCombattant(tableauCombattants[NBENNEMIVAGUE],listeCourant[tailleMaxSpritesCourants], indiceBugfirewalk);
+    for (int i = 0; i < NBENNEMIVAGUE; i++)
+    {
+        int r = rand() % NBRTYPEINSECTES;
+        if (r == BUGFIRE)
+        {
+            creerAttaquant(spritesDeBase, tableauCombattants, listeCourant, indiceBugfirewalk, i);
+            for(int i=0;i<tailleMaxSpritesCourants;i++){
+    printf("listeCourrants[%d] == NULL : %d\n",i,listeCourant[i]==NULL);}
         }
-        if(r == 1){
-            creerCombattant(tableauCombattants[NBENNEMIVAGUE],listeCourant[tailleMaxSpritesCourants],indiceFlyvolant);
+        else if (r == FLY)
+        {
+            creerAttaquant(spritesDeBase, tableauCombattants, listeCourant, indiceFlyvolant, i);
+            for(int i=0;i<tailleMaxSpritesCourants;i++){
+    printf("listeCourrants[%d] == NULL : %d\n",i,listeCourant[i]==NULL);}
         }
-        if(r == 2){
-            creerCombattant(tableauCombattants[NBENNEMIVAGUE],listeCourant[tailleMaxSpritesCourants],indiceMantiswalk);
+        else if (r == MANTIS)
+        {
+            creerAttaquant(spritesDeBase, tableauCombattants, listeCourant, indiceMantiswalk, i);
+            for(int i=0;i<tailleMaxSpritesCourants;i++){
+    printf("listeCourrants[%d] == NULL : %d\n",i,listeCourant[i]==NULL);}
+        }
+        else
+        {
+            printf("erreur de création de vagues\n");
         }
     }
+    
 
 }
 
@@ -48,9 +63,9 @@ void extractionEnnemisVivants(spriteCourant_t *listeCourants[tailleMaxSpritesCou
             nombreEnnemiParType[2]++;
         }
     }
-}*/ 
+}*/
 
-//utilisation de pointeurs !!!!! on appelle donc la fonction de cette maniere : TotalAttaque(tableauAttaque, &totalphysique, &totalmagie, nbrEnnemis);
+// utilisation de pointeurs !!!!! on appelle donc la fonction de cette maniere : TotalAttaque(tableauAttaque, &totalphysique, &totalmagie, nbrEnnemis);
 
 /*
 int main()
