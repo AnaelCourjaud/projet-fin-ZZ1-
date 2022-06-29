@@ -60,24 +60,25 @@ indiceLore3,
 indiceBugfirewalk, 
 indiceBugfireattaque,
 indiceBugfiremort,
-indiceFlyvolant,
+indiceFlyWalk,
 indiceFlyattaque, 
 indiceFlymort,
 indiceMantiswalk,
+indiceMantisAttaque,
 indiceMantismort,
-indiceRobot,
-indiceRobotattaque,
-indiceRobotMort, 
-indiceRobotmetal,
-indiceRobotmetalattaquedeb,
+indiceRobotGrosWalk,
+indiceRobotGrosattaque,
+indiceRobotGrosMort, 
+indiceRobotmetalWalk,
 indiceRobotmetalattaque,
 indiceRobotmetalmort,
 indiceRobotpetitwalk,
 indiceRobotpetitattaque,
 indiceRobotpetitmort} indicesPNGs;
 
-typedef enum typeC {BUGFIRE, FLY, MANTIS, ROBOT, ROBOTPETIT, ROBOTMETAL}typesCombattants;
-typedef enum typePA {TOUTDEVANT, DEVANT, MILIEU, DERRIERE, TOUTDERRIERE}typesPrioritesaffichage;
+typedef enum typeC {BUGFIRE, FLY, MANTIS, ROBOTGROS, ROBOTMETAL, ROBOTPETIT}typesCombattants_t;
+typedef enum typePA {TOUTDEVANT, DEVANT, MILIEU, DERRIERE, TOUTDERRIERE}prioritesaffichage_t;
+typedef enum typeE {WALK, ATTAQUE, MORT} etatsCombattants_t;
 
 
 typedef struct spriteBase {
@@ -123,6 +124,7 @@ typedef struct combattant {
     struct spriteCourant *spriteCourant;
 
     enum typeC typeCombattant;
+    enum typeE etatCombattant;
 
     //int statPhysique;
     //int statMagie;

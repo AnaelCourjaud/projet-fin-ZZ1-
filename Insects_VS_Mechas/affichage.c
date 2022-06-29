@@ -109,10 +109,10 @@ void animation(SDL_Window *window, SDL_Renderer *renderer, spriteCourant_t *list
     }
 }
 
-void creerAttaquant(SDL_Window *window, spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], indicesPNGs indicePNG, int indiceEmplacement)
+void creerAttaquant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], indicesPNGs indicePNG, int indiceEmplacement)
 {
 
-    // printf("début créer attaquant\n");
+    // printf("début créer estAttaquant\n");
 
     int indiceEmplacementDansListeCourants;
     // while (listeCourants[indiceEmplacementDansListeCourants] != NULL)
@@ -121,67 +121,69 @@ void creerAttaquant(SDL_Window *window, spriteBase_t *spritesDeBase[NBRTEXTURES]
     // }
     // indiceEmplacementDansListeCourants = 0;
     // printf(" indicePNG : %d\n", indicePNG);
-    indiceEmplacementDansListeCourants = creerSpriteCourant(window, spritesDeBase, listeCourants, indicePNG);
-    // printf(" creerAttaquant : indicePNG : %d, animation = %d, nbr imageshorizon : %d, nbr images vertic : %d, priorite affichage : %d\n", listeCourants[indiceEmplacementDansListeCourants]->spriteDeBase->indicePNG, listeCourants[indiceEmplacementDansListeCourants]->spriteDeBase->animation, listeCourants[indiceEmplacementDansListeCourants]->spriteDeBase->nbrImagesHorizontales, listeCourants[indiceEmplacementDansListeCourants]->spriteDeBase->nbrImagesVerticales, listeCourants[indiceEmplacementDansListeCourants]->spriteDeBase->prioriteAffichage);
+    indiceEmplacementDansListeCourants = creerSpriteCourant(spritesDeBase, listeCourants, indicePNG);
+    // printf(" creerestAttaquant : indicePNG : %d, animation = %d, nbr imageshorizon : %d, nbr images vertic : %d, priorite affichage : %d\n", listeCourants[indiceEmplacementDansListeCourants]->spriteDeBase->indicePNG, listeCourants[indiceEmplacementDansListeCourants]->spriteDeBase->animation, listeCourants[indiceEmplacementDansListeCourants]->spriteDeBase->nbrImagesHorizontales, listeCourants[indiceEmplacementDansListeCourants]->spriteDeBase->nbrImagesVerticales, listeCourants[indiceEmplacementDansListeCourants]->spriteDeBase->prioriteAffichage);
 
-    combattant_t *emplacementAttaquant = malloc(sizeof(combattant_t));
-    // emplacementAttaquant->spriteCourant = malloc(sizeof(spriteCourant_t));
-    // emplacementAttaquant->spriteCourant->spriteDeBase = spritesDeBase[indicePNG];
+    combattant_t *emplacementestAttaquant = malloc(sizeof(combattant_t));
+    // emplacementestAttaquant->spriteCourant = malloc(sizeof(spriteCourant_t));
+    // emplacementestAttaquant->spriteCourant->spriteDeBase = spritesDeBase[indicePNG];
 
-    // emplacementAttaquant->spriteCourant->source.x = 0;
-    // emplacementAttaquant->spriteCourant->source.y = 0;
-    // emplacementAttaquant->spriteCourant->source.w = 200;
-    // emplacementAttaquant->spriteCourant->source.h = 200;
+    // emplacementestAttaquant->spriteCourant->source.x = 0;
+    // emplacementestAttaquant->spriteCourant->source.y = 0;
+    // emplacementestAttaquant->spriteCourant->source.w = 200;
+    // emplacementestAttaquant->spriteCourant->source.h = 200;
 
-    // emplacementAttaquant->spriteCourant->destination.x = 0;
-    // emplacementAttaquant->spriteCourant->destination.y = 0;
-    // emplacementAttaquant->spriteCourant->destination.w = 200;
-    // emplacementAttaquant->spriteCourant->destination.h = 200;
+    // emplacementestAttaquant->spriteCourant->destination.x = 0;
+    // emplacementestAttaquant->spriteCourant->destination.y = 0;
+    // emplacementestAttaquant->spriteCourant->destination.w = 200;
+    // emplacementestAttaquant->spriteCourant->destination.h = 200;
 
-    // emplacementAttaquant->spriteCourant->numImageEnCours = 0;
-    // emplacementAttaquant->spriteCourant->retardateurRalenti = emplacementAttaquant->spriteCourant->spriteDeBase->ralenti;
+    // emplacementestAttaquant->spriteCourant->numImageEnCours = 0;
+    // emplacementestAttaquant->spriteCourant->retardateurRalenti = emplacementestAttaquant->spriteCourant->spriteDeBase->ralenti;
+    emplacementestAttaquant->etatCombattant = WALK;
+
     if (indicePNG == indiceBugfirewalk)
     {
-        emplacementAttaquant->typeCombattant = BUGFIRE;
-        emplacementAttaquant->physiqueRestant = 3;
-        emplacementAttaquant->magieRestante = 4;
+        emplacementestAttaquant->typeCombattant = BUGFIRE;
+        emplacementestAttaquant->physiqueRestant = 3;
+        emplacementestAttaquant->magieRestante = 4;
     }
-    else if (indicePNG == indiceFlyvolant)
+    else if (indicePNG == indiceFlyWalk)
     {
-        emplacementAttaquant->typeCombattant = FLY;
-        emplacementAttaquant->physiqueRestant = 2;
-        emplacementAttaquant->magieRestante = 2;
+        emplacementestAttaquant->typeCombattant = FLY;
+        emplacementestAttaquant->physiqueRestant = 2;
+        emplacementestAttaquant->magieRestante = 2;
     }
     else if (indicePNG == indiceMantiswalk)
     {
-        emplacementAttaquant->typeCombattant = MANTIS;
-        emplacementAttaquant->physiqueRestant = 5;
-        emplacementAttaquant->magieRestante = 0;
+        emplacementestAttaquant->typeCombattant = MANTIS;
+        emplacementestAttaquant->physiqueRestant = 5;
+        emplacementestAttaquant->magieRestante = 0;
     }
     else
     {
-        printf("Erreur dans la création de l'attaquant\n");
+        printf("Erreur dans la création de l'estAttaquant\n");
     }
 
-    emplacementAttaquant->spriteCourant = listeCourants[indiceEmplacementDansListeCourants];
+    emplacementestAttaquant->spriteCourant = listeCourants[indiceEmplacementDansListeCourants];
 
-    // listeCourants[i] = emplacementAttaquant->spriteCourant;
+    // listeCourants[i] = emplacementestAttaquant->spriteCourant;
     // printf("listeCourants[%d] == NULL : %d\n", i, listeCourants[i] == NULL);
 
-    tableauCombattants[indiceEmplacement] = emplacementAttaquant;
-    // printf(" creerAttaquant bis : indicePNG : %d, animation = %d, nbr imageshorizon : %d, nbr images vertic : %d, priorite affichage : %d\n", tableauCombattants[indiceEmplacement]->spriteCourant->spriteDeBase->indicePNG, tableauCombattants[indiceEmplacement]->spriteCourant->spriteDeBase->animation, tableauCombattants[indiceEmplacement]->spriteCourant->spriteDeBase->nbrImagesHorizontales, tableauCombattants[indiceEmplacement]->spriteCourant->spriteDeBase->nbrImagesVerticales, tableauCombattants[indiceEmplacement]->spriteCourant->spriteDeBase->prioriteAffichage);
+    tableauCombattants[indiceEmplacement] = emplacementestAttaquant;
+    // printf(" creerestAttaquant bis : indicePNG : %d, animation = %d, nbr imageshorizon : %d, nbr images vertic : %d, priorite affichage : %d\n", tableauCombattants[indiceEmplacement]->spriteCourant->spriteDeBase->indicePNG, tableauCombattants[indiceEmplacement]->spriteCourant->spriteDeBase->animation, tableauCombattants[indiceEmplacement]->spriteCourant->spriteDeBase->nbrImagesHorizontales, tableauCombattants[indiceEmplacement]->spriteCourant->spriteDeBase->nbrImagesVerticales, tableauCombattants[indiceEmplacement]->spriteCourant->spriteDeBase->prioriteAffichage);
 
-    // printf("attaquant créé ! indiceEmplacement = %d et indicePNG = %d et emplacement dans listeCourants : %d\n", indiceEmplacement, indicePNG, indiceEmplacementDansListeCourants);
+    // printf("estAttaquant créé ! indiceEmplacement = %d et indicePNG = %d et emplacement dans listeCourants : %d\n", indiceEmplacement, indicePNG, indiceEmplacementDansListeCourants);
     /*
         int j=0;
         while(listeCourants[j] != NULL){
             j++
         }
-        listeCourants[i] = emplacementAttaquant->spriteCourant;
+        listeCourants[i] = emplacementestAttaquant->spriteCourant;
     */
 }
 
-int creerSpriteCourant(SDL_Window *window, spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], indicesPNGs indicePNG)
+int creerSpriteCourant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], indicesPNGs indicePNG)
 {
 
     int emplacementLibreDansListeCourants = 0;
@@ -238,7 +240,7 @@ int creerSpriteCourant(SDL_Window *window, spriteBase_t *spritesDeBase[NBRTEXTUR
     return emplacementLibreDansListeCourants;
 }
 
-void cleanListeCourants(spriteCourant_t *listeCourants[tailleMaxSpritesCourants])
+void cleanListeCourants(spriteCourant_t *listeCourants[tailleMaxSpritesCourants]) // à utiliser avant de changer radicalement d'affichage (genre en passant de ACCUEIL à JEU par exemple)
 {
     for (int i = 0; i < tailleMaxSpritesCourants; i++)
     {
@@ -250,7 +252,22 @@ void cleanListeCourants(spriteCourant_t *listeCourants[tailleMaxSpritesCourants]
     }
 }
 
-void cleanListeCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS])
+void cleanCombattantsDeListeCourants(spriteCourant_t *listeCourants[tailleMaxSpritesCourants]) // à utiliser avant de lancer une nouvelle vague d'estAttaquants
+{
+    for (int i = 0; i < tailleMaxSpritesCourants; i++)
+    {
+        if (listeCourants[i] != NULL)
+        {
+            if (listeCourants[i]->spriteDeBase->indicePNG >= indiceBugfirewalk)
+            {
+                free(listeCourants[i]);
+                listeCourants[i] = NULL;
+            }
+        }
+    }
+}
+
+void cleanListeCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS]) //
 {
     for (int i = 0; i < NBRMAXCOMBATTANTS; i++)
     {
@@ -260,6 +277,46 @@ void cleanListeCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS])
             tableauCombattants[i] = NULL;
         }
     }
+}
+
+void switchEtatCombattants(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], typesCombattants_t familleCombattants, etatsCombattants_t etatArrivee)
+{
+
+    // int estAttaquant;
+    // int estDefenseur;
+    // if (familleCombattants == BUGFIRE || familleCombattants == FLY || familleCombattants == MANTIS)
+    // {
+    //     estAttaquant = 1;
+    //     estDefenseur = 0;
+    // }
+    // else if (familleCombattants == ROBOT || familleCombattants == ROBOTPETIT || familleCombattants == ROBOTMETAL)
+    // {
+    //     estAttaquant = 0;
+    //     estDefenseur = 1;
+    // }
+
+    for (int i = 0; i < NBRMAXCOMBATTANTS; i++)
+    {
+        if (tableauCombattants[i] != NULL)
+        {
+            if (tableauCombattants[i]->typeCombattant >= familleCombattants && tableauCombattants[i]->typeCombattant <= familleCombattants + 2)
+            {
+                tableauCombattants[i]->etatCombattant = etatArrivee;
+                // int indiceCreationDeSpriteCourant;
+                // indiceCreationDeSpriteCourant = creerSpriteCourant(spritesDeBase, listeCourants, retourIndicePNG(familleCombattants, etatArrivee));
+                free(tableauCombattants[i]->spriteCourant);
+                tableauCombattants[i]->spriteCourant = listeCourants[creerSpriteCourant(spritesDeBase, listeCourants, retourIndicePNG(familleCombattants, etatArrivee))];
+            }
+        }
+    }
+}
+
+int retourIndicePNG(typesCombattants_t familleCombattants, etatsCombattants_t etatArrivee){
+
+    int bonIndicePNG;
+    bonIndicePNG = familleCombattants * etatArrivee + indiceBugfirewalk;
+  
+    return bonIndicePNG;
 }
 
 // void supprCombattant(spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *listeCombattants[NBRMAXCOMBATTANTS], )
