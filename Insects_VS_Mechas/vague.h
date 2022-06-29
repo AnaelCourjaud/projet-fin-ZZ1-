@@ -5,7 +5,7 @@
 #include "affichage.h"
 
 //void TotalAttaque(insecte_t tableauAttaque[TAILLEMAX], int *totalphysique, int *totalmagie, int nbrEnnemis);
-void creationVague(spriteBase_t *spritesDeBase[NBRTEXTURES], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], spriteCourant_t *listeCourant[tailleMaxSpritesCourants]); // il faut bien que listeCombattants soit vide à l'execution de cette fonction
+void creationVague(SDL_Window *window, spriteBase_t *spritesDeBase[NBRTEXTURES], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], spriteCourant_t *listeCourant[tailleMaxSpritesCourants]); // il faut bien que listeCombattants soit vide à l'execution de cette fonction
 //void extractionEnnemisVivants(spriteCourant_t *listeCourants[tailleMaxSpritesCourants], int nombreEnnemiParType[3]);
 
 #endif

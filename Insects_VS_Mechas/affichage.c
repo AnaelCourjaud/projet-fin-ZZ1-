@@ -46,111 +46,223 @@ void creationTexte(char texte[], char style[], char police[], SDL_Renderer *rend
     SDL_DestroyTexture(text_texture);
 }
 
-void creationFond(SDL_Texture *my_texture, SDL_Window *window, SDL_Renderer *renderer, int x, int y)
-{
+// void creationFond(SDL_Texture *my_texture, SDL_Window *window, SDL_Renderer *renderer, int x, int y)
+// {
 
-    SDL_Rect
-        source = {0},            // Rectangle définissant la zone de la texture à récupérer
-        window_dimensions = {0}, // Rectangle définissant la fenêtre, on n'utilisera que largeur et hauteur
-        destination = {0};       // Rectangle définissant où la zone_source doit être déposée dans le renderer
+//     SDL_Rect
+//         source = {0},            // Rectangle définissant la zone de la texture à récupérer
+//         window_dimensions = {0}, // Rectangle définissant la fenêtre, on n'utilisera que largeur et hauteur
+//         destination = {0};       // Rectangle définissant où la zone_source doit être déposée dans le renderer
 
-    SDL_GetWindowSize(window, &window_dimensions.w, &window_dimensions.h); // Récupération des dimensions de la fenêtre
-    SDL_QueryTexture(my_texture, NULL, NULL, &source.w, &source.h);
+//     SDL_GetWindowSize(window, &window_dimensions.w, &window_dimensions.h); // Récupération des dimensions de la fenêtre
+//     SDL_QueryTexture(my_texture, NULL, NULL, &source.w, &source.h);
 
-    destination.x = x;
-    destination.y = y;
-    destination.w = window_dimensions.w;
-    destination.h = window_dimensions.h;
+//     destination.x = x;
+//     destination.y = y;
+//     destination.w = window_dimensions.w;
+//     destination.h = window_dimensions.h;
 
-    SDL_RenderCopy(renderer, my_texture, &source, &destination);
-}
+//     SDL_RenderCopy(renderer, my_texture, &source, &destination);
+// }
 
 void animation(SDL_Window *window, SDL_Renderer *renderer, spriteCourant_t *listeCourants[tailleMaxSpritesCourants])
 {
-    printf("debut animation\n");
-    for (int i = 0; i < 2; i++)
-    {printf("%d\n",i);
-        if (listeCourants[i]->spriteDeBase->animation == 1)
+    SDL_Rect window_dimensions = {0};
+    SDL_GetWindowSize(window, &window_dimensions.w, &window_dimensions.h); // Récupération des dimensions de la fenêtre
+
+    // printf("debut animation\n");
+    for (int i = 0; i < tailleMaxSpritesCourants; i++)
+    {
+        // printf("%d\n", i);
+        if (listeCourants[i] != NULL)
         {
-            printf("animation\n");
-            if (listeCourants[i]->retardateurRalenti <= 0)
+            // printf("pas nul\n");
+            // printf(" indicePNG : %d, animation = %d, nbr imageshorizon : %d, nbr images vertic : %d, priorite affichage : %d\n", listeCourants[i]->spriteDeBase->indicePNG, listeCourants[i]->spriteDeBase->animation, listeCourants[i]->spriteDeBase->nbrImagesHorizontales, listeCourants[i]->spriteDeBase->nbrImagesVerticales, listeCourants[i]->spriteDeBase->prioriteAffichage);
+            if (listeCourants[i]->spriteDeBase->animation == 1)
             {
-                listeCourants[i]->source.x = (listeCourants[i]->numImageEnCours % listeCourants[i]->spriteDeBase->nbrImagesHorizontales) * listeCourants[i]->source.w;
-                listeCourants[i]->source.y = (listeCourants[i]->numImageEnCours / listeCourants[i]->spriteDeBase->nbrImagesHorizontales) * listeCourants[i]->source.h;
-
-                listeCourants[i]->numImageEnCours++;
-                if (listeCourants[i]->numImageEnCours >= listeCourants[i]->spriteDeBase->nbrImagesHorizontales * listeCourants[i]->spriteDeBase->nbrImagesVerticales)
+                // printf("animation\n");
+                if (listeCourants[i]->retardateurRalenti <= 0)
                 {
-                    listeCourants[i]->numImageEnCours = 0;
-                }
-                listeCourants[i]->retardateurRalenti = listeCourants[i]->spriteDeBase->ralenti;
-            }else{
-                listeCourants[i]->retardateurRalenti--;
-            }
-        }
+                    listeCourants[i]->source.x = (listeCourants[i]->numImageEnCours % listeCourants[i]->spriteDeBase->nbrImagesHorizontales) * listeCourants[i]->source.w;
+                    listeCourants[i]->source.y = (listeCourants[i]->numImageEnCours / listeCourants[i]->spriteDeBase->nbrImagesHorizontales) * listeCourants[i]->source.h;
 
-        SDL_RenderCopy(renderer, listeCourants[i]->spriteDeBase->textureSprite, &listeCourants[i]->source, &listeCourants[i]->destination);
-        printf("apres copy\n");
+                    listeCourants[i]->numImageEnCours++;
+                    if (listeCourants[i]->numImageEnCours >= listeCourants[i]->spriteDeBase->nbrImagesHorizontales * listeCourants[i]->spriteDeBase->nbrImagesVerticales)
+                    {
+                        listeCourants[i]->numImageEnCours = 0;
+                    }
+                    listeCourants[i]->retardateurRalenti = listeCourants[i]->spriteDeBase->ralenti;
+                }
+                else
+                {
+                    listeCourants[i]->retardateurRalenti--;
+                }
+            }
+
+            listeCourants[i]->destination.w = window_dimensions.w * listeCourants[i]->spriteDeBase->wCoefReductionDestination;
+            listeCourants[i]->destination.h = window_dimensions.h * listeCourants[i]->spriteDeBase->hCoefReductionDestination;
+            // maillonSpriteCourant->destination.w = window_dimensions.w * maillonSpriteCourant->spriteDeBase->wCoefReductionDestination;
+            // maillonSpriteCourant->destination.h = window_dimensions.h * maillonSpriteCourant->spriteDeBase->hCoefReductionDestination;
+            SDL_RenderCopy(renderer, listeCourants[i]->spriteDeBase->textureSprite, &listeCourants[i]->source, &listeCourants[i]->destination);
+            // printf("apres copy\n");
+        }
     }
 }
 
+void creerAttaquant(SDL_Window *window, spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], indicesPNGs indicePNG, int indiceEmplacement)
+{
 
-void creerAttaquant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], indicesPNGs indicePNG, int indiceEmplacement){
-    
-    printf("début créer attaquant\n");
+    // printf("début créer attaquant\n");
+
+    int indiceEmplacementDansListeCourants;
+    // while (listeCourants[indiceEmplacementDansListeCourants] != NULL)
+    // {
+    //     indiceEmplacementDansListeCourants++;
+    // }
+    // indiceEmplacementDansListeCourants = 0;
+    // printf(" indicePNG : %d\n", indicePNG);
+    indiceEmplacementDansListeCourants = creerSpriteCourant(window, spritesDeBase, listeCourants, indicePNG);
+    // printf(" creerAttaquant : indicePNG : %d, animation = %d, nbr imageshorizon : %d, nbr images vertic : %d, priorite affichage : %d\n", listeCourants[indiceEmplacementDansListeCourants]->spriteDeBase->indicePNG, listeCourants[indiceEmplacementDansListeCourants]->spriteDeBase->animation, listeCourants[indiceEmplacementDansListeCourants]->spriteDeBase->nbrImagesHorizontales, listeCourants[indiceEmplacementDansListeCourants]->spriteDeBase->nbrImagesVerticales, listeCourants[indiceEmplacementDansListeCourants]->spriteDeBase->prioriteAffichage);
+
     combattant_t *emplacementAttaquant = malloc(sizeof(combattant_t));
-    emplacementAttaquant->spriteCourant = malloc(sizeof(spriteCourant_t));
-    emplacementAttaquant->spriteCourant->spriteDeBase = spritesDeBase[indicePNG];
+    // emplacementAttaquant->spriteCourant = malloc(sizeof(spriteCourant_t));
+    // emplacementAttaquant->spriteCourant->spriteDeBase = spritesDeBase[indicePNG];
 
-    emplacementAttaquant->spriteCourant->source.x = 0;
-    emplacementAttaquant->spriteCourant->source.y = 0;
-    emplacementAttaquant->spriteCourant->source.w = 200;
-    emplacementAttaquant->spriteCourant->source.h = 200;
+    // emplacementAttaquant->spriteCourant->source.x = 0;
+    // emplacementAttaquant->spriteCourant->source.y = 0;
+    // emplacementAttaquant->spriteCourant->source.w = 200;
+    // emplacementAttaquant->spriteCourant->source.h = 200;
 
-    emplacementAttaquant->spriteCourant->destination.x = 0;
-    emplacementAttaquant->spriteCourant->destination.y = 0;
-    emplacementAttaquant->spriteCourant->destination.w = 200;
-    emplacementAttaquant->spriteCourant->destination.h = 200;
+    // emplacementAttaquant->spriteCourant->destination.x = 0;
+    // emplacementAttaquant->spriteCourant->destination.y = 0;
+    // emplacementAttaquant->spriteCourant->destination.w = 200;
+    // emplacementAttaquant->spriteCourant->destination.h = 200;
 
-    emplacementAttaquant->spriteCourant->numImageEnCours = 0;
-    emplacementAttaquant->spriteCourant->retardateurRalenti = emplacementAttaquant->spriteCourant->spriteDeBase->ralenti;
-    if(indicePNG == indiceBugfirewalk){
+    // emplacementAttaquant->spriteCourant->numImageEnCours = 0;
+    // emplacementAttaquant->spriteCourant->retardateurRalenti = emplacementAttaquant->spriteCourant->spriteDeBase->ralenti;
+    if (indicePNG == indiceBugfirewalk)
+    {
         emplacementAttaquant->typeCombattant = BUGFIRE;
         emplacementAttaquant->physiqueRestant = 3;
         emplacementAttaquant->magieRestante = 4;
-    }else if(indicePNG == indiceFlyvolant){
+    }
+    else if (indicePNG == indiceFlyvolant)
+    {
         emplacementAttaquant->typeCombattant = FLY;
         emplacementAttaquant->physiqueRestant = 2;
         emplacementAttaquant->magieRestante = 2;
-    }else if(indicePNG == indiceMantiswalk){
+    }
+    else if (indicePNG == indiceMantiswalk)
+    {
         emplacementAttaquant->typeCombattant = MANTIS;
         emplacementAttaquant->physiqueRestant = 5;
         emplacementAttaquant->magieRestante = 0;
-    }else{
+    }
+    else
+    {
         printf("Erreur dans la création de l'attaquant\n");
     }
-    
-    int i=0;
-    while(listeCourants[i] != NULL){
-        i++;
-    }
-    listeCourants[i] = emplacementAttaquant->spriteCourant;
-    printf("listeCourants[%d] == NULL : %d\n", i, listeCourants[i] == NULL);
+
+    emplacementAttaquant->spriteCourant = listeCourants[indiceEmplacementDansListeCourants];
+
+    // listeCourants[i] = emplacementAttaquant->spriteCourant;
+    // printf("listeCourants[%d] == NULL : %d\n", i, listeCourants[i] == NULL);
 
     tableauCombattants[indiceEmplacement] = emplacementAttaquant;
-    printf("attaquant créé ! indiceEmplacement = %d et indicePNG = %d et emplacement dans listeCourants : %d\n", indiceEmplacement, indicePNG, i);
-/*
-    int j=0;
-    while(listeCourants[j] != NULL){
-        j++
-    }
-    listeCourants[i] = emplacementAttaquant->spriteCourant;
-*/
+    // printf(" creerAttaquant bis : indicePNG : %d, animation = %d, nbr imageshorizon : %d, nbr images vertic : %d, priorite affichage : %d\n", tableauCombattants[indiceEmplacement]->spriteCourant->spriteDeBase->indicePNG, tableauCombattants[indiceEmplacement]->spriteCourant->spriteDeBase->animation, tableauCombattants[indiceEmplacement]->spriteCourant->spriteDeBase->nbrImagesHorizontales, tableauCombattants[indiceEmplacement]->spriteCourant->spriteDeBase->nbrImagesVerticales, tableauCombattants[indiceEmplacement]->spriteCourant->spriteDeBase->prioriteAffichage);
+
+    // printf("attaquant créé ! indiceEmplacement = %d et indicePNG = %d et emplacement dans listeCourants : %d\n", indiceEmplacement, indicePNG, indiceEmplacementDansListeCourants);
+    /*
+        int j=0;
+        while(listeCourants[j] != NULL){
+            j++
+        }
+        listeCourants[i] = emplacementAttaquant->spriteCourant;
+    */
 }
 
+int creerSpriteCourant(SDL_Window *window, spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], indicesPNGs indicePNG)
+{
 
+    int emplacementLibreDansListeCourants = 0;
+    while (listeCourants[emplacementLibreDansListeCourants] != NULL)
+    {
+        emplacementLibreDansListeCourants++;
 
-//void supprCombattant(spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *listeCombattants[NBRMAXCOMBATTANTS], )
+        if (emplacementLibreDansListeCourants >= tailleMaxSpritesCourants)
+        {
+            printf("Erreur : plus d'emplacement libre dans listeCourants\n");
+        }
+    }
+
+    spriteCourant_t *maillonSpriteCourant = malloc(sizeof(spriteCourant_t));
+    // spriteBase_t *maillonCopieBase = malloc(sizeof(spriteBase_t));
+    // // maillonSpriteCourant->spriteDeBase
+    // maillonCopieBase->textureSprite = spritesDeBase[indicePNG]->textureSprite;
+    // maillonCopieBase->indicePNG = spritesDeBase[indicePNG]->indicePNG;
+    // maillonCopieBase->prioriteAffichage = spritesDeBase[indicePNG]->prioriteAffichage;
+    // maillonCopieBase->animation = spritesDeBase[indicePNG]->animation;
+    // maillonCopieBase->nbrImagesHorizontales = spritesDeBase[indicePNG]->nbrImagesHorizontales;
+    // maillonCopieBase->nbrImagesVerticales = spritesDeBase[indicePNG]->nbrImagesVerticales;
+    // maillonCopieBase->ralenti = spritesDeBase[indicePNG]->ralenti;
+
+    maillonSpriteCourant->spriteDeBase = spritesDeBase[indicePNG];
+
+    // printf(" creerSpriteCourant : indicePNG : %d, animation = %d, nbr imageshorizon : %d, nbr images vertic : %d, priorite affichage : %d\n", maillonSpriteCourant->spriteDeBase->indicePNG, maillonSpriteCourant->spriteDeBase->animation, maillonSpriteCourant->spriteDeBase->nbrImagesHorizontales, maillonSpriteCourant->spriteDeBase->nbrImagesVerticales, maillonSpriteCourant->spriteDeBase->prioriteAffichage);
+    // SDL_Rect window_dimensions = {0};
+    // SDL_GetWindowSize(window, &window_dimensions.w, &window_dimensions.h); // Récupération des dimensions de la fenêtre
+
+    maillonSpriteCourant->source.x = 0;
+    maillonSpriteCourant->source.y = 0;
+    maillonSpriteCourant->source.w = 0;
+    maillonSpriteCourant->source.h = 0;
+
+    SDL_QueryTexture(maillonSpriteCourant->spriteDeBase->textureSprite, NULL, NULL, &maillonSpriteCourant->source.w, &maillonSpriteCourant->source.h);
+
+    if (maillonSpriteCourant->spriteDeBase->animation == 1)
+    {
+        maillonSpriteCourant->source.w = maillonSpriteCourant->source.w / maillonSpriteCourant->spriteDeBase->nbrImagesHorizontales;
+        maillonSpriteCourant->source.h = maillonSpriteCourant->source.h / maillonSpriteCourant->spriteDeBase->nbrImagesVerticales;
+    }
+
+    maillonSpriteCourant->destination.x = 0;
+    maillonSpriteCourant->destination.y = 0;
+    maillonSpriteCourant->destination.w = 0; // window_dimensions.w * maillonSpriteCourant->spriteDeBase->wCoefReductionDestination;
+    maillonSpriteCourant->destination.h = 0; // window_dimensions.h * maillonSpriteCourant->spriteDeBase->hCoefReductionDestination;
+
+    maillonSpriteCourant->numImageEnCours = 0;
+    maillonSpriteCourant->retardateurRalenti = maillonSpriteCourant->spriteDeBase->ralenti;
+
+    listeCourants[emplacementLibreDansListeCourants] = maillonSpriteCourant;
+
+    return emplacementLibreDansListeCourants;
+}
+
+void cleanListeCourants(spriteCourant_t *listeCourants[tailleMaxSpritesCourants])
+{
+    for (int i = 0; i < tailleMaxSpritesCourants; i++)
+    {
+        if (listeCourants[i] != NULL)
+        {
+            free(listeCourants[i]);
+            listeCourants[i] = NULL;
+        }
+    }
+}
+
+void cleanListeCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS])
+{
+    for (int i = 0; i < NBRMAXCOMBATTANTS; i++)
+    {
+        if (tableauCombattants[i] != NULL)
+        {
+            free(tableauCombattants[i]);
+            tableauCombattants[i] = NULL;
+        }
+    }
+}
+
+// void supprCombattant(spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *listeCombattants[NBRMAXCOMBATTANTS], )
 
 /*
 
