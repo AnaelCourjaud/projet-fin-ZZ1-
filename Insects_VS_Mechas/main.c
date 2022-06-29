@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     spriteCourant_t *listeCourants[tailleMaxSpritesCourants]; // le maximum de sprites courants à afficher
     combattant_t *listeCombattants[NBRMAXCOMBATTANTS];
 
-    int listeCompo[20][3] = {{BUGFIRE, NULL, NULL}, {FLY, NULL, NULL}, {MANTIS, NULL, NULL}, {BUGFIRE, BUGFIRE, NULL}, {FLY, FLY, NULL}, {MANTIS, MANTIS, NULL}, {BUGFIRE, FLY, NULL}, {BUGFIRE, MANTIS, NULL}, {FLY, MANTIS, NULL}, {BUGFIRE, BUGFIRE, BUGFIRE}, {FLY, FLY, FLY}, {MANTIS, MANTIS, MANTIS}, {BUGFIRE, BUGFIRE, FLY}, {BUGFIRE, BUGFIRE, MANTIS}, {FLY, FLY, BUGFIRE}, {FLY, FLY, MANTIS}, {MANTIS, MANTIS, BUGFIRE}, {MANTIS, MANTIS, FLY}, {BUGFIRE, FLY, MANTIS}};
+    // int listeCompo[20][3] = {{BUGFIRE, NULL, NULL}, {FLY, NULL, NULL}, {MANTIS, NULL, NULL}, {BUGFIRE, BUGFIRE, NULL}, {FLY, FLY, NULL}, {MANTIS, MANTIS, NULL}, {BUGFIRE, FLY, NULL}, {BUGFIRE, MANTIS, NULL}, {FLY, MANTIS, NULL}, {BUGFIRE, BUGFIRE, BUGFIRE}, {FLY, FLY, FLY}, {MANTIS, MANTIS, MANTIS}, {BUGFIRE, BUGFIRE, FLY}, {BUGFIRE, BUGFIRE, MANTIS}, {FLY, FLY, BUGFIRE}, {FLY, FLY, MANTIS}, {MANTIS, MANTIS, BUGFIRE}, {MANTIS, MANTIS, FLY}, {BUGFIRE, FLY, MANTIS}};
 
     // ************** Initialisation de la SDL  + gestion de l'échec possible *********
     // ********************************************************************************
@@ -45,13 +45,13 @@ int main(int argc, char *argv[])
 
     window = SDL_CreateWindow("Insects_VS_Mechas", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, tailleFenetre.w, tailleFenetre.h, SDL_WINDOW_RESIZABLE);
     if (window == NULL)
-        end_sdl(0, "ERROR WINDOW CREATION", window, renderer, listeCourants);
+        end_sdl(0, "ERROR WINDOW CREATION", window, renderer, spritesDeBase, listeCourants);
 
     //  ************************* Création du renderer *************************
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (renderer == NULL)
-        end_sdl(0, "ERROR RENDERER CREATION", window, renderer, listeCourants);
+        end_sdl(0, "ERROR RENDERER CREATION", window, renderer, spritesDeBase, listeCourants);
 
     // ********************************************************************************
     // ********************************************************************************
@@ -124,141 +124,144 @@ int main(int argc, char *argv[])
     //     azer++;
     // }
 
-    int repet = 0;
-    while (repet < 20)
-    {
-        repet++;
+    // int repet = 0;
+    // while (repet < 20)
+    // {
 
-        animation(window, renderer, listeCourants);
+    //     animation(renderer, listeCourants);
+
+    //     SDL_RenderPresent(renderer);
+    //     SDL_RenderClear(renderer);
+    //     printf("avant délai\n");
+    //     SDL_Delay(20);
+    //     // printf("après délai %d\n",fond->numImageEnCours);
+    //     repet++;
+    //     printf(" repet : %d", repet);
+    // }
+
+    // SDL_Texture *sprite1;
+    // SDL_Texture *sprite2;
+    // SDL_Texture *textureFond;
+
+    SDL_bool program_on = SDL_TRUE; // Booléen pour dire que le programme doit continuer
+    SDL_Event event;                // c'est le type IMPORTANT !!
+
+    int ETATJEU = ACCUEIL;
+
+    // int i = 0;
+    // int j=0;
+
+    // sprite_t fondAccueil;
+    // sprite_t lore1;
+    // sprite_t lore2;
+    // sprite_t lore3;
+
+    while (program_on)
+    {
+        // Voilà la boucle des évènements
+        int interessant = 0;
+        // int choixFait = 0;
+
+        // *************************  Gestion des evenements *****************************
+        //
+        // *******************************************************************************
+
+        while ((interessant == 0) && (SDL_PollEvent(&event)))
+        { // tant que la file d'évènements n'est pas vide : défiler l'élément en tête et l'on a pas d'évènements interessants à traiter
+            // de file dans 'event'
+            switch (event.type)
+            {
+            case SDL_QUIT:
+                interessant = 1;        // Un évènement simple, on a cliqué sur la x de la fenêtre
+                program_on = SDL_FALSE; // Il est temps d'arrêter le programme
+                break;
+            case SDL_KEYUP: // Le type de event est : une touche lachée
+
+                switch (event.key.keysym.sym)
+                { // la touche appuyée est ...
+                case SDLK_SPACE:
+                    if (ETATJEU == ACCUEIL)
+                    {
+                        ETATJEU = LORE1;
+                    }
+                    else if (ETATJEU == LORE1)
+                    {
+                        ETATJEU = LORE2;
+                    }
+                    else if (ETATJEU == LORE2)
+                    {
+                        ETATJEU = LORE3;
+                    }
+                    else if (ETATJEU == LORE3)
+                    {
+                        ETATJEU = VAGUE;
+                    }
+                    interessant = 1;
+
+                default: // L'évènement défilé ne nous intéresse pas
+                    break;
+                }
+            default:
+                break;
+            }
+        }
+        // interessant = 0;
+
+        switch (ETATJEU)
+        {
+        case ERREUR:
+            break;
+        case ACCUEIL:
+            printf("Accueil\n");
+            // fondAccueil.textureSprite = texture[indiceFondAccueil];
+            // creationFond(fondAccueil.textureSprite, window, renderer, 0, 0);
+            break;
+        case LORE1:
+            printf("lore1\n");
+            // lore1.textureSprite = texture[indiceLore1];
+            // creationFond(lore1.textureSprite, window, renderer, 0, 0);
+
+            break;
+        case LORE2:
+            printf("lore2\n");
+            // lore2.textureSprite = texture[indiceLore2];
+            // creationFond(lore2.textureSprite, window, renderer, 0, 0);
+
+            break;
+        case LORE3:
+            printf("lore3\n");
+            // lore3.textureSprite = texture[indiceLore3];
+            // creationFond(lore3.textureSprite, window, renderer, 0, 0);
+
+            break;
+        case VAGUE:
+            printf("Jeu en route\n");
+            animation(renderer, listeCourants);
+
+            break;
+        case ATTENTERIPOSTE:
+
+            break;
+        case RIPOSTE:
+
+            break;
+        case FINDEVAGUE:
+
+            break;
+        case FINJEU:
+
+            break;
+        default:
+            ETATJEU = ERREUR;
+            break;
+        }
 
         SDL_RenderPresent(renderer);
         SDL_RenderClear(renderer);
-        printf("avant délai\n");
         SDL_Delay(20);
-        // printf("après délai %d\n",fond->numImageEnCours);
-        printf(" repet : %d", repet);
     }
 
-    /*
-        SDL_Texture *sprite1;
-        SDL_Texture *sprite2;
-        SDL_Texture *textureFond;
-
-        SDL_bool program_on = SDL_TRUE; // Booléen pour dire que le programme doit continuer
-        SDL_Event event;                // c'est le type IMPORTANT !!
-
-        int ETATJEU = ACCUEIL;
-        /*
-        int i = 0;
-        int j=0;
-
-        sprite_t fondAccueil;
-        sprite_t lore1;
-        sprite_t lore2;
-        sprite_t lore3;
-
-*/
-    /*
-        while (program_on)
-        {
-            // Voilà la boucle des évènements
-            int interessant = 0;
-            int choixFait = 0;
-
-            // *************************  Gestion des evenements *****************************
-            //
-            // *******************************************************************************
-
-            while ((interessant == 0) && (SDL_PollEvent(&event)))
-            {   // tant que la file d'évènements n'est pas vide : défiler l'élément en tête et l'on a pas d'évènements interessants à traiter
-                // de file dans 'event'
-                switch (event.type)
-                {
-                case SDL_QUIT:
-                    interessant = 1;        // Un évènement simple, on a cliqué sur la x de la fenêtre
-                    program_on = SDL_FALSE; // Il est temps d'arrêter le programme
-                    break;
-                case SDL_KEYUP: // Le type de event est : une touche lachée
-
-                    switch (event.key.keysym.sym)
-                    { // la touche appuyée est ...
-                    case SDLK_SPACE:
-                        if (ETATJEU == ACCUEIL)
-                        {
-                            ETATJEU = LORE1;
-                        }
-                        else if (ETATJEU == LORE1)
-                        {
-                            ETATJEU = LORE2;
-                        }
-                        else if (ETATJEU == LORE2)
-                        {
-                            ETATJEU = LORE3;
-                        }
-                        else if (ETATJEU == LORE3)
-                        {
-                            ETATJEU = VAGUE;
-                        }
-
-                    default: // L'évènement défilé ne nous intéresse pas
-                        break;
-                    }
-                interessant = 0;
-                    }
-
-
-
-            switch (ETATJEU)
-            {
-            case ERREUR:
-                break;
-            case ACCUEIL:
-                fondAccueil.textureSprite = texture[indiceFondAccueil];
-                creationFond(fondAccueil.textureSprite, window, renderer, 0, 0);
-                break;
-            case LORE1:
-                lore1.textureSprite = texture[indiceLore1];
-                creationFond(lore1.textureSprite, window, renderer, 0, 0);
-
-                break;
-            case LORE2:
-                lore2.textureSprite = texture[indiceLore2];
-                creationFond(lore2.textureSprite, window, renderer, 0, 0);
-
-                break;
-            case LORE3:
-                lore3.textureSprite = texture[indiceLore3];
-                creationFond(lore3.textureSprite, window, renderer, 0, 0);
-
-
-                break;
-            case VAGUE:
-                printf("Jeu en route");
-
-                break;
-            case ATTENTERIPOSTE:
-
-                break;
-            case RIPOSTE:
-
-                break;
-            case FINDEVAGUE:
-
-                break;
-            case FINJEU:
-
-                break;
-            default:
-                ETATJEU = ERREUR;
-                break;
-            }
-
-            SDL_RenderPresent(renderer);
-            SDL_Delay(150);
-        }
-        }
-    */
-
-    end_sdl(1, "FIN NORMALE", window, renderer, listeCourants);
+    // printf(" juste avant end_sdl\n");
+    end_sdl(1, "FIN NORMALE", window, renderer, spritesDeBase, listeCourants);
     return 0;
 }

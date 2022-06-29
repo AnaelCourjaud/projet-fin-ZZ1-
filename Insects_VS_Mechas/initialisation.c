@@ -30,7 +30,7 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
         spritesDeBase[i] = malloc(sizeof(spriteBase_t));
         spritesDeBase[i]->textureSprite = IMG_LoadTexture(renderer, nomFichiers[i]);
         if (spritesDeBase[i]->textureSprite == NULL)
-            end_sdl(0, "Echec du chargement de l'image dans la texture", window, renderer, listeCourants);
+            end_sdl(0, "Echec du chargement de l'image dans la texture", window, renderer, spritesDeBase, listeCourants);
 
         spritesDeBase[i]->indicePNG = i;
         spritesDeBase[i]->animation = 1;
@@ -46,22 +46,30 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
         {
             spritesDeBase[i]->prioriteAffichage = TOUTDEVANT;
             spritesDeBase[i]->animation = 0;
+            spritesDeBase[i]->wCoefReductionDestination = 1.0;
+            spritesDeBase[i]->hCoefReductionDestination = 1.0;
         }
         else if (i == indiceFond)
         {
             spritesDeBase[i]->prioriteAffichage = TOUTDERRIERE;
             spritesDeBase[i]->nbrImagesHorizontales = 7;
             spritesDeBase[i]->nbrImagesVerticales = 4;
+            spritesDeBase[i]->wCoefReductionDestination = 1.0;
+            spritesDeBase[i]->hCoefReductionDestination = 1.0;
         }
         else if (i == indicePasserelleFinie)
         {
             spritesDeBase[i]->prioriteAffichage = DERRIERE;
             spritesDeBase[i]->animation = 0;
+            spritesDeBase[i]->wCoefReductionDestination = 1.0;
+            spritesDeBase[i]->hCoefReductionDestination = 1.0;
         }
         else if (i == indiceBatiment2)
         {
             spritesDeBase[i]->prioriteAffichage = MILIEU;
             spritesDeBase[i]->animation = 0;
+            spritesDeBase[i]->wCoefReductionDestination = 1.0;
+            spritesDeBase[i]->hCoefReductionDestination = 1.0;
         }
         else if (i >= indiceBugfirewalk)
         {
@@ -95,10 +103,14 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
                 spritesDeBase[i]->typeSprite = ROBOTPETIT;
                 */
 
+            spritesDeBase[i]->wCoefReductionDestination = 0.10;
+            spritesDeBase[i]->hCoefReductionDestination = 0.20;
             spritesDeBase[i]->prioriteAffichage = DEVANT;
         }
         else
         {
+            spritesDeBase[i]->wCoefReductionDestination = 1.0;
+            spritesDeBase[i]->hCoefReductionDestination = 1.0;
             spritesDeBase[i]->prioriteAffichage = TOUTDEVANT;
             spritesDeBase[i]->animation = 0;
         }
@@ -108,7 +120,7 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
 
     for (int i = 0; i < tailleMaxSpritesCourants; i++)
     {
-        listeCourants[i] = NULL;
+        listeCourants[i] = NULL; // malloc(sizeof(spriteCourant_t));
     }
 
     // *******************************Initialisation de la liste des combattants ************************
@@ -116,7 +128,7 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
 
     for (int i = 0; i < NBRMAXCOMBATTANTS; i++)
     {
-        listeCombattants[i] = NULL;
+        listeCombattants[i] = NULL; // malloc(sizeof(combattant_t));
     }
 
     // ******************************* récupération des polices + stockage + test  *********************
@@ -126,14 +138,14 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
     {
         tabPolices[i] = TTF_OpenFont(nomPolices[i], taillePolices[i]);
         if (tabPolices[i] == NULL)
-            end_sdl(0, "Echec du chargement de la police", window, renderer, listeCourants);
+            end_sdl(0, "Echec du chargement de la police", window, renderer, spritesDeBase, listeCourants);
     }
 }
 
 void end_sdl(char ok,            // fin anormale : ok = 0 ; normale ok = 1
              char const *msg,    // message à afficher
              SDL_Window *window, // fenêtre à fermer
-             SDL_Renderer *renderer, spriteCourant_t *listeCourants[tailleMaxSpritesCourants])
+             SDL_Renderer *renderer, spriteBase_t *spritesDebase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants])
 { // renderer à fermer
     char msg_formated[255];
     int l;
@@ -169,9 +181,9 @@ void end_sdl(char ok,            // fin anormale : ok = 0 ; normale ok = 1
     // ******************************* free du tableau sprites de base  *********************************
     // **************************************************************************************************
 
-    for (int i = 0; i < tailleMaxSpritesCourants; i++)
+    for (int i = 0; i < NBRTEXTURES; i++)
     {
-        free(listeCourants[i]);
+        free(spritesDebase[i]);
     }
 
     SDL_DestroyRenderer(renderer);

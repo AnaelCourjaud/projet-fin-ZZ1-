@@ -80,6 +80,8 @@ typedef struct spriteBase {
     //SDL_Rect source;
     //SDL_Rect destination;
     enum typePA prioriteAffichage;
+    float wCoefReductionDestination;
+    float hCoefReductionDestination;
     
     int animation;
     int nbrImagesHorizontales;
