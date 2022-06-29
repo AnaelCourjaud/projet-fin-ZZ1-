@@ -6,6 +6,9 @@
 
 int main(int argc, char *argv[])
 {
+
+// modif de fouuuuuuu lol 
+
     srand(time(NULL)); 
 
     SDL_Window *window = NULL;
