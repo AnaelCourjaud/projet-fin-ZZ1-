@@ -1,14 +1,10 @@
 #include "initialisation.h"
 #include "affichage.h"
-//#include "affichageAttaque.h"
 #include "general.h"
 #include "vague.h"
 
 int main(int argc, char *argv[])
 {
-
-    // modif de fouuuuuuu lol
-
     srand(time(NULL));
 
     SDL_Window *window = NULL;
@@ -61,103 +57,13 @@ int main(int argc, char *argv[])
     // ********************************************************************************
 
     init(window, renderer, tabPolices, spritesDeBase, listeCourants, listeCombattants);
-    /*
-        for (int i = 0; i < tailleMaxSpritesCourants; i++)
-        {
-            spriteCourant_t *courant = malloc(sizeof(spriteCourant_t));
-            listeCourants[i] = courant;
-        }
-        */
-
-    // on va initialiser que les deux premiers car trop long sinon
-    /*
-    listeCourants[0] = malloc(sizeof(spriteCourant_t));
-    listeCourants[1] = malloc(sizeof(spriteCourant_t));
-
-        listeCourants[0]->spriteDeBase = spritesDeBase[indiceFond];
-        listeCourants[0]->numImageEnCours = 0;
-        listeCourants[0]->retardateurRalenti = listeCourants[0]->spriteDeBase->ralenti;
-
-        listeCourants[1]->spriteDeBase = spritesDeBase[indicePasserelleFinie];
-
-        SDL_Rect window_dimensions = {0};
-        SDL_GetWindowSize(window, &window_dimensions.w, &window_dimensions.h); // Récupération des dimensions de la fenêtre
-
-        listeCourants[0]->source.x = 0;
-        listeCourants[0]->source.y = 0;
-        listeCourants[0]->source.w = 0;
-        listeCourants[0]->source.h = 0; // Rectangle définissant la zone de la texture à récupérer
-        // Rectangle définissant la fenêtre, on n'utilisera que largeur et hauteur
-        listeCourants[0]->destination.x = 0;
-        listeCourants[0]->destination.y = 0;
-        listeCourants[0]->destination.w = window_dimensions.w;
-        listeCourants[0]->destination.h = window_dimensions.h; // Rectangle définissant où la zone_source doit être déposée dans le renderer
-
-        SDL_QueryTexture(listeCourants[0]->spriteDeBase->textureSprite, NULL, NULL, &listeCourants[0]->source.w, &listeCourants[0]->source.h);
-
-        listeCourants[0]->source.w = listeCourants[0]->source.w / listeCourants[0]->spriteDeBase->nbrImagesHorizontales;
-        listeCourants[0]->source.h = listeCourants[0]->source.h / listeCourants[0]->spriteDeBase->nbrImagesVerticales;
-
-        listeCourants[1]->source.x = 0;
-        listeCourants[1]->source.y = 0;
-        listeCourants[1]->source.w = 0;
-        listeCourants[1]->source.h = 0; // Rectangle définissant la zone de la texture à récupérer
-        // Rectangle définissant la fenêtre, on n'utilisera que largeur et hauteur
-        listeCourants[1]->destination.x = 0;
-        listeCourants[1]->destination.y = 0;
-        listeCourants[1]->destination.w = window_dimensions.w;
-        listeCourants[1]->destination.h = window_dimensions.h; // Rectangle définissant où la zone_source doit être déposée dans le renderer
-
-        SDL_QueryTexture(listeCourants[1]->spriteDeBase->textureSprite, NULL, NULL, &listeCourants[1]->source.w, &listeCourants[1]->source.h);
-
-        // listeCourants[1]->source.w = listeCourants[1]->source.w / listeCourants[1]->spriteDeBase->nbrImagesHorizontales;
-        // listeCourants[1]->source.h = listeCourants[1]->source.h / listeCourants[1]->spriteDeBase->nbrImagesVerticales;
-    */
-    // printf("fin creation vague\n");
-
-    // printf("0 == 0 : %d\n", 0 == 0);
-
-    // for(int i=0;i<tailleMaxSpritesCourants;i++){
-    //     printf("listeCourrants[%d] == NULL : %d\n",i,listeCourants[i]==NULL);
-    // }
-
-    // int azer=0;
-    // while(listeCourants[azer] != NULL){
-    //     printf("%d\n",azer);
-    //     azer++;
-    // }
-
-    // int repet = 0;
-    // while (repet < 20)
-    // {
-
-    //     animation(renderer, listeCourants);
-
-    //     SDL_RenderPresent(renderer);
-    //     SDL_RenderClear(renderer);
-    //     printf("avant délai\n");
-    //     SDL_Delay(20);
-    //     // printf("après délai %d\n",fond->numImageEnCours);
-    //     repet++;
-    //     printf(" repet : %d", repet);
-    // }
-
-    // SDL_Texture *sprite1;
-    // SDL_Texture *sprite2;
-    // SDL_Texture *textureFond;
 
     SDL_bool program_on = SDL_TRUE; // Booléen pour dire que le programme doit continuer
     SDL_Event event;                // c'est le type IMPORTANT !!
 
     int ETATJEU = ACCUEIL;
 
-    // int i = 0;
-    // int j=0;
-
-    // sprite_t fondAccueil;
-    // sprite_t lore1;
-    // sprite_t lore2;
-    // sprite_t lore3;
+    creerSpriteCourant(spritesDeBase, listeCourants, indiceFondAccueil, 0.0, 0.0);
 
     while (program_on)
     {
@@ -178,32 +84,54 @@ int main(int argc, char *argv[])
                 interessant = 1;        // Un évènement simple, on a cliqué sur la x de la fenêtre
                 program_on = SDL_FALSE; // Il est temps d'arrêter le programme
                 break;
-            case SDL_KEYUP: // Le type de event est : une touche lachée
+            case SDL_KEYUP: // Le type de event est : une touche relâchée
 
                 switch (event.key.keysym.sym)
                 { // la touche appuyée est ...
+                case SDLK_ESCAPE:
+                    interessant = 1;
+                    program_on = SDL_FALSE;
+                    break;
                 case SDLK_SPACE:
                     if (ETATJEU == ACCUEIL)
                     {
+                        cleanListeCourants(listeCourants);
+                        creerSpriteCourant(spritesDeBase, listeCourants, indiceLore1, 0.0, 0.0);
                         ETATJEU = LORE1;
                     }
                     else if (ETATJEU == LORE1)
                     {
+                        cleanListeCourants(listeCourants);
+                        creerSpriteCourant(spritesDeBase, listeCourants, indiceLore2, 0.0, 0.0);
                         ETATJEU = LORE2;
                     }
                     else if (ETATJEU == LORE2)
                     {
+                        cleanListeCourants(listeCourants);
+                        creerSpriteCourant(spritesDeBase, listeCourants, indiceLore3, 0.0, 0.0);
                         ETATJEU = LORE3;
                     }
                     else if (ETATJEU == LORE3)
                     {
-
-                        creerSpriteCourant(spritesDeBase, listeCourants, indiceFond);
+                        cleanListeCourants(listeCourants);
+                        creerSpriteCourant(spritesDeBase, listeCourants, indiceFond, 0.0, 0.0);
+                        creerSpriteCourant(spritesDeBase, listeCourants, indicePasserelleFinie, 0.0, 0.0);
                         creationVague(spritesDeBase, listeCombattants, listeCourants);
                         ETATJEU = VAGUE;
                     }
                     interessant = 1;
+                    break;
+                case SDLK_q:
 
+                    if (ETATJEU != ACCUEIL)
+                    {
+                        cleanListeCombattants(listeCombattants);
+                        cleanListeCourants(listeCourants);
+                        creerSpriteCourant(spritesDeBase, listeCourants, indiceFondAccueil, 0.0, 0.0);
+                        ETATJEU = ACCUEIL;
+                    }
+                    interessant = 1;
+                    break;
                 default: // L'évènement défilé ne nous intéresse pas
                     break;
                 }
@@ -211,51 +139,51 @@ int main(int argc, char *argv[])
                 break;
             }
         }
-        // interessant = 0;
 
         switch (ETATJEU)
         {
         case ERREUR:
+            printf("ETATJEU == ERREUR\n");
             break;
         case ACCUEIL:
             printf("Accueil\n");
-            // fondAccueil.textureSprite = texture[indiceFondAccueil];
-            // creationFond(fondAccueil.textureSprite, window, renderer, 0, 0);
+            animation(window, renderer, listeCourants);
             break;
         case LORE1:
             printf("lore1\n");
-            // lore1.textureSprite = texture[indiceLore1];
-            // creationFond(lore1.textureSprite, window, renderer, 0, 0);
+            animation(window, renderer, listeCourants);
 
             break;
         case LORE2:
             printf("lore2\n");
-            // lore2.textureSprite = texture[indiceLore2];
-            // creationFond(lore2.textureSprite, window, renderer, 0, 0);
+            animation(window, renderer, listeCourants);
 
             break;
         case LORE3:
             printf("lore3\n");
-            // lore3.textureSprite = texture[indiceLore3];
-            // creationFond(lore3.textureSprite, window, renderer, 0, 0);
+            animation(window, renderer, listeCourants);
 
             break;
         case VAGUE:
-            printf("Jeu en route\n");
+            printf("vague\n");
             animation(window, renderer, listeCourants);
             // listeCombattants[0]->spriteCourant->destination.x++;
             break;
         case ATTENTERIPOSTE:
-
+            printf("attente riposte\n");
+            animation(window, renderer, listeCourants);
             break;
         case RIPOSTE:
-
+            printf("riposte\n");
+            animation(window, renderer, listeCourants);
             break;
         case FINDEVAGUE:
-
+            printf("fin de vague\n");
+            animation(window, renderer, listeCourants);
             break;
         case FINJEU:
-
+            printf("fin du jeu\n");
+            animation(window, renderer, listeCourants);
             break;
         default:
             ETATJEU = ERREUR;

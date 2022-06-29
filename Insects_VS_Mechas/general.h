@@ -46,7 +46,8 @@
 #define NBDEFENSES 3
 #define TAILLECHAR 5
 
-
+#define wHypothetiqueFenetre 1500
+#define hHypothetiqueFenetre 1000
 
 typedef enum typePNG{
 indicePasserelleFinie,
@@ -88,8 +89,12 @@ typedef struct spriteBase {
     //SDL_Rect source;
     //SDL_Rect destination;
     enum typePA prioriteAffichage;
+
     float wCoefReductionDestination;
     float hCoefReductionDestination;
+
+    int wImageSprite;
+    int hImageSprite;
     
     int animation;
     int nbrImagesHorizontales;
@@ -111,8 +116,12 @@ typedef struct spriteBase {
 typedef struct spriteCourant{
 
     struct spriteBase *spriteDeBase;
-    SDL_Rect source;
-    SDL_Rect destination;
+
+    float xProportionPosFenetre;
+    float yProportionPosFenetre;
+
+    // SDL_Rect source;
+    // SDL_Rect destination;
 
     int numImageEnCours;
     int retardateurRalenti;
@@ -128,6 +137,8 @@ typedef struct combattant {
 
     //int statPhysique;
     //int statMagie;
+    int speedX;
+    int speedY;
 
     int physiqueRestant;
     int magieRestante;
