@@ -7,9 +7,9 @@
 int main(int argc, char *argv[])
 {
 
-// modif de fouuuuuuu lol 
+    // modif de fouuuuuuu lol
 
-    srand(time(NULL)); 
+    srand(time(NULL));
 
     SDL_Window *window = NULL;
     SDL_Renderer *renderer = NULL;
@@ -113,7 +113,6 @@ int main(int argc, char *argv[])
         // listeCourants[1]->source.w = listeCourants[1]->source.w / listeCourants[1]->spriteDeBase->nbrImagesHorizontales;
         // listeCourants[1]->source.h = listeCourants[1]->source.h / listeCourants[1]->spriteDeBase->nbrImagesVerticales;
     */
-    creationVague(window, spritesDeBase, listeCombattants, listeCourants);
     // printf("fin creation vague\n");
 
     // printf("0 == 0 : %d\n", 0 == 0);
@@ -198,6 +197,9 @@ int main(int argc, char *argv[])
                     }
                     else if (ETATJEU == LORE3)
                     {
+
+                        creerSpriteCourant(spritesDeBase, listeCourants, indiceFond);
+                        creationVague(spritesDeBase, listeCombattants, listeCourants);
                         ETATJEU = VAGUE;
                     }
                     interessant = 1;
@@ -241,7 +243,7 @@ int main(int argc, char *argv[])
         case VAGUE:
             printf("Jeu en route\n");
             animation(window, renderer, listeCourants);
-            //listeCombattants[0]->spriteCourant->destination.x++;
+            // listeCombattants[0]->spriteCourant->destination.x++;
             break;
         case ATTENTERIPOSTE:
 

@@ -11,7 +11,7 @@ void TotalAttaque(insecte_t tableauAttaque[TAILLEMAX], int *totalphysique, int *
     }
 }*/
 
-void creationVague(SDL_Window *window, spriteBase_t *spritesDeBase[NBRTEXTURES], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], spriteCourant_t *listeCourant[tailleMaxSpritesCourants]) // il faut bien que listeCombattants soit vide à l'execution de cette fonction
+void creationVague(spriteBase_t *spritesDeBase[NBRTEXTURES], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], spriteCourant_t *listeCourant[tailleMaxSpritesCourants]) // il faut bien que listeCombattants soit vide à l'execution de cette fonction
 {
     
 
@@ -20,7 +20,7 @@ void creationVague(SDL_Window *window, spriteBase_t *spritesDeBase[NBRTEXTURES],
         int r = rand() % NBRTYPEINSECTES;
         if (r == BUGFIRE)
         {
-            creerAttaquant(window, spritesDeBase, listeCourant, tableauCombattants, indiceBugfirewalk, j);
+            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, indiceBugfirewalk, j);
             // printf(" creation vague juste après creer attaquant dans liste courants: indicePNG : %d, animation = %d, nbr imageshorizon : %d, nbr images vertic : %d, priorite affichage : %d\n", listeCourant[j]->spriteDeBase->indicePNG, listeCourant[j]->spriteDeBase->animation, listeCourant[j]->spriteDeBase->nbrImagesHorizontales, listeCourant[j]->spriteDeBase->nbrImagesVerticales, listeCourant[j]->spriteDeBase->prioriteAffichage);
             // printf(" creation vague juste après creer attaquant dans liste combattants : indicePNG : %d, animation = %d, nbr imageshorizon : %d, nbr images vertic : %d, priorite affichage : %d\n", tableauCombattants[j]->spriteCourant->spriteDeBase->indicePNG, tableauCombattants[j]->spriteCourant->spriteDeBase->animation, tableauCombattants[j]->spriteCourant->spriteDeBase->nbrImagesHorizontales, tableauCombattants[j]->spriteCourant->spriteDeBase->nbrImagesVerticales, tableauCombattants[j]->spriteCourant->spriteDeBase->prioriteAffichage);
 
@@ -32,7 +32,7 @@ void creationVague(SDL_Window *window, spriteBase_t *spritesDeBase[NBRTEXTURES],
         }
         else if (r == FLY)
         {
-            creerAttaquant(window, spritesDeBase, listeCourant, tableauCombattants, indiceFlyvolant, j);
+            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, indiceFlyWalk, j);
             // printf(" creation vague juste après creer attaquant dans liste courants: indicePNG : %d, animation = %d, nbr imageshorizon : %d, nbr images vertic : %d, priorite affichage : %d\n", listeCourant[j]->spriteDeBase->indicePNG, listeCourant[j]->spriteDeBase->animation, listeCourant[j]->spriteDeBase->nbrImagesHorizontales, listeCourant[j]->spriteDeBase->nbrImagesVerticales, listeCourant[j]->spriteDeBase->prioriteAffichage);
             // printf(" creation vague juste après creer attaquant dans liste combattants : indicePNG : %d, animation = %d, nbr imageshorizon : %d, nbr images vertic : %d, priorite affichage : %d\n", tableauCombattants[j]->spriteCourant->spriteDeBase->indicePNG, tableauCombattants[j]->spriteCourant->spriteDeBase->animation, tableauCombattants[j]->spriteCourant->spriteDeBase->nbrImagesHorizontales, tableauCombattants[j]->spriteCourant->spriteDeBase->nbrImagesVerticales, tableauCombattants[j]->spriteCourant->spriteDeBase->prioriteAffichage);
 
@@ -43,7 +43,7 @@ void creationVague(SDL_Window *window, spriteBase_t *spritesDeBase[NBRTEXTURES],
         }
         else if (r == MANTIS)
         {
-            creerAttaquant(window, spritesDeBase, listeCourant, tableauCombattants, indiceMantiswalk, j);
+            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, indiceMantiswalk, j);
             // printf(" creation vague juste après creer attaquant dans liste courants: indicePNG : %d, animation = %d, nbr imageshorizon : %d, nbr images vertic : %d, priorite affichage : %d\n", listeCourant[j]->spriteDeBase->indicePNG, listeCourant[j]->spriteDeBase->animation, listeCourant[j]->spriteDeBase->nbrImagesHorizontales, listeCourant[j]->spriteDeBase->nbrImagesVerticales, listeCourant[j]->spriteDeBase->prioriteAffichage);
             // printf(" creation vague juste après creer attaquant dans liste combattants : indicePNG : %d, animation = %d, nbr imageshorizon : %d, nbr images vertic : %d, priorite affichage : %d\n", tableauCombattants[j]->spriteCourant->spriteDeBase->indicePNG, tableauCombattants[j]->spriteCourant->spriteDeBase->animation, tableauCombattants[j]->spriteCourant->spriteDeBase->nbrImagesHorizontales, tableauCombattants[j]->spriteCourant->spriteDeBase->nbrImagesVerticales, tableauCombattants[j]->spriteCourant->spriteDeBase->prioriteAffichage);
 

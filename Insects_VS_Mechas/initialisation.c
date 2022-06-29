@@ -5,7 +5,7 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
 
     ///////////// Chargement des polices et des textures et stockage des pointeurs dans les tableaux
 
-    char nomFichiers[NBRTEXTURES][tailleMaxFichiers] = {"./Sprites/passerellefinie.png", "./Sprites/batiment2.png", "./Sprites/batiment2coupe.png", "./Sprites/fond.png", "./Sprites/fondaccueil.png", "./Sprites/lore1.png", "./Sprites/lore2.png", "./Sprites/lore3.png", "./Sprites/bugfirewalk.png", "./Sprites/bugfireattaque.png", "./Sprites/bugfiremort.png", "./Sprites/flyvolant.png", "./Sprites/flyattaque.png", "./Sprites/flymort.png", "./Sprites/mantiswalk.png", "./Sprites/mantismort.png", "./Sprites/robot.png", "./Sprites/robotattaque.png", "./Sprites/robotmort.png", "./Sprites/robotmetal.png", "./Sprites/robotmetalattaquedeb.png", "./Sprites/robotmetalattaque.png", "./Sprites/robotmetalmort.png", "./Sprites/robotpetitwalk.png", "./Sprites/robotpetitattaque.png", "./Sprites/robotpetitmort.png"};
+    char nomFichiers[NBRTEXTURES][tailleMaxFichiers] = {"./Sprites/passerellefinie.png", "./Sprites/batiment2.png", "./Sprites/batiment2coupe.png", "./Sprites/fond.png", "./Sprites/fondaccueil.png", "./Sprites/lore1.png", "./Sprites/lore2.png", "./Sprites/lore3.png", "./Sprites/bugfirewalk.png", "./Sprites/bugfireattaque.png", "./Sprites/bugfiremort.png", "./Sprites/flyvolant.png", "./Sprites/flyattaque.png", "./Sprites/flymort.png", "./Sprites/mantiswalk.png","./Sprites/mantiswalk.png", "./Sprites/mantismort.png", "./Sprites/robot.png", "./Sprites/robotattaque.png", "./Sprites/robotmort.png", "./Sprites/robotmetal.png", "./Sprites/robotmetalattaquedeb.png", "./Sprites/robotmetalmort.png", "./Sprites/robotpetitwalk.png", "./Sprites/robotpetitattaque.png", "./Sprites/robotpetitmort.png"};
 
     // 0 : premier batiment | 1 et 2 : deuxieme batiment avec en 2 celui coupé | 3 : fond du jeu animé | 4 : fond d'accueil | 5 à 7 : fond du Lore |||
 
@@ -36,7 +36,7 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
         spritesDeBase[i]->animation = 1;
         spritesDeBase[i]->nbrImagesHorizontales = 7;
         spritesDeBase[i]->nbrImagesVerticales = 4;
-        spritesDeBase[i]->ralenti = 0;
+        spritesDeBase[i]->ralenti = 4;
         //       spritesDeBase[i]->typeSprite = DECOR;
         //     spritesDeBase[i]->vitesseX = 5;
         //  spritesDeBase[i]->statPhysique = 5;
@@ -78,7 +78,7 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
                 spritesDeBase[i]->nbrImagesHorizontales = 3;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
             }
-            else if (i == indiceFlyvolant)
+            else if (i == indiceFlyWalk)
             {
                 spritesDeBase[i]->nbrImagesHorizontales = 4;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
@@ -88,20 +88,6 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
                 spritesDeBase[i]->nbrImagesHorizontales = 3;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
             }
-            /*
-            if (i <= indiceBugfiremort)
-                spritesDeBase[i]->typeSprite = BUGFIRE;
-            else if (i <= indiceFlymort)
-                spritesDeBase[i]->typeSprite = FLY;
-            else if (i <= indiceMantismort)
-                spritesDeBase[i]->typeSprite = MANTIS;
-            else if (i <= indiceRobotMort)
-                spritesDeBase[i]->typeSprite = ROBOT;
-            else if (i <= indiceRobotmetalmort)
-                spritesDeBase[i]->typeSprite = ROBOTMETAL;
-            else if (i <= indiceRobotpetitmort)
-                spritesDeBase[i]->typeSprite = ROBOTPETIT;
-                */
 
             spritesDeBase[i]->wCoefReductionDestination = 0.10;
             spritesDeBase[i]->hCoefReductionDestination = 0.20;
