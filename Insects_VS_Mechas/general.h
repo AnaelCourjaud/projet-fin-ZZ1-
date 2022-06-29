@@ -49,8 +49,11 @@
 #define wHypothetiqueFenetre 1500
 #define hHypothetiqueFenetre 1000
 
+#define xSponeDefenseur 0.2
+#define ySponeDefenseur 0.7
+
 typedef enum typePNG{
-indicePasserelleFinie,
+indicePasserelleAnimee,
 indiceBatiment2,
 indiceBatiment2coupe,
 indiceFond,
@@ -96,7 +99,7 @@ typedef struct spriteBase {
     int wImageSprite;
     int hImageSprite;
     
-    int animation;
+    // int animation;
     int nbrImagesHorizontales;
     int nbrImagesVerticales;
     int ralenti;
@@ -137,8 +140,8 @@ typedef struct combattant {
 
     //int statPhysique;
     //int statMagie;
-    int speedX;
-    int speedY;
+    float speedX;
+    float speedY;
 
     int physiqueRestant;
     int magieRestante;

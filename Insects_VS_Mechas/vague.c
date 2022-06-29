@@ -12,34 +12,31 @@ void TotalAttaque(insecte_t tableauAttaque[TAILLEMAX], int *totalphysique, int *
 }*/
 
 void creationVague(spriteBase_t *spritesDeBase[NBRTEXTURES], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], spriteCourant_t *listeCourant[tailleMaxSpritesCourants]) // il faut bien que listeCombattants soit vide à l'execution de cette fonction
-{   
-    
+{
+    float xSpone = 1.0;
 
     for (int j = 0; j < NBENNEMIVAGUE; j++)
     {
         int r = rand() % NBRTYPEINSECTES;
         if (r == BUGFIRE)
         {
-            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, indiceBugfirewalk, j, 0.5, 0.5);
-   
+            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, indiceBugfirewalk, j, xSpone, 0.5);
         }
         else if (r == FLY)
         {
-            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, indiceFlyWalk, j, 0.5, 0.5);
-
+            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, indiceFlyWalk, j, xSpone, 0.5);
         }
         else if (r == MANTIS)
         {
-            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, indiceMantiswalk, j, 0.5, 0.5);
-    
+            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, indiceMantiswalk, j, xSpone, 0.5);
         }
         else
         {
             printf("erreur de création de vagues\n");
         }
+        xSpone += 0.1;
     }
 }
-
 
 // utilisation de pointeurs !!!!! on appelle donc la fonction de cette maniere : TotalAttaque(tableauAttaque, &totalphysique, &totalmagie, nbrEnnemis);
 

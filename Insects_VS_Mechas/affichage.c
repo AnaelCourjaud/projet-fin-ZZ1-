@@ -46,10 +46,9 @@ void creationTexte(char texte[], char style[], char police[], SDL_Renderer *rend
     SDL_DestroyTexture(text_texture);
 }
 
-
 void animation(SDL_Window *window, SDL_Renderer *renderer, spriteCourant_t *listeCourants[tailleMaxSpritesCourants])
 {
-    SDL_Rect window_dimensions = {0}, source ={0}, destination ={0};
+    SDL_Rect window_dimensions = {0}, source = {0}, destination = {0};
     SDL_GetWindowSize(window, &window_dimensions.w, &window_dimensions.h); // Récupération des dimensions de la fenêtre
 
     // printf("debut animation\n");
@@ -57,29 +56,31 @@ void animation(SDL_Window *window, SDL_Renderer *renderer, spriteCourant_t *list
     {
         if (listeCourants[i] != NULL)
         {
-           if (listeCourants[i]->spriteDeBase->animation == 1)
-            {
-                // printf("animation\n");
-                if (listeCourants[i]->retardateurRalenti <= 0)
-                {
-                    source.x = (listeCourants[i]->numImageEnCours % listeCourants[i]->spriteDeBase->nbrImagesHorizontales) * listeCourants[i]->spriteDeBase->wImageSprite;
-                    source.y = (listeCourants[i]->numImageEnCours / listeCourants[i]->spriteDeBase->nbrImagesHorizontales) * listeCourants[i]->spriteDeBase->hImageSprite;
+            source.x = (listeCourants[i]->numImageEnCours % listeCourants[i]->spriteDeBase->nbrImagesHorizontales) * listeCourants[i]->spriteDeBase->wImageSprite;
+            source.y = (listeCourants[i]->numImageEnCours / listeCourants[i]->spriteDeBase->nbrImagesHorizontales) * listeCourants[i]->spriteDeBase->hImageSprite;
+            source.w = listeCourants[i]->spriteDeBase->wImageSprite;
+            source.h = listeCourants[i]->spriteDeBase->hImageSprite;
 
-                    listeCourants[i]->numImageEnCours++;
-                    if (listeCourants[i]->numImageEnCours >= listeCourants[i]->spriteDeBase->nbrImagesHorizontales * listeCourants[i]->spriteDeBase->nbrImagesVerticales)
-                    {
-                        listeCourants[i]->numImageEnCours = 0;
-                    }
-                    listeCourants[i]->retardateurRalenti = listeCourants[i]->spriteDeBase->ralenti;
-                }
-                else
-                {
-                    listeCourants[i]->retardateurRalenti--;
-                }
-            }
-
+            destination.x = window_dimensions.w * listeCourants[i]->xProportionPosFenetre;
+            destination.y = window_dimensions.h * listeCourants[i]->yProportionPosFenetre;
             destination.w = window_dimensions.w * listeCourants[i]->spriteDeBase->wCoefReductionDestination;
             destination.h = window_dimensions.h * listeCourants[i]->spriteDeBase->hCoefReductionDestination;
+
+            // printf("animation\n");
+            if (listeCourants[i]->retardateurRalenti <= 0)
+            {
+                listeCourants[i]->numImageEnCours++;
+                if (listeCourants[i]->numImageEnCours >= listeCourants[i]->spriteDeBase->nbrImagesHorizontales * listeCourants[i]->spriteDeBase->nbrImagesVerticales)
+                {
+                    listeCourants[i]->numImageEnCours = 0;
+                }
+                listeCourants[i]->retardateurRalenti = listeCourants[i]->spriteDeBase->ralenti;
+            }
+            else
+            {
+                listeCourants[i]->retardateurRalenti--;
+            }
+
             SDL_RenderCopy(renderer, listeCourants[i]->spriteDeBase->textureSprite, &source, &destination);
             // printf("apres copy\n");
         }
@@ -104,18 +105,48 @@ void creerAttaquant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *l
         emplacementestAttaquant->typeCombattant = BUGFIRE;
         emplacementestAttaquant->physiqueRestant = 3;
         emplacementestAttaquant->magieRestante = 4;
+        emplacementestAttaquant->speedX = 0.99;
+        emplacementestAttaquant->speedY = 1.0;
     }
     else if (indicePNG == indiceFlyWalk)
     {
         emplacementestAttaquant->typeCombattant = FLY;
         emplacementestAttaquant->physiqueRestant = 2;
         emplacementestAttaquant->magieRestante = 2;
+        emplacementestAttaquant->speedX = 0.99;
+        emplacementestAttaquant->speedY = 1.0;
     }
     else if (indicePNG == indiceMantiswalk)
     {
         emplacementestAttaquant->typeCombattant = MANTIS;
         emplacementestAttaquant->physiqueRestant = 5;
         emplacementestAttaquant->magieRestante = 0;
+        emplacementestAttaquant->speedX = 0.99;
+        emplacementestAttaquant->speedY = 1.0;
+    }
+    else if (indicePNG == indiceRobotGrosWalk)
+    {
+        emplacementestAttaquant->typeCombattant = ROBOTGROS;
+        emplacementestAttaquant->physiqueRestant = 5;
+        emplacementestAttaquant->magieRestante = 0;
+        emplacementestAttaquant->speedX = 1.01;
+        emplacementestAttaquant->speedY = 1.0;
+    }
+    else if (indicePNG == indiceRobotmetalWalk)
+    {
+        emplacementestAttaquant->typeCombattant = ROBOTMETAL;
+        emplacementestAttaquant->physiqueRestant = 5;
+        emplacementestAttaquant->magieRestante = 0;
+        emplacementestAttaquant->speedX = 1.01;
+        emplacementestAttaquant->speedY = 1.0;
+    }
+    else if (indicePNG == indiceRobotpetitwalk)
+    {
+        emplacementestAttaquant->typeCombattant = ROBOTPETIT;
+        emplacementestAttaquant->physiqueRestant = 5;
+        emplacementestAttaquant->magieRestante = 0;
+        emplacementestAttaquant->speedX = 1.01;
+        emplacementestAttaquant->speedY = 1.0;
     }
     else
     {
@@ -145,7 +176,7 @@ int creerSpriteCourant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t
 
     maillonSpriteCourant->spriteDeBase = spritesDeBase[indicePNG];
 
-    maillonSpriteCourant->xProportionPosFenetre = proportionPosX; 
+    maillonSpriteCourant->xProportionPosFenetre = proportionPosX;
     maillonSpriteCourant->yProportionPosFenetre = proportionPosY;
 
     maillonSpriteCourant->numImageEnCours = 0;
@@ -208,20 +239,66 @@ void switchEtatCombattants(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCoura
                 float proportionPosY = tableauCombattants[i]->spriteCourant->yProportionPosFenetre;
                 // int indiceCreationDeSpriteCourant;
                 // indiceCreationDeSpriteCourant = creerSpriteCourant(spritesDeBase, listeCourants, retourIndicePNG(familleCombattants, etatArrivee));
-                free(tableauCombattants[i]->spriteCourant);
-                tableauCombattants[i]->spriteCourant = listeCourants[creerSpriteCourant(spritesDeBase, listeCourants, retourIndicePNG(familleCombattants, etatArrivee), proportionPosX, proportionPosY)];
+                for (int j = 0; j < tailleMaxSpritesCourants; j++)
+                {
+                    if (listeCourants[j] == tableauCombattants[i]->spriteCourant)
+                    {
+                        free(tableauCombattants[i]->spriteCourant);
+                        tableauCombattants[i]->spriteCourant = NULL;
+                        listeCourants[j] = NULL;
+                    }
+                }
+
+                tableauCombattants[i]->spriteCourant = listeCourants[creerSpriteCourant(spritesDeBase, listeCourants, retourIndicePNG(tableauCombattants[i]->typeCombattant, etatArrivee), proportionPosX, proportionPosY)];
+                printf(" idice PNG : %d\n", retourIndicePNG(tableauCombattants[i]->typeCombattant, etatArrivee));
             }
         }
     }
 }
 
-int retourIndicePNG(typesCombattants_t familleCombattants, etatsCombattants_t etatArrivee)
+int retourIndicePNG(typesCombattants_t typeCombattants, etatsCombattants_t etatArrivee)
 {
 
     int bonIndicePNG;
-    bonIndicePNG = familleCombattants * etatArrivee + indiceBugfirewalk;
+    bonIndicePNG = 3 * typeCombattants + etatArrivee + indiceBugfirewalk;
 
     return bonIndicePNG;
+}
+
+int faireAvancerCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], typesCombattants_t familleCombattants)
+{
+    int avanceeFinie = 0;
+
+    for (int i = 0; i < NBRMAXCOMBATTANTS; i++)
+    {
+        if (tableauCombattants[i] != NULL)
+        {
+            if (tableauCombattants[i]->typeCombattant >= familleCombattants && tableauCombattants[i]->typeCombattant <= familleCombattants + 2)
+            {
+                tableauCombattants[i]->spriteCourant->xProportionPosFenetre *= tableauCombattants[i]->speedX;
+                tableauCombattants[i]->spriteCourant->yProportionPosFenetre *= tableauCombattants[i]->speedY;
+
+                //////////////////////:dégeulasse
+                if (familleCombattants == BUGFIRE)
+                {
+                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre <= 0.5) // dégueulasse, c'est pas du tout paramètrable mdr
+                    {
+                        avanceeFinie = 1;
+                    }
+                }
+                if (familleCombattants == ROBOTGROS)
+                {
+                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre >= 0.4) // dégueulasse, c'est pas du tout paramètrable mdr
+                    {
+                        avanceeFinie = 1;
+                    }
+                }
+                ////////////////////////
+            }
+        }
+    }
+
+    return avanceeFinie;
 }
 
 // void supprCombattant(spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *listeCombattants[NBRMAXCOMBATTANTS], )

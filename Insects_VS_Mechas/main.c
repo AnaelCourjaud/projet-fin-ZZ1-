@@ -115,7 +115,8 @@ int main(int argc, char *argv[])
                     {
                         cleanListeCourants(listeCourants);
                         creerSpriteCourant(spritesDeBase, listeCourants, indiceFond, 0.0, 0.0);
-                        creerSpriteCourant(spritesDeBase, listeCourants, indicePasserelleFinie, 0.0, 0.0);
+                        creerSpriteCourant(spritesDeBase, listeCourants, indicePasserelleAnimee, 0.0, 0.0);
+                        creerSpriteCourant(spritesDeBase, listeCourants, indiceBatiment2, -0.12, 0.27);
                         creationVague(spritesDeBase, listeCombattants, listeCourants);
                         ETATJEU = VAGUE;
                     }
@@ -129,6 +130,36 @@ int main(int argc, char *argv[])
                         cleanListeCourants(listeCourants);
                         creerSpriteCourant(spritesDeBase, listeCourants, indiceFondAccueil, 0.0, 0.0);
                         ETATJEU = ACCUEIL;
+                    }
+                    interessant = 1;
+                    break;
+                case SDLK_g:
+
+                    if (ETATJEU == ATTENTERIPOSTE)
+                    {
+                        // cleanListeCombattants(listeCombattants);
+                        // cleanListeCourants(listeCourants);
+                        // creerSpriteCourant(spritesDeBase, listeCourants, indiceFondAccueil, 0.0, 0.0);
+                        creerAttaquant(spritesDeBase, listeCourants, listeCombattants, indiceRobotGrosWalk, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
+                        ETATJEU = RIPOSTE;
+                    }
+                    interessant = 1;
+                    break;
+                case SDLK_p:
+
+                    if (ETATJEU == ATTENTERIPOSTE)
+                    {
+                        creerAttaquant(spritesDeBase, listeCourants, listeCombattants, indiceRobotpetitwalk, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
+                        ETATJEU = RIPOSTE;
+                    }
+                    interessant = 1;
+                    break;
+                case SDLK_m:
+
+                    if (ETATJEU == ATTENTERIPOSTE)
+                    {
+                        creerAttaquant(spritesDeBase, listeCourants, listeCombattants, indiceRobotmetalWalk, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
+                        ETATJEU = RIPOSTE;
                     }
                     interessant = 1;
                     break;
@@ -167,6 +198,13 @@ int main(int argc, char *argv[])
         case VAGUE:
             printf("vague\n");
             animation(window, renderer, listeCourants);
+            int attaquantsArrives = 0;
+            attaquantsArrives = faireAvancerCombattants(listeCombattants, BUGFIRE);
+            if (attaquantsArrives == 1)
+            {
+                switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, BUGFIRE, ATTAQUE);
+                ETATJEU = ATTENTERIPOSTE;
+            }
             // listeCombattants[0]->spriteCourant->destination.x++;
             break;
         case ATTENTERIPOSTE:
@@ -176,6 +214,13 @@ int main(int argc, char *argv[])
         case RIPOSTE:
             printf("riposte\n");
             animation(window, renderer, listeCourants);
+            int defenseursArrives = 0;
+            defenseursArrives = faireAvancerCombattants(listeCombattants, ROBOTGROS);
+            if (defenseursArrives == 1)
+            {
+                switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, ATTAQUE);
+                ETATJEU = ATTENTERIPOSTE;
+            }
             break;
         case FINDEVAGUE:
             printf("fin de vague\n");

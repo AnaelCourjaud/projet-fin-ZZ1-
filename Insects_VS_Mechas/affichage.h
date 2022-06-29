@@ -14,8 +14,9 @@ void cleanCombattantsDeListeCourants(spriteCourant_t *listeCourants[tailleMaxSpr
 void cleanListeCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS]);
 
 void switchEtatCombattants(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], typesCombattants_t familleCombattants, etatsCombattants_t etatArrivee);
-int retourIndicePNG(typesCombattants_t familleCombattants, etatsCombattants_t etatArrivee);
+int retourIndicePNG(typesCombattants_t typeCombattants, etatsCombattants_t etatArrivee);
 
+int faireAvancerCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], typesCombattants_t familleCombattants);
 
 //void creationImage(SDL_Texture *my_texture, SDL_Window *window, SDL_Renderer *renderer, int longueur, int largeur, int x, int y);
 //void Animation(SDL_Texture *, SDL_Texture *,SDL_Texture *, SDL_Renderer *renderer, SDL_Window *window, int longueur, int largeur, int x1, int x2, int y,int nbimage1,int nbimage2,int nbimageFond, int ite, int iteFond);
