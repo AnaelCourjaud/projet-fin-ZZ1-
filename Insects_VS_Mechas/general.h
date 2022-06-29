@@ -41,8 +41,6 @@
 #define NBRTYPEINSECTES 3
 
 
-<<<<<<< HEAD
-=======
 #define NBPERCEPTION 19
 #define PERCEPTIONMAX 35
 #define NBDEFENSES 3
@@ -50,7 +48,6 @@
 
 
 
->>>>>>> 1ccfe1085b0d1612979eca2b450b53fc40a4b046
 typedef enum typePNG{
 indicePasserelleFinie,
 indiceBatiment2,
