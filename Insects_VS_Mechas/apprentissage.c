@@ -48,25 +48,23 @@ int preferencelearning(int perception, float tableQ[NBPERCEPTION][NBDEFENSES], f
 /*
 Entrées :
   - s la situation
-  - Q la méthode permettant de connaitre la qualité d'une action dans une situation donnée
-  - T la 'température', c'est un réel strictement positif
+  - la tableQ
+  - epsilon
 Sortie :
   - une action tirée selon la distribution de Gibbs
 Processus :
-  - Définir L : la liste des actions possibles depuis l'état s
-  - Définir N le nombre d'éléments de L
   - Pour chaque action a de L:
       - Définir E(a) : l'énergie de a est E(a) = exp(Q(s,a)/T)
   - Définir Z : la somme des énergies des éléments de L
-  - Définir action = L[N-1], c'est l'indice de l'action par défaut 
+  - Définir defense = L[r], avec r un nombre aléatoire entre 0 et 2
   - Définir alpha : un réel tiré en aléatoire uniforme dans [0 ; 1[
   - Définir cumul = 0
   - pour a dans L :
     - cumul +=  E(a)/Z
     - si alpha <= cumul :
-      - action = a
+      - defense = a
       - break
-  - renvoyer action */
+  - renvoyer defense */
 
 float reelAleatoireUniforme()
 {
@@ -110,7 +108,7 @@ void initTableQ(float tableQ[NBPERCEPTION][NBDEFENSES])
     }
 }
 
-void affichageTable(float tableQ[NBPERCEPTION ][NBDEFENSES]){
+void affichageTable(float tableQ[NBPERCEPTION][NBDEFENSES]){
 
     char nomperception[PERCEPTIONMAX][TAILLECHAR];
     strcpy(nomperception[0], "B   ");strcpy(nomperception[1], "M   ");strcpy(nomperception[2], "F   ");strcpy(nomperception[3], "BB  ");strcpy(nomperception[4], "FF  ");strcpy(nomperception[5], "MM  ");strcpy(nomperception[6], "BF  ");strcpy(nomperception[7], "BM  ");strcpy(nomperception[8], "FM  ");strcpy(nomperception[9], "BBB ");strcpy(nomperception[10], "FFF ");strcpy(nomperception[11], "MMM ");strcpy(nomperception[12], "BBF ");strcpy(nomperception[13], "BBM ");strcpy(nomperception[14], "FFB ");strcpy(nomperception[15], "FFM ");strcpy(nomperception[16], "MMB ");strcpy(nomperception[17], "MMF ");strcpy(nomperception[18], "MFB ");strcpy(nomperception[19], "BBBB");strcpy(nomperception[20], "FFFF");strcpy(nomperception[21], "MMMM");strcpy(nomperception[22], "BBBF");strcpy(nomperception[23], "BBBM");strcpy(nomperception[24], "FFFM");strcpy(nomperception[25], "FFFB");strcpy(nomperception[26], "MMMF");strcpy(nomperception[27], "MMMB");strcpy(nomperception[28], "BBMM");strcpy(nomperception[29], "BBFF");strcpy(nomperception[30], "BBFM");strcpy(nomperception[31], "FFMM");strcpy(nomperception[32], "FFBB");strcpy(nomperception[33], "FFBM");strcpy(nomperception[34], "MMFB");
@@ -124,6 +122,59 @@ void affichageTable(float tableQ[NBPERCEPTION ][NBDEFENSES]){
         printf("%s|           %f                       %f                       %f            \n", nomperception[i], tableQ[i][0], tableQ[i][1], tableQ[i][2]);
     }
     printf("\n");
+}
+
+void sauvegarder(float tableQ[NBPERCEPTION][NBDEFENSES])
+{
+    FILE *fichier = NULL;
+    time_t now;
+    time(&now);
+    char nomfichier[100];
+    strcpy(nomfichier, "sauvegarde");
+    strcat(strcat(nomfichier, ctime(&now)), ".txt");
+    fichier = fopen(nomfichier, "w");
+    int i, j;
+    for (i = 0; i < NBPERCEPTION; i++)
+    {
+        for (j = 0; j < NBDEFENSES; j++)
+        {
+            fprintf(fichier, "%f ", tableQ[i][j]);
+        }
+        fprintf(fichier, "\n");
+    }
+    fclose(fichier);
+}
+
+
+int loadConfig(float tableQ[NBPERCEPTION][NBDEFENSES], char nom_fic[100])
+{
+    int erreur = 1; // pas d'erreur
+
+    FILE *fichier = NULL;
+    fichier = fopen(nom_fic, "r");
+    if (fichier == NULL)
+        erreur = 0;
+    char ligne[NBDEFENSES + 1];
+    ligne[0] = '\0';
+
+    if (fichier)
+    {
+        int i = 0;
+        int j;
+
+        while (!feof(fichier))
+        {
+            for (j = 0; j < NBDEFENSES; j++)
+            {
+                fscanf(fichier, "%f", &tableQ[i][j]);
+                printf("%f ", tableQ[i][j]);
+            }
+            printf("\n");
+            i++;
+        }
+        fclose(fichier);
+    }
+    return erreur;
 }
 
 int main()
@@ -150,6 +201,10 @@ int main()
     int perception = 0;
     int defense = preferencelearning(perception, tableQ, epsilon);
     printf("defense a effectuer%d\n", defense);
+
+    sauvegarder(tableQ);
+    loadConfig(tableQ, "yo.txt");
+        affichageTable(tableQ);
 
     return 0;
 }
