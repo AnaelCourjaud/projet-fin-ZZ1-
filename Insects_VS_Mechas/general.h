@@ -6,6 +6,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <math.h>
 #include <stdio.h>
+#include <stddef.h>
 #include <string.h>
 #include <stdlib.h> 
 #include <time.h>
@@ -38,6 +39,12 @@
 #define NBENNEMIVAGUE 3 //nb d'ennemis au debut de la vague
 #define NBRMAXCOMBATTANTS 10
 #define NBRTYPEINSECTES 3
+
+
+#define NBPERCEPTION 19
+#define PERCEPTIONMAX 35
+#define NBDEFENSES 3
+#define TAILLECHAR 5
 
 
 
