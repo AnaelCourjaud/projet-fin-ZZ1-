@@ -197,6 +197,8 @@ int main(int argc, char *argv[])
                     }
                     else if (ETATJEU == LORE3)
                     {
+
+                        creerSpriteCourant(spritesDeBase, listeCourants, indiceFond);
                         creationVague(spritesDeBase, listeCombattants, listeCourants);
                         ETATJEU = VAGUE;
                     }
