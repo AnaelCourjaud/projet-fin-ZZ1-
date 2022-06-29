@@ -36,7 +36,7 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
         spritesDeBase[i]->animation = 1;
         spritesDeBase[i]->nbrImagesHorizontales = 7;
         spritesDeBase[i]->nbrImagesVerticales = 4;
-        spritesDeBase[i]->ralenti = 0;
+        spritesDeBase[i]->ralenti = 4;
         //       spritesDeBase[i]->typeSprite = DECOR;
         //     spritesDeBase[i]->vitesseX = 5;
         //  spritesDeBase[i]->statPhysique = 5;
