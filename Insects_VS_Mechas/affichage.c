@@ -46,27 +46,30 @@ void creationTexte(char texte[], char style[], char police[], SDL_Renderer *rend
     SDL_DestroyTexture(text_texture);
 }
 
-void creationFond(SDL_Texture *my_texture, SDL_Window *window, SDL_Renderer *renderer, int x, int y)
+// void creationFond(SDL_Texture *my_texture, SDL_Window *window, SDL_Renderer *renderer, int x, int y)
+// {
+
+//     SDL_Rect
+//         source = {0},            // Rectangle définissant la zone de la texture à récupérer
+//         window_dimensions = {0}, // Rectangle définissant la fenêtre, on n'utilisera que largeur et hauteur
+//         destination = {0};       // Rectangle définissant où la zone_source doit être déposée dans le renderer
+
+//     SDL_GetWindowSize(window, &window_dimensions.w, &window_dimensions.h); // Récupération des dimensions de la fenêtre
+//     SDL_QueryTexture(my_texture, NULL, NULL, &source.w, &source.h);
+
+//     destination.x = x;
+//     destination.y = y;
+//     destination.w = window_dimensions.w;
+//     destination.h = window_dimensions.h;
+
+//     SDL_RenderCopy(renderer, my_texture, &source, &destination);
+// }
+
+void animation(SDL_Window *window, SDL_Renderer *renderer, spriteCourant_t *listeCourants[tailleMaxSpritesCourants])
 {
-
-    SDL_Rect
-        source = {0},            // Rectangle définissant la zone de la texture à récupérer
-        window_dimensions = {0}, // Rectangle définissant la fenêtre, on n'utilisera que largeur et hauteur
-        destination = {0};       // Rectangle définissant où la zone_source doit être déposée dans le renderer
-
+    SDL_Rect window_dimensions = {0};
     SDL_GetWindowSize(window, &window_dimensions.w, &window_dimensions.h); // Récupération des dimensions de la fenêtre
-    SDL_QueryTexture(my_texture, NULL, NULL, &source.w, &source.h);
 
-    destination.x = x;
-    destination.y = y;
-    destination.w = window_dimensions.w;
-    destination.h = window_dimensions.h;
-
-    SDL_RenderCopy(renderer, my_texture, &source, &destination);
-}
-
-void animation(SDL_Renderer *renderer, spriteCourant_t *listeCourants[tailleMaxSpritesCourants])
-{
     // printf("debut animation\n");
     for (int i = 0; i < tailleMaxSpritesCourants; i++)
     {
@@ -96,6 +99,10 @@ void animation(SDL_Renderer *renderer, spriteCourant_t *listeCourants[tailleMaxS
                 }
             }
 
+            listeCourants[i]->destination.w = window_dimensions.w * listeCourants[i]->spriteDeBase->wCoefReductionDestination;
+            listeCourants[i]->destination.h = window_dimensions.h * listeCourants[i]->spriteDeBase->hCoefReductionDestination;
+            // maillonSpriteCourant->destination.w = window_dimensions.w * maillonSpriteCourant->spriteDeBase->wCoefReductionDestination;
+            // maillonSpriteCourant->destination.h = window_dimensions.h * maillonSpriteCourant->spriteDeBase->hCoefReductionDestination;
             SDL_RenderCopy(renderer, listeCourants[i]->spriteDeBase->textureSprite, &listeCourants[i]->source, &listeCourants[i]->destination);
             // printf("apres copy\n");
         }
@@ -202,8 +209,8 @@ int creerSpriteCourant(SDL_Window *window, spriteBase_t *spritesDeBase[NBRTEXTUR
     maillonSpriteCourant->spriteDeBase = spritesDeBase[indicePNG];
 
     // printf(" creerSpriteCourant : indicePNG : %d, animation = %d, nbr imageshorizon : %d, nbr images vertic : %d, priorite affichage : %d\n", maillonSpriteCourant->spriteDeBase->indicePNG, maillonSpriteCourant->spriteDeBase->animation, maillonSpriteCourant->spriteDeBase->nbrImagesHorizontales, maillonSpriteCourant->spriteDeBase->nbrImagesVerticales, maillonSpriteCourant->spriteDeBase->prioriteAffichage);
-    SDL_Rect window_dimensions = {0};
-    SDL_GetWindowSize(window, &window_dimensions.w, &window_dimensions.h); // Récupération des dimensions de la fenêtre
+    // SDL_Rect window_dimensions = {0};
+    // SDL_GetWindowSize(window, &window_dimensions.w, &window_dimensions.h); // Récupération des dimensions de la fenêtre
 
     maillonSpriteCourant->source.x = 0;
     maillonSpriteCourant->source.y = 0;
@@ -220,8 +227,8 @@ int creerSpriteCourant(SDL_Window *window, spriteBase_t *spritesDeBase[NBRTEXTUR
 
     maillonSpriteCourant->destination.x = 0;
     maillonSpriteCourant->destination.y = 0;
-    maillonSpriteCourant->destination.w = window_dimensions.w * maillonSpriteCourant->spriteDeBase->wCoefReductionDestination;
-    maillonSpriteCourant->destination.h = window_dimensions.h * maillonSpriteCourant->spriteDeBase->hCoefReductionDestination;
+    maillonSpriteCourant->destination.w = 0; // window_dimensions.w * maillonSpriteCourant->spriteDeBase->wCoefReductionDestination;
+    maillonSpriteCourant->destination.h = 0; // window_dimensions.h * maillonSpriteCourant->spriteDeBase->hCoefReductionDestination;
 
     maillonSpriteCourant->numImageEnCours = 0;
     maillonSpriteCourant->retardateurRalenti = maillonSpriteCourant->spriteDeBase->ralenti;
@@ -229,6 +236,30 @@ int creerSpriteCourant(SDL_Window *window, spriteBase_t *spritesDeBase[NBRTEXTUR
     listeCourants[emplacementLibreDansListeCourants] = maillonSpriteCourant;
 
     return emplacementLibreDansListeCourants;
+}
+
+void cleanListeCourants(spriteCourant_t *listeCourants[tailleMaxSpritesCourants])
+{
+    for (int i = 0; i < tailleMaxSpritesCourants; i++)
+    {
+        if (listeCourants[i] != NULL)
+        {
+            free(listeCourants[i]);
+            listeCourants[i] = NULL;
+        }
+    }
+}
+
+void cleanListeCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS])
+{
+    for (int i = 0; i < NBRMAXCOMBATTANTS; i++)
+    {
+        if (tableauCombattants[i] != NULL)
+        {
+            free(tableauCombattants[i]);
+            tableauCombattants[i] = NULL;
+        }
+    }
 }
 
 // void supprCombattant(spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *listeCombattants[NBRMAXCOMBATTANTS], )

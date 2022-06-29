@@ -13,7 +13,7 @@ void TotalAttaque(insecte_t tableauAttaque[TAILLEMAX], int *totalphysique, int *
 
 void creationVague(SDL_Window *window, spriteBase_t *spritesDeBase[NBRTEXTURES], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], spriteCourant_t *listeCourant[tailleMaxSpritesCourants]) // il faut bien que listeCombattants soit vide à l'execution de cette fonction
 {
-    srand(time(NULL)); // nul à changer
+    
 
     for (int j = 0; j < NBENNEMIVAGUE; j++)
     {

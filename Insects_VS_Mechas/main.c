@@ -6,6 +6,7 @@
 
 int main(int argc, char *argv[])
 {
+    srand(time(NULL)); 
 
     SDL_Window *window = NULL;
     SDL_Renderer *renderer = NULL;
@@ -236,8 +237,8 @@ int main(int argc, char *argv[])
             break;
         case VAGUE:
             printf("Jeu en route\n");
-            animation(renderer, listeCourants);
-
+            animation(window, renderer, listeCourants);
+            //listeCombattants[0]->spriteCourant->destination.x++;
             break;
         case ATTENTERIPOSTE:
 
