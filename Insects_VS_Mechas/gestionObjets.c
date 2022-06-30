@@ -1,33 +1,34 @@
 #include "gestionObjets.h"
 
-void creationVague(spriteBase_t *spritesDeBase[NBRTEXTURES], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], spriteCourant_t *listeCourant[tailleMaxSpritesCourants]) // il faut bien que listeCombattants soit vide à l'execution de cette fonction
+void creationVague(spriteBase_t *spritesDeBase[NBRTEXTURES], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], spriteCourant_t *listeCourant[tailleMaxSpritesCourants], int modeAffichage) // il faut bien que listeCombattants soit vide à l'execution de cette fonction
 {
     float xSpone = 1.0;
 
     for (int j = 0; j < NBENNEMIVAGUE; j++)
     {
-        int r = rand() % NBRTYPEINSECTES;
-        if (r == BUGFIRE)
-        {
-            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, BUGFIRE, WALK, j, xSpone, 0.5);
-        }
-        else if (r == FLY)
-        {
-            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, FLY, WALK, j, xSpone, 0.5);
-        }
-        else if (r == MANTIS)
-        {
-            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, MANTIS, WALK, j, xSpone, 0.5);
-        }
-        else
-        {
-            printf("erreur de création de vagues\n");
-        }
+        int typeInsecte = rand() % NBRTYPEINSECTES;
+        creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, typeInsecte, WALK, j, xSpone, 0.5, modeAffichage);
+        // if (r == BUGFIRE)
+        // {
+        //     creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, BUGFIRE, WALK, j, xSpone, 0.5, modeAffichage);
+        // }
+        // else if (r == FLY)
+        // {
+        //     creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, FLY, WALK, j, xSpone, 0.5, train);
+        // }
+        // else if (r == MANTIS)
+        // {
+        //     creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, MANTIS, WALK, j, xSpone, 0.5, train);
+        // }
+        // else
+        // {
+        //     printf("erreur de création de vagues\n");
+        // }
         xSpone += 0.1;
     }
 }
 
-void creerAttaquant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], typeCombattant_t typeCombattant, etatCombattant_t etatArrivee, int indiceEmplacement, float proportionPosX, float proportionPosY)
+void creerAttaquant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], typeCombattant_t typeCombattant, etatCombattant_t etatArrivee, int indiceEmplacement, float proportionPosX, float proportionPosY, int modeAffichage)
 {
 
     // printf("début créer estAttaquant\n");
@@ -35,10 +36,10 @@ void creerAttaquant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *l
     int indiceEmplacementDansListeCourants;
     int indicePNG = retourIndicePNG(typeCombattant, etatArrivee);
 
-    // if (ETATJEU != TRAIN)
-    // {
+    if (modeAffichage == 1)
+    {
         indiceEmplacementDansListeCourants = creerSpriteCourant(spritesDeBase, listeCourants, indicePNG, proportionPosX, proportionPosY);
-    // }
+    }
 
     combattant_t *emplacementestAttaquant = malloc(sizeof(combattant_t));
 
@@ -97,10 +98,10 @@ void creerAttaquant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *l
     // {
     //     printf("Erreur dans la création de l'estAttaquant\n");
     // }
-    // if (ETATJEU != TRAIN)
-    // {
+    if (modeAffichage == 1)
+    {
         emplacementestAttaquant->spriteCourant = listeCourants[indiceEmplacementDansListeCourants];
-    // }
+    }
 
     tableauCombattants[indiceEmplacement] = emplacementestAttaquant;
 }
@@ -174,7 +175,7 @@ void cleanListeCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS]) 
     }
 }
 
-int switchEtatCombattants(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], typeCombattant_t familleCombattants, etatCombattant_t etatArrivee)
+int switchEtatCombattants(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], typeCombattant_t familleCombattants, etatCombattant_t etatArrivee, int modeAffichage)
 {
     int nombreDeMorts = 0;
     for (int i = 0; i < NBRMAXCOMBATTANTS; i++)
@@ -232,7 +233,7 @@ int switchEtatCombattants(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCouran
             free(tableauCombattants[i]);
             tableauCombattants[i] = NULL;
 
-            creerAttaquant(spritesDeBase, listeCourants, tableauCombattants, typeCombattant, etatArrivee, i, proportionPosX, proportionPosY);
+            creerAttaquant(spritesDeBase, listeCourants, tableauCombattants, typeCombattant, etatArrivee, i, proportionPosX, proportionPosY, modeAffichage);
             tableauCombattants[i]->speedX = speedX;
             tableauCombattants[i]->speedY = speedY;
             tableauCombattants[i]->physiqueRestant = physiqueRestant;
