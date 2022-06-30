@@ -78,6 +78,7 @@ int main()
     SDL_bool program_on = SDL_TRUE; // Booléen pour dire que le programme doit continuer
     SDL_Event event;                // c'est le type IMPORTANT !!
 
+    // ETATJEU = ACCUEIL;
     int ETATJEU = ACCUEIL;
     int changermusique = 1;
     int compteurAnimationMort = 0;
@@ -138,6 +139,7 @@ int main()
                     else if (ETATJEU == LORE3)
                     {
                         cleanListeCourants(listeCourants);
+                        cleanListeCombattants(listeCombattants);
                         creerSpriteCourant(spritesDeBase, listeCourants, indiceFond, 0.0, 0.0);
                         creerSpriteCourant(spritesDeBase, listeCourants, indicePasserelleAnimee, 0.0, 0.0);
                         creerSpriteCourant(spritesDeBase, listeCourants, indiceBatiment2, -0.12, 0.27);
@@ -199,6 +201,69 @@ int main()
                         interessant = 1;
                     }
                     break;
+                // case SDLK_t:
+                //     if (ETATJEU == ACCUEIL)
+                //     {
+                //         cleanListeCombattants(listeCombattants);
+                //         // ETATJEU = TRAIN;
+                //         interessant = 1;
+                        
+                //         for (int i = 1; i <= NBRVAGUESTRAIN; i++)
+                //         {
+                //             creationVague(spritesDeBase, listeCombattants, listeCourants);
+                //             int estVide = 1;
+
+                //             while (estVide == 1)
+                //             {
+                //                 int perception = reconnaitreCompo(listeCompo, listeCombattants);
+                //                 // int ordreIA = preferenceLearning(perception, tableQ, epsilon);
+                //                 int compteurdeCoupsIA = 0;
+                //                 // switch (ordreIA)
+                //                 {
+                //                 case ROBOTGROS:
+                //                     creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
+                //                     compteurdeCoupsIA++;
+                //                     break;
+                //                 case ROBOTMETAL:
+                //                     creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTMETAL, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
+                //                     compteurdeCoupsIA++;
+                //                     break;
+                //                 case ROBOTPETIT:
+                //                     creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTPETIT, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
+                //                     compteurdeCoupsIA++;
+                //                     break;
+                //                 }
+                //                 applicationDegats(listeCombattants);
+                //                 for (int j = 0; j < NBRMAXCOMBATTANTS; j++)
+                //                 {
+                //                     if (listeCombattants[j] != NULL)
+                //                     {
+                //                         if (listeCombattants[j]->typeCombattant >= ROBOTGROS && listeCombattants[j]->typeCombattant <= ROBOTGROS + 2)
+                //                         {
+                //                             free(listeCombattants[j]);
+                //                             listeCombattants[j] = NULL;
+                //                         }
+                //                         else
+                //                         {
+                //                             if (listeCombattants[j]->magieRestante <= 0 && listeCombattants[j]->physiqueRestant <= 0)
+                //                             {
+                //                                 free(listeCombattants[j]);
+                //                                 listeCombattants[j] = NULL;
+                //                             }
+                //                         }
+                //                     }
+                //                 }
+                //                 for (int j = 0; j < NBRMAXCOMBATTANTS; j++) // est-ce qu'il reste des combattants vivants ? si oui : nouvelle défense, si non : nouvelle vague
+                //                 {
+                //                     if (listeCombattants[j] != NULL)
+                //                     {
+                //                         estVide = 0;
+                //                     }
+                //                 }
+                //             }
+                //         }
+                //     }
+                //     break;
                 default: // L'évènement défilé ne nous intéresse pas
                     break;
                 }
@@ -267,7 +332,7 @@ int main()
             if (train == 1)
             {
                 int perception = reconnaitreCompo(listeCompo, listeCombattants);
-                int ordreIA = preferenceLearning(perception, tableQ, epsilon);
+                // int ordreIA = preferenceLearning(perception, tableQ, epsilon);
                 switch (ordreIA)
                 {
                 case ROBOTGROS:
@@ -287,7 +352,7 @@ int main()
                     break;
                 }
             }
-            // printf("attente riposte\n");
+            printf("attente riposte\n");
             animation(window, renderer, listeCourants);
             break;
         case ARRIVEERIPOSTE:
@@ -307,8 +372,8 @@ int main()
             if (compteurAnimationMort == NBRATTAQUESDEFENSEURAVANTMORT * listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->nbrImagesHorizontales * listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->nbrImagesVerticales * (listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->ralenti + 1))
             {
                 // résolution
-                // applicationDegats(listeCombattants);
-                degatInflige(listeCombattants);
+                applicationDegats(listeCombattants);
+                // degatInflige(listeCombattants);
                 // switch etat mort
                 nombreInsectesMorts = switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, BUGFIRE, MORT);
                 switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, MORT);

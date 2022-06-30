@@ -1,6 +1,5 @@
 #include "gestionObjets.h"
 
-
 void creationVague(spriteBase_t *spritesDeBase[NBRTEXTURES], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], spriteCourant_t *listeCourant[tailleMaxSpritesCourants]) // il faut bien que listeCombattants soit vide à l'execution de cette fonction
 {
     float xSpone = 1.0;
@@ -36,13 +35,15 @@ void creerAttaquant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *l
     int indiceEmplacementDansListeCourants;
     int indicePNG = retourIndicePNG(typeCombattant, etatArrivee);
 
-    indiceEmplacementDansListeCourants = creerSpriteCourant(spritesDeBase, listeCourants, indicePNG, proportionPosX, proportionPosY);
+    // if (ETATJEU != TRAIN)
+    // {
+        indiceEmplacementDansListeCourants = creerSpriteCourant(spritesDeBase, listeCourants, indicePNG, proportionPosX, proportionPosY);
+    // }
 
     combattant_t *emplacementestAttaquant = malloc(sizeof(combattant_t));
 
-emplacementestAttaquant->typeCombattant = typeCombattant;
+    emplacementestAttaquant->typeCombattant = typeCombattant;
     emplacementestAttaquant->etatCombattant = etatArrivee;
-
 
     if (indicePNG == indiceBugfirewalk)
     {
@@ -96,13 +97,13 @@ emplacementestAttaquant->typeCombattant = typeCombattant;
     // {
     //     printf("Erreur dans la création de l'estAttaquant\n");
     // }
-
-    emplacementestAttaquant->spriteCourant = listeCourants[indiceEmplacementDansListeCourants];
+    // if (ETATJEU != TRAIN)
+    // {
+        emplacementestAttaquant->spriteCourant = listeCourants[indiceEmplacementDansListeCourants];
+    // }
 
     tableauCombattants[indiceEmplacement] = emplacementestAttaquant;
 }
-
-
 
 int creerSpriteCourant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], indicesPNGs indicePNG, float proportionPosX, float proportionPosY)
 {
@@ -187,7 +188,8 @@ int switchEtatCombattants(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCouran
                 {
                     if (familleCombattants == BUGFIRE)
                     {
-                        if(tableauCombattants[i]->magieRestante <= 0 && tableauCombattants[i]->physiqueRestant <= 0){
+                        if (tableauCombattants[i]->magieRestante <= 0 && tableauCombattants[i]->physiqueRestant <= 0)
+                        {
                             goChanger = 1;
                             nombreDeMorts++;
                         }
@@ -228,21 +230,19 @@ int switchEtatCombattants(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCouran
                 }
             }
             free(tableauCombattants[i]);
-            tableauCombattants[i]=NULL;
+            tableauCombattants[i] = NULL;
 
             creerAttaquant(spritesDeBase, listeCourants, tableauCombattants, typeCombattant, etatArrivee, i, proportionPosX, proportionPosY);
-            tableauCombattants[i]->speedX =speedX;
+            tableauCombattants[i]->speedX = speedX;
             tableauCombattants[i]->speedY = speedY;
             tableauCombattants[i]->physiqueRestant = physiqueRestant;
             tableauCombattants[i]->magieRestante = magieRestante;
             // tableauCombattants[i]->spriteCourant = listeCourants[creerSpriteCourant(spritesDeBase, listeCourants, retourIndicePNG(tableauCombattants[i]->typeCombattant, etatArrivee), proportionPosX, proportionPosY)];
-            //printf(" idice PNG : %d\n", retourIndicePNG(tableauCombattants[i]->typeCombattant, etatArrivee));
+            // printf(" idice PNG : %d\n", retourIndicePNG(tableauCombattants[i]->typeCombattant, etatArrivee));
         }
     }
     return nombreDeMorts;
 }
-
-
 
 int retourIndicePNG(typeCombattant_t typeCombattants, etatCombattant_t etatArrivee)
 {
@@ -288,4 +288,3 @@ int faireAvancerCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS],
 
     return avanceeFinie;
 }
-

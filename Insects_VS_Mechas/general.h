@@ -12,8 +12,12 @@
 #include <stdlib.h> 
 #include <time.h>
 
+
+// extern int ETATJEU;
+
 #define ERREUR 10
 #define ACCUEIL 20
+// #define TRAIN 130
 #define LORE1 30
 #define LORE2 40
 #define LORE3 50
@@ -53,6 +57,7 @@
 #define NBRATTAQUESDEFENSEURAVANTMORT 3
 
 #define NBRDEVAGUES 3
+#define NBRVAGUESTRAIN 1000
 
 // #define wHypothetiqueFenetre 1500
 // #define hHypothetiqueFenetre 1000
