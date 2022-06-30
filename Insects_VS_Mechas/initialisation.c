@@ -5,22 +5,12 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
 
     ///////////// Chargement des polices et des textures et stockage des pointeurs dans les tableaux
 
-    char nomFichiers[NBRTEXTURES][tailleMaxFichiers] = {"./Sprites/passerellefinie.png", "./Sprites/batiment2.png", "./Sprites/batiment2coupe.png", "./Sprites/fond.png", "./Sprites/fondaccueil.png", "./Sprites/lore1.png", "./Sprites/lore2.png", "./Sprites/lore3.png", "./Sprites/bugfirewalk.png", "./Sprites/bugfireattaque.png", "./Sprites/bugfiremort.png", "./Sprites/flyvolant.png", "./Sprites/flyattaque.png", "./Sprites/flymort.png", "./Sprites/mantiswalk.png","./Sprites/mantiswalk.png", "./Sprites/mantismort.png", "./Sprites/robot.png", "./Sprites/robotattaque.png", "./Sprites/robotmort.png", "./Sprites/robotmetal.png", "./Sprites/robotmetalattaquedeb.png", "./Sprites/robotmetalmort.png", "./Sprites/robotpetitwalk.png", "./Sprites/robotpetitattaque.png", "./Sprites/robotpetitmort.png"};
+    char nomFichiers[NBRTEXTURES][tailleMaxFichiers] = {"./Sprites/passerelleanimee.png", "./Sprites/batiment2.png", "./Sprites/batiment2coupe.png", "./Sprites/fond.png", "./Sprites/fondaccueil.png", "./Sprites/lore1.png", "./Sprites/lore2.png", "./Sprites/lore3.png", "./Sprites/bugfirewalk.png", "./Sprites/bugfireattaque.png", "./Sprites/bugfiremort.png", "./Sprites/flyvolant.png", "./Sprites/flyattaquedeb.png", "./Sprites/flymort.png", "./Sprites/mantiswalk.png", "./Sprites/mantiswalk.png", "./Sprites/mantismort.png", "./Sprites/robot.png", "./Sprites/robotattaque.png", "./Sprites/robotmort.png", "./Sprites/robotmetal.png", "./Sprites/robotmetalattaquedeb.png", "./Sprites/robotmetalmort.png", "./Sprites/robotpetitwalk.png", "./Sprites/robotpetitattaque.png", "./Sprites/robotpetitmort.png"};
 
     // 0 : premier batiment | 1 et 2 : deuxieme batiment avec en 2 celui coupé | 3 : fond du jeu animé | 4 : fond d'accueil | 5 à 7 : fond du Lore |||
 
     char nomPolices[nbrPolices][tailleMaxFichiers] = {"./fonts/font.ttf", "./fonts/font2.ttf"};
     int taillePolices[nbrPolices] = {100, 50};
-    /*
-        /////////////// récupération des textures et stockage dans tableau texture et test de réussite de chargement
-        for (int i = 0; i < NBRTEXTURES; i++)
-        {
-            texture[i] = IMG_LoadTexture(renderer, nomFichiers[i]);
-            if (texture[i] == NULL)
-                end_sdl(0, "Echec du chargement de l'image dans la texture", window, renderer);
-        }
-        //////////////////////////
-    */
 
     // *******************************Initialisation de la liste de sprites de base**********************
     // **************************************************************************************************
@@ -33,19 +23,17 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
             end_sdl(0, "Echec du chargement de l'image dans la texture", window, renderer, spritesDeBase, listeCourants);
 
         spritesDeBase[i]->indicePNG = i;
-        spritesDeBase[i]->animation = 1;
+        // spritesDeBase[i]->animation = 1;
         spritesDeBase[i]->nbrImagesHorizontales = 7;
         spritesDeBase[i]->nbrImagesVerticales = 4;
-        spritesDeBase[i]->ralenti = 4;
-        //       spritesDeBase[i]->typeSprite = DECOR;
-        //     spritesDeBase[i]->vitesseX = 5;
-        //  spritesDeBase[i]->statPhysique = 5;
-        // spritesDeBase[i]->statMagie = 6;
+        spritesDeBase[i]->ralenti = 1;
 
         if (i == indiceBatiment2coupe)
         {
             spritesDeBase[i]->prioriteAffichage = TOUTDEVANT;
-            spritesDeBase[i]->animation = 0;
+            // spritesDeBase[i]->animation = 0;
+            spritesDeBase[i]->nbrImagesHorizontales = 1;
+            spritesDeBase[i]->nbrImagesVerticales = 1;
             spritesDeBase[i]->wCoefReductionDestination = 1.0;
             spritesDeBase[i]->hCoefReductionDestination = 1.0;
         }
@@ -57,37 +45,101 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
             spritesDeBase[i]->wCoefReductionDestination = 1.0;
             spritesDeBase[i]->hCoefReductionDestination = 1.0;
         }
-        else if (i == indicePasserelleFinie)
+        else if (i == indicePasserelleAnimee)
         {
             spritesDeBase[i]->prioriteAffichage = DERRIERE;
-            spritesDeBase[i]->animation = 0;
+            // spritesDeBase[i]->animation = 0;
+            spritesDeBase[i]->nbrImagesHorizontales = 4;
+            spritesDeBase[i]->nbrImagesVerticales = 2;
             spritesDeBase[i]->wCoefReductionDestination = 1.0;
             spritesDeBase[i]->hCoefReductionDestination = 1.0;
+            spritesDeBase[i]->ralenti = 4;
         }
         else if (i == indiceBatiment2)
         {
             spritesDeBase[i]->prioriteAffichage = MILIEU;
-            spritesDeBase[i]->animation = 0;
-            spritesDeBase[i]->wCoefReductionDestination = 1.0;
-            spritesDeBase[i]->hCoefReductionDestination = 1.0;
+            // spritesDeBase[i]->animation = 0;
+            spritesDeBase[i]->nbrImagesHorizontales = 1;
+            spritesDeBase[i]->nbrImagesVerticales = 1;
+            spritesDeBase[i]->wCoefReductionDestination = 0.35;
+            spritesDeBase[i]->hCoefReductionDestination = 0.60;
         }
         else if (i >= indiceBugfirewalk)
         {
+            spritesDeBase[i]->ralenti = 0;
             if (i == indiceBugfirewalk)
             {
                 spritesDeBase[i]->nbrImagesHorizontales = 3;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
+                spritesDeBase[i]->ralenti = 2;
             }
             else if (i == indiceFlyWalk)
             {
                 spritesDeBase[i]->nbrImagesHorizontales = 4;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
+                spritesDeBase[i]->ralenti = 2;
             }
             else if (i == indiceMantiswalk)
             {
                 spritesDeBase[i]->nbrImagesHorizontales = 3;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
+                spritesDeBase[i]->ralenti = 4;
             }
+            else if (i == indiceBugfireattaque)
+            {
+                spritesDeBase[i]->nbrImagesHorizontales = 5;
+                spritesDeBase[i]->nbrImagesVerticales = 1;
+                spritesDeBase[i]->ralenti = 2;
+            }
+            else if (i == indiceFlyattaque)
+            {
+                spritesDeBase[i]->nbrImagesHorizontales = 1;
+                spritesDeBase[i]->nbrImagesVerticales = 1;
+                spritesDeBase[i]->ralenti = 1;
+            }
+            else if (i == indiceMantisAttaque)
+            {
+                spritesDeBase[i]->nbrImagesHorizontales = 3;
+                spritesDeBase[i]->nbrImagesVerticales = 1;
+                spritesDeBase[i]->ralenti = 4;
+            }
+            else if (i == indiceRobotGrosWalk)
+            {
+                spritesDeBase[i]->nbrImagesHorizontales = 5;
+                spritesDeBase[i]->nbrImagesVerticales = 1;
+                spritesDeBase[i]->ralenti = 4;
+            }
+            else if (i == indiceRobotGrosattaque)
+            {
+                spritesDeBase[i]->nbrImagesHorizontales = 7;
+                spritesDeBase[i]->nbrImagesVerticales = 1;
+                spritesDeBase[i]->ralenti = 2;
+            }
+            else if (i == indiceRobotpetitwalk)
+            {
+                spritesDeBase[i]->nbrImagesHorizontales = 6;
+                spritesDeBase[i]->nbrImagesVerticales = 1;
+                spritesDeBase[i]->ralenti = 4;
+            }
+            else if (i == indiceRobotpetitattaque)
+            {
+                spritesDeBase[i]->nbrImagesHorizontales = 6;
+                spritesDeBase[i]->nbrImagesVerticales = 1;
+                spritesDeBase[i]->ralenti = 2;
+            }
+            else if (i == indiceRobotmetalWalk)
+            {
+                spritesDeBase[i]->nbrImagesHorizontales = 2;
+                spritesDeBase[i]->nbrImagesVerticales = 1;
+                spritesDeBase[i]->ralenti = 4;
+            }
+            else if (i == indiceRobotmetalattaque)
+            {
+                spritesDeBase[i]->nbrImagesHorizontales = 2;
+                spritesDeBase[i]->nbrImagesVerticales = 1;
+                spritesDeBase[i]->ralenti = 2;
+            }
+            
 
             spritesDeBase[i]->wCoefReductionDestination = 0.10;
             spritesDeBase[i]->hCoefReductionDestination = 0.20;
@@ -98,8 +150,17 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
             spritesDeBase[i]->wCoefReductionDestination = 1.0;
             spritesDeBase[i]->hCoefReductionDestination = 1.0;
             spritesDeBase[i]->prioriteAffichage = TOUTDEVANT;
-            spritesDeBase[i]->animation = 0;
+            spritesDeBase[i]->nbrImagesHorizontales = 1;
+            spritesDeBase[i]->nbrImagesVerticales = 1;
+            // spritesDeBase[i]->animation = 0;
         }
+
+        SDL_Rect source = {0};
+
+        SDL_QueryTexture(spritesDeBase[i]->textureSprite, NULL, NULL, &source.w, &source.h);
+
+        spritesDeBase[i]->wImageSprite = source.w / spritesDeBase[i]->nbrImagesHorizontales;
+        spritesDeBase[i]->hImageSprite = source.h / spritesDeBase[i]->nbrImagesVerticales;
     }
     // *******************************Initialisation de la liste de sprites courants ********************
     // **************************************************************************************************

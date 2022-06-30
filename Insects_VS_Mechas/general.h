@@ -39,6 +39,7 @@
 #define NBENNEMIVAGUE 3 //nb d'ennemis au debut de la vague
 #define NBRMAXCOMBATTANTS 10
 #define NBRTYPEINSECTES 3
+#define NBCOMPO 20 ///----/!\ 34 quand 4 ennemis par vague
 
 
 #define NBPERCEPTION 19
@@ -46,10 +47,14 @@
 #define NBDEFENSES 3
 #define TAILLECHAR 5
 
+#define wHypothetiqueFenetre 1500
+#define hHypothetiqueFenetre 1000
 
+#define xSponeDefenseur 0.2
+#define ySponeDefenseur 0.7
 
 typedef enum typePNG{
-indicePasserelleFinie,
+indicePasserelleAnimee,
 indiceBatiment2,
 indiceBatiment2coupe,
 indiceFond,
@@ -88,10 +93,14 @@ typedef struct spriteBase {
     //SDL_Rect source;
     //SDL_Rect destination;
     enum typePA prioriteAffichage;
+
     float wCoefReductionDestination;
     float hCoefReductionDestination;
+
+    int wImageSprite;
+    int hImageSprite;
     
-    int animation;
+    // int animation;
     int nbrImagesHorizontales;
     int nbrImagesVerticales;
     int ralenti;
@@ -111,8 +120,12 @@ typedef struct spriteBase {
 typedef struct spriteCourant{
 
     struct spriteBase *spriteDeBase;
-    SDL_Rect source;
-    SDL_Rect destination;
+
+    float xProportionPosFenetre;
+    float yProportionPosFenetre;
+
+    // SDL_Rect source;
+    // SDL_Rect destination;
 
     int numImageEnCours;
     int retardateurRalenti;
@@ -128,6 +141,8 @@ typedef struct combattant {
 
     //int statPhysique;
     //int statMagie;
+    float speedX;
+    float speedY;
 
     int physiqueRestant;
     int magieRestante;
