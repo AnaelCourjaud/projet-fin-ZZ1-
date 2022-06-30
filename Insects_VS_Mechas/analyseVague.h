@@ -4,7 +4,7 @@
 
 #include "general.h"
 
-int reconnaitreCompo(int [], int [NBCOMPO][NBENNEMIVAGUE], combattant_t *[]);
+int reconnaitreCompo( int [NBCOMPO][NBENNEMIVAGUE], combattant_t *[]);
 
 
 

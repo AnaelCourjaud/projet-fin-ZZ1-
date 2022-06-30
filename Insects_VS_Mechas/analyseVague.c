@@ -7,10 +7,10 @@
 
 
 
-int reconnaitreCompo(int compo[NBENNEMIVAGUE], int listeCompo[NBCOMPO][NBENNEMIVAGUE], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS])
+int reconnaitreCompo( int listeCompo[NBCOMPO][NBENNEMIVAGUE], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS])
 {
     //---------Reformuler compo liste attaquant
-    // int compo[NBENNEMIVAGUE];
+    int compo[NBENNEMIVAGUE];
     int courdeb = 0;
     int courfin = NBENNEMIVAGUE - 1;
     for (int i = 0; i < NBENNEMIVAGUE; i++)
