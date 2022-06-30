@@ -1,4 +1,4 @@
-SRC=main.c affichage.h affichage.c general.h initialisation.c initialisation.h gestionObjets.c gestionObjets.h riposte.c riposte.h resolutionNulle.c resolutionNulle.h
+SRC=main.c affichage.h affichage.c general.h initialisation.c initialisation.h gestionObjets.c gestionObjets.h riposte.c riposte.h resolutionNulle.c resolutionNulle.h apprentissage.c apprentissage.h  analyseVague.c analyseVague.h
 #SRC+=world.c etc1.c etc2.c
 #SRC=$(wildcard *.c)  # en commentaire, je ne suis pas un grand amateur
 EXE=Insects_VS_Mechas.out

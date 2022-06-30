@@ -4,6 +4,8 @@
 #include "gestionObjets.h"
 #include "riposte.h"
 #include "resolutionNulle.h"
+#include "apprentissage.h"
+#include "analyseVague.h"
 
 int main()
 {
@@ -87,6 +89,16 @@ int main()
     int compteurDeCoups = 0;
     int train = 1;
 
+    // Initialisation ia
+    float tableQ[NBPERCEPTION][NBDEFENSES];
+    initTableQ(tableQ);
+
+    int tablesauv[2][NBPERCEPTION] ;
+
+    float epsilon = 1.0;
+    float gamma = 0.5;
+
+    
     creerSpriteCourant(spritesDeBase, listeCourants, indiceFondAccueil, 0.0, 0.0);
 
     while (program_on)
@@ -332,8 +344,14 @@ int main()
             if (train == 1)
             {
                 int perception = reconnaitreCompo(listeCompo, listeCombattants);
-                // int ordreIA = preferenceLearning(perception, tableQ, epsilon);
-                switch (ordreIA)
+                int ordreIA = preferencelearning(perception, tableQ, epsilon);
+                printf("ordreIA:%d\n", ordreIA);
+
+                //Sauvegardes des perceptions et des defenses
+                tablesauv[0][compteurDeCoups] = perception;
+                tablesauv[1][compteurDeCoups] = ordreIA;
+
+                switch (ordreIA+3)
                 {
                 case ROBOTGROS:
                     creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
@@ -428,6 +446,8 @@ int main()
 
                 if (nombreCombattantsExistants == 0)
                 {
+                    gestionTable( tableQ, tablesauv, gamma, epsilon);
+
                     if (numeroDeVague < NBRDEVAGUES)
                     {
                         creationVague(spritesDeBase, listeCombattants, listeCourants);

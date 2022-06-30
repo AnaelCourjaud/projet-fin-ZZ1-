@@ -85,7 +85,7 @@ float reelAleatoireUniforme()
 {
     int digit = 1000000;
     int r = rand() % digit;
-    printf("r : %d\n", r);
+    //printf("r : %d\n", r);
     float reel = r/(float)digit;
 
     return reel;
