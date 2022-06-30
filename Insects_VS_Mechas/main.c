@@ -370,7 +370,7 @@ int main()
                     break;
                 }
             }
-            printf("attente riposte\n");
+            //printf("attente riposte\n");
             animation(window, renderer, listeCourants);
             break;
         case ARRIVEERIPOSTE:
@@ -446,7 +446,10 @@ int main()
 
                 if (nombreCombattantsExistants == 0)
                 {
-                    gestionTable( tableQ, tablesauv, gamma, epsilon);
+                    printf("compteur de coups : %d\n",compteurDeCoups);
+                    affichageSauv(tablesauv,compteurDeCoups);
+                    gestionTable( tableQ, tablesauv, compteurDeCoups, gamma, epsilon);
+                    compteurDeCoups = 0;
 
                     if (numeroDeVague < NBRDEVAGUES)
                     {
