@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h> 
 #include <time.h>
+#include <SDL2/SDL_mixer.h> //+Ajout de -lSDL2_mixer dans le Makefile
 
 int main()
 {
@@ -12,11 +13,23 @@ int main()
     /*                                                                              */
     /********************************************************************************/
 
-    if(SDL_Init(SDL_INIT_VIDEO) !=0 ){
+    if(SDL_Init(SDL_INIT_VIDEO| SDL_INIT_AUDIO ) !=0 ){
         SDL_Log("Error : SDL initialisation - %s\n",
             SDL_GetError());    // l'initialisation de la SDL a échoué 
         exit(EXIT_FAILURE);
     }
+
+    /************** Musique* *********/
+    /*                                                                              */
+    /********************************************************************************/
+
+    /* Chargement musique */
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+
+    Mix_Music *Pantera = Mix_LoadMUS("lore1.mp3");//Chargement de la music
+    Mix_PlayMusic(Pantera, 0);//Indice = priorité file
+    //Mix_PauseMusic(); 
+    //Mix_ResumeMusic();
 
 
     /*************************  Gestion des fenetres   *****************************/
@@ -138,7 +151,8 @@ int main()
         }   
     }
     SDL_DestroyRenderer(renderer);  
-    SDL_DestroyWindow(window); 
+    SDL_DestroyWindow(window);
+    Mix_CloseAudio(); 
     SDL_Quit();   
     return 0;
 }
