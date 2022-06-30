@@ -2,12 +2,14 @@
 #include "affichage.h"
 // #include "general.h"
 #include "gestionObjets.h"
-// #include "riposte.h"
+#include "riposte.h"
 #include "resolutionNulle.h"
 
 int main()
 {
     srand(time(NULL));
+
+    int listeCompo[20][3] = {{BUGFIRE, -1, -1}, {FLY, -1, -1}, {MANTIS, -1, -1}, {BUGFIRE, BUGFIRE, -1}, {FLY, FLY, -1}, {MANTIS, MANTIS, -1}, {BUGFIRE, FLY, -1}, {BUGFIRE, MANTIS, -1}, {FLY, MANTIS, -1}, {BUGFIRE, BUGFIRE, BUGFIRE}, {FLY, FLY, FLY}, {MANTIS, MANTIS, MANTIS}, {BUGFIRE, BUGFIRE, FLY}, {BUGFIRE, BUGFIRE, MANTIS}, {BUGFIRE, FLY, FLY}, {FLY, FLY, MANTIS}, {BUGFIRE, MANTIS, MANTIS}, {FLY, MANTIS, MANTIS}, {BUGFIRE, FLY, MANTIS}};
 
     SDL_Window *window = NULL;
     SDL_Renderer *renderer = NULL;
@@ -82,6 +84,7 @@ int main()
     int nombreInsectesMorts = 0;
     int numeroDeVague = 0;
     int compteurDeCoups = 0;
+    int train = 1;
 
     creerSpriteCourant(spritesDeBase, listeCourants, indiceFondAccueil, 0.0, 0.0);
 
@@ -158,37 +161,43 @@ int main()
                     changermusique = 1;
                     break;
                 case SDLK_g:
-
-                    if (ETATJEU == ATTENTECHOIXRIPOSTE)
+                    if (train == 0)
                     {
-                        // cleanListeCombattants(listeCombattants);
-                        // cleanListeCourants(listeCourants);
-                        // creerSpriteCourant(spritesDeBase, listeCourants, indiceFondAccueil, 0.0, 0.0);
-                        creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
-                        compteurDeCoups++;
-                        ETATJEU = ARRIVEERIPOSTE;
+                        if (ETATJEU == ATTENTECHOIXRIPOSTE)
+                        {
+                            // cleanListeCombattants(listeCombattants);
+                            // cleanListeCourants(listeCourants);
+                            // creerSpriteCourant(spritesDeBase, listeCourants, indiceFondAccueil, 0.0, 0.0);
+                            creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
+                            compteurDeCoups++;
+                            ETATJEU = ARRIVEERIPOSTE;
+                        }
+                        interessant = 1;
                     }
-                    interessant = 1;
                     break;
                 case SDLK_p:
-
-                    if (ETATJEU == ATTENTECHOIXRIPOSTE)
+                    if (train == 0)
                     {
-                        creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTPETIT, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
-                        compteurDeCoups++;
-                        ETATJEU = ARRIVEERIPOSTE;
+                        if (ETATJEU == ATTENTECHOIXRIPOSTE)
+                        {
+                            creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTPETIT, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
+                            compteurDeCoups++;
+                            ETATJEU = ARRIVEERIPOSTE;
+                        }
+                        interessant = 1;
                     }
-                    interessant = 1;
                     break;
                 case SDLK_m:
-
-                    if (ETATJEU == ATTENTECHOIXRIPOSTE)
+                    if (train == 0)
                     {
-                        creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTMETAL, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
-                        compteurDeCoups++;
-                        ETATJEU = ARRIVEERIPOSTE;
+                        if (ETATJEU == ATTENTECHOIXRIPOSTE)
+                        {
+                            creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTMETAL, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
+                            compteurDeCoups++;
+                            ETATJEU = ARRIVEERIPOSTE;
+                        }
+                        interessant = 1;
                     }
-                    interessant = 1;
                     break;
                 default: // L'évènement défilé ne nous intéresse pas
                     break;
@@ -255,6 +264,29 @@ int main()
             // listeCombattants[0]->spriteCourant->destination.x++;
             break;
         case ATTENTECHOIXRIPOSTE:
+            if (train == 1)
+            {
+                int perception = reconnaitreCompo(listeCompo, listeCombattants);
+                int ordreIA = preferenceLearning(perception, tableQ, epsilon);
+                switch (ordreIA)
+                {
+                case ROBOTGROS:
+                    creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
+                    compteurDeCoups++;
+                    ETATJEU = ARRIVEERIPOSTE;
+                    break;
+                case ROBOTMETAL:
+                    creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTMETAL, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
+                    compteurDeCoups++;
+                    ETATJEU = ARRIVEERIPOSTE;
+                    break;
+                case ROBOTPETIT:
+                    creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTPETIT, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
+                    compteurDeCoups++;
+                    ETATJEU = ARRIVEERIPOSTE;
+                    break;
+                }
+            }
             // printf("attente riposte\n");
             animation(window, renderer, listeCourants);
             break;
@@ -275,8 +307,8 @@ int main()
             if (compteurAnimationMort == NBRATTAQUESDEFENSEURAVANTMORT * listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->nbrImagesHorizontales * listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->nbrImagesVerticales * (listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->ralenti + 1))
             {
                 // résolution
-                applicationDegats(listeCombattants);
-                // degatInflige(listeCombattants);
+                // applicationDegats(listeCombattants);
+                degatInflige(listeCombattants);
                 // switch etat mort
                 nombreInsectesMorts = switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, BUGFIRE, MORT);
                 switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, MORT);
@@ -336,7 +368,9 @@ int main()
                         creationVague(spritesDeBase, listeCombattants, listeCourants);
                         numeroDeVague++;
                         ETATJEU = ARRIVEEVAGUE;
-                    }else{
+                    }
+                    else
+                    {
                         ETATJEU = FINDEVAGUE;
                     }
                 }
