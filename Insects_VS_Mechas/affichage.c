@@ -246,8 +246,9 @@ void cleanListeCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS]) 
     }
 }
 
-void switchEtatCombattants(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], typeCombattant_t familleCombattants, etatCombattant_t etatArrivee)
+int switchEtatCombattants(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], typeCombattant_t familleCombattants, etatCombattant_t etatArrivee)
 {
+    int nombreDeMorts = 0;
     for (int i = 0; i < NBRMAXCOMBATTANTS; i++)
     {
         int goChanger = 0;
@@ -261,6 +262,7 @@ void switchEtatCombattants(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCoura
                     {
                         if(tableauCombattants[i]->magieRestante <= 0 && tableauCombattants[i]->physiqueRestant <= 0){
                             goChanger = 1;
+                            nombreDeMorts++;
                         }
                     }
                     else
@@ -310,6 +312,7 @@ void switchEtatCombattants(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCoura
             //printf(" idice PNG : %d\n", retourIndicePNG(tableauCombattants[i]->typeCombattant, etatArrivee));
         }
     }
+    return nombreDeMorts;
 }
 
 
