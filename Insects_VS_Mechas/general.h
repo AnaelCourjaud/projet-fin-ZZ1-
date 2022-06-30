@@ -19,6 +19,7 @@
 #define ARRIVEEVAGUE 60
 #define ATTENTECHOIXRIPOSTE 70
 #define ARRIVEERIPOSTE 80
+#define ATTAQUESDEFENSEUR 120
 #define ANIMATIONMORT 90
 #define FINDEVAGUE 100
 #define FINJEU 110
@@ -84,9 +85,9 @@ indiceRobotpetitwalk,
 indiceRobotpetitattaque,
 indiceRobotpetitmort} indicesPNGs;
 
-typedef enum typeC {BUGFIRE, FLY, MANTIS, ROBOTGROS, ROBOTMETAL, ROBOTPETIT}typesCombattants_t;
-typedef enum typePA {TOUTDEVANT, DEVANT, MILIEU, DERRIERE, TOUTDERRIERE}prioritesaffichage_t;
-typedef enum typeE {WALK, ATTAQUE, MORT} etatsCombattants_t;
+typedef enum typeC {BUGFIRE, FLY, MANTIS, ROBOTGROS, ROBOTMETAL, ROBOTPETIT}typeCombattant_t;
+typedef enum typePA {TOUTDEVANT, DEVANT, MILIEU, DERRIERE, TOUTDERRIERE}prioriteAffichage_t;
+typedef enum typeE {WALK, ATTAQUE, MORT} etatCombattant_t;
 
 
 typedef struct spriteBase {
@@ -104,6 +105,7 @@ typedef struct spriteBase {
     int hImageSprite;
     
     // int animation;
+    int animationInfinie;
     int nbrImagesHorizontales;
     int nbrImagesVerticales;
     int ralenti;
@@ -130,6 +132,7 @@ typedef struct spriteCourant{
     // SDL_Rect source;
     // SDL_Rect destination;
 
+    int animationTerminee;
     int numImageEnCours;
     int retardateurRalenti;
 
