@@ -14,7 +14,7 @@ void cleanListeCourants(spriteCourant_t *listeCourants[tailleMaxSpritesCourants]
 void cleanCombattantsDeListeCourants(spriteCourant_t *listeCourants[tailleMaxSpritesCourants]);
 void cleanListeCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS]);
 
-void switchEtatCombattants(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], typeCombattant_t familleCombattants, etatCombattant_t etatArrivee);
+int switchEtatCombattants(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], typeCombattant_t familleCombattants, etatCombattant_t etatArrivee);
 int retourIndicePNG(typeCombattant_t typeCombattants, etatCombattant_t etatArrivee);
 
 int faireAvancerCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], typeCombattant_t familleCombattants);
