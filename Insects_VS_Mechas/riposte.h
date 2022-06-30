@@ -6,6 +6,7 @@
 #define NBRMAXCOMBATTANTS 10
 
 #include "general.h"
+#include "affichage.h"
 
 int appartient(int , int []);
 void initValNull(int [], combattant_t *[]);

@@ -2,6 +2,7 @@
 #include "affichage.h"
 #include "general.h"
 #include "vague.h"
+#include "riposte.h"
 
 int main(int argc, char *argv[])
 {
@@ -62,6 +63,7 @@ int main(int argc, char *argv[])
     SDL_Event event;                // c'est le type IMPORTANT !!
 
     int ETATJEU = ACCUEIL;
+    int compteurAnimationMort = 0;
 
     creerSpriteCourant(spritesDeBase, listeCourants, indiceFondAccueil, 0.0, 0.0);
 
@@ -118,7 +120,7 @@ int main(int argc, char *argv[])
                         creerSpriteCourant(spritesDeBase, listeCourants, indicePasserelleAnimee, 0.0, 0.0);
                         creerSpriteCourant(spritesDeBase, listeCourants, indiceBatiment2, -0.12, 0.27);
                         creationVague(spritesDeBase, listeCombattants, listeCourants);
-                        ETATJEU = VAGUE;
+                        ETATJEU = ARRIVEEVAGUE;
                     }
                     interessant = 1;
                     break;
@@ -135,31 +137,31 @@ int main(int argc, char *argv[])
                     break;
                 case SDLK_g:
 
-                    if (ETATJEU == ATTENTERIPOSTE)
+                    if (ETATJEU == ATTENTECHOIXRIPOSTE)
                     {
                         // cleanListeCombattants(listeCombattants);
                         // cleanListeCourants(listeCourants);
                         // creerSpriteCourant(spritesDeBase, listeCourants, indiceFondAccueil, 0.0, 0.0);
                         creerAttaquant(spritesDeBase, listeCourants, listeCombattants, indiceRobotGrosWalk, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
-                        ETATJEU = RIPOSTE;
+                        ETATJEU = ARRIVEERIPOSTE;
                     }
                     interessant = 1;
                     break;
                 case SDLK_p:
 
-                    if (ETATJEU == ATTENTERIPOSTE)
+                    if (ETATJEU == ATTENTECHOIXRIPOSTE)
                     {
                         creerAttaquant(spritesDeBase, listeCourants, listeCombattants, indiceRobotpetitwalk, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
-                        ETATJEU = RIPOSTE;
+                        ETATJEU = ARRIVEERIPOSTE;
                     }
                     interessant = 1;
                     break;
                 case SDLK_m:
 
-                    if (ETATJEU == ATTENTERIPOSTE)
+                    if (ETATJEU == ATTENTECHOIXRIPOSTE)
                     {
                         creerAttaquant(spritesDeBase, listeCourants, listeCombattants, indiceRobotmetalWalk, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
-                        ETATJEU = RIPOSTE;
+                        ETATJEU = ARRIVEERIPOSTE;
                     }
                     interessant = 1;
                     break;
@@ -195,32 +197,46 @@ int main(int argc, char *argv[])
             animation(window, renderer, listeCourants);
 
             break;
-        case VAGUE:
-            printf("vague\n");
+        case ARRIVEEVAGUE:
+            printf("ARRIVEEVAGUE\n");
             animation(window, renderer, listeCourants);
             int attaquantsArrives = 0;
             attaquantsArrives = faireAvancerCombattants(listeCombattants, BUGFIRE);
             if (attaquantsArrives == 1)
             {
                 switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, BUGFIRE, ATTAQUE);
-                ETATJEU = ATTENTERIPOSTE;
+                ETATJEU = ATTENTECHOIXRIPOSTE;
             }
             // listeCombattants[0]->spriteCourant->destination.x++;
             break;
-        case ATTENTERIPOSTE:
+        case ATTENTECHOIXRIPOSTE:
             printf("attente riposte\n");
             animation(window, renderer, listeCourants);
             break;
-        case RIPOSTE:
-            printf("riposte\n");
+        case ARRIVEERIPOSTE:
+            printf("ARRIVEERIPOSTE\n");
             animation(window, renderer, listeCourants);
             int defenseursArrives = 0;
             defenseursArrives = faireAvancerCombattants(listeCombattants, ROBOTGROS);
             if (defenseursArrives == 1)
             {
                 switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, ATTAQUE);
-                ETATJEU = ATTENTERIPOSTE;
+                compteurAnimationMort = 0;
+                ETATJEU = ANIMATIONMORT;
             }
+            break;
+        case ANIMATIONMORT:
+            printf("animation mort\n");
+            if (compteurAnimationMort == NBRATTAQUESDEFENSEURAVANTMORT * listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->nbrImagesHorizontales * listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->nbrImagesVerticales * (listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->ralenti + 1))
+            {
+                // résolution
+                degatInflige(listeCombattants);
+                // switch etat mort
+                switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, BUGFIRE, MORT);
+                switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, MORT);
+            }
+            animation(window, renderer, listeCourants);
+            compteurAnimationMort++;
             break;
         case FINDEVAGUE:
             printf("fin de vague\n");
@@ -238,7 +254,7 @@ int main(int argc, char *argv[])
         SDL_RenderPresent(renderer);
         SDL_RenderClear(renderer);
         SDL_Delay(20);
-printf(("hello\n"));
+        printf(("hello\n"));
         for (int i = 0; i < NBRMAXCOMBATTANTS; i++)
         {
             printf("listeCombattants[%d] == %d\n", i, listeCombattants[i] == NULL);

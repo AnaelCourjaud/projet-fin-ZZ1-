@@ -16,11 +16,12 @@
 #define LORE1 30
 #define LORE2 40
 #define LORE3 50
-#define VAGUE 60
-#define ATTENTERIPOSTE 70
-#define RIPOSTE 80
-#define FINDEVAGUE 90
-#define FINJEU 100
+#define ARRIVEEVAGUE 60
+#define ATTENTECHOIXRIPOSTE 70
+#define ARRIVEERIPOSTE 80
+#define ANIMATIONMORT 90
+#define FINDEVAGUE 100
+#define FINJEU 110
 
 
 #define NBRTEXTURES 26
@@ -47,8 +48,10 @@
 #define NBDEFENSES 3
 #define TAILLECHAR 5
 
-#define wHypothetiqueFenetre 1500
-#define hHypothetiqueFenetre 1000
+#define NBRATTAQUESDEFENSEURAVANTMORT 3
+
+// #define wHypothetiqueFenetre 1500
+// #define hHypothetiqueFenetre 1000
 
 #define xSponeDefenseur 0.2
 #define ySponeDefenseur 0.7
