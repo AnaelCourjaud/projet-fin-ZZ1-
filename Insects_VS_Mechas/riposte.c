@@ -387,6 +387,18 @@ void degatInflige(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS])
     supprValNull(listeIndice, tableauCombattants);
 }
 
+void creerAttaquantSansSprite(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], int indiceEmplacement)
+{
+
+    combattant_t *emplacementestAttaquant = malloc(sizeof(combattant_t));
+
+    emplacementestAttaquant->magieRestante = 0;
+    emplacementestAttaquant->physiqueRestant = 0;
+
+    tableauCombattants[indiceEmplacement] = emplacementestAttaquant;
+
+}
+
 // int main()
 // {
 //     int tableau[NBENNEMIVAGUE] = {4, 5, 2};

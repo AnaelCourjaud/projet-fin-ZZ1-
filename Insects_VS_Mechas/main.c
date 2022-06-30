@@ -1,11 +1,11 @@
 #include "initialisation.h"
 #include "affichage.h"
-#include "general.h"
-#include "vague.h"
-#include "riposte.h"
+// #include "general.h"
+#include "gestionObjets.h"
+// #include "riposte.h"
 #include "resolutionNulle.h"
 
-int main(int argc, char *argv[])
+int main()
 {
     srand(time(NULL));
 
@@ -201,10 +201,10 @@ int main(int argc, char *argv[])
         switch (ETATJEU)
         {
         case ERREUR:
-            printf("ETATJEU == ERREUR\n");
+            // printf("ETATJEU == ERREUR\n");
             break;
         case ACCUEIL:
-            printf("Accueil\n");
+            // printf("Accueil\n");
             if (changermusique == 1)
             {
                 Mix_PlayMusic(accueil, -1);
@@ -212,7 +212,7 @@ int main(int argc, char *argv[])
             animation(window, renderer, listeCourants);
             break;
         case LORE1:
-            printf("lore1\n");
+            // printf("lore1\n");
             if (changermusique == 1)
             {
                 Mix_PlayMusic(lore1, 0);
@@ -220,7 +220,7 @@ int main(int argc, char *argv[])
             animation(window, renderer, listeCourants);
             break;
         case LORE2:
-            printf("lore2\n");
+            // printf("lore2\n");
             if (changermusique == 1)
             {
                 Mix_PlayMusic(lore2, 0);
@@ -229,7 +229,7 @@ int main(int argc, char *argv[])
 
             break;
         case LORE3:
-            printf("lore3\n");
+            // printf("lore3\n");
             if (changermusique == 1)
             {
                 Mix_PlayMusic(lore3, 0);
@@ -238,8 +238,8 @@ int main(int argc, char *argv[])
 
             break;
         case ARRIVEEVAGUE:
-            printf("ARRIVEEVAGUE\n");
-            printf("vague\n");
+            // printf("ARRIVEEVAGUE\n");
+            // printf("vague\n");
             if (changermusique == 1)
             {
                 Mix_PlayMusic(jeu, -1);
@@ -255,11 +255,11 @@ int main(int argc, char *argv[])
             // listeCombattants[0]->spriteCourant->destination.x++;
             break;
         case ATTENTECHOIXRIPOSTE:
-            printf("attente riposte\n");
+            // printf("attente riposte\n");
             animation(window, renderer, listeCourants);
             break;
         case ARRIVEERIPOSTE:
-            printf("ARRIVEERIPOSTE\n");
+            // printf("ARRIVEERIPOSTE\n");
             animation(window, renderer, listeCourants);
             int defenseursArrives = 0;
             defenseursArrives = faireAvancerCombattants(listeCombattants, ROBOTGROS);
@@ -271,7 +271,7 @@ int main(int argc, char *argv[])
             }
             break;
         case ATTAQUESDEFENSEUR:
-            printf("attaques défenseur\n");
+            // printf("attaques défenseur\n");
             if (compteurAnimationMort == NBRATTAQUESDEFENSEURAVANTMORT * listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->nbrImagesHorizontales * listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->nbrImagesVerticales * (listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->ralenti + 1))
             {
                 // résolution
@@ -286,7 +286,7 @@ int main(int argc, char *argv[])
             compteurAnimationMort++;
             break;
         case ANIMATIONMORT:
-            printf("animation mort\n");
+            // printf("animation mort\n");
             // if (compteurAnimationMort == NBRATTAQUESDEFENSEURAVANTMORT * listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->nbrImagesHorizontales * listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->nbrImagesVerticales * (listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->ralenti + 1))
             // {
             //     // résolution
@@ -309,7 +309,7 @@ int main(int argc, char *argv[])
                                 free(listeCombattants[i]->spriteCourant);
                                 listeCombattants[i]->spriteCourant = NULL;
                                 listeCourants[j] = NULL;
-                                printf("sprite de combattant supprimé main\n");
+                                // printf("sprite de combattant supprimé main\n");
                             }
                         }
                         free(listeCombattants[i]);
@@ -348,12 +348,12 @@ int main(int argc, char *argv[])
 
             break;
         case FINDEVAGUE:
-            printf("fin de vague\n");
+            // printf("fin de vague\n");
             animation(window, renderer, listeCourants);
             ETATJEU = FINJEU;
             break;
         case FINJEU:
-            printf("fin du jeu\n");
+            // printf("fin du jeu\n");
             cleanListeCourants(listeCourants);
             animation(window, renderer, listeCourants);
             break;
@@ -367,11 +367,11 @@ int main(int argc, char *argv[])
         SDL_RenderPresent(renderer);
         SDL_RenderClear(renderer);
         SDL_Delay(20);
-        printf(("hello\n"));
-        for (int i = 0; i < NBRMAXCOMBATTANTS; i++)
-        {
-            printf("listeCombattants[%d] == %d\n", i, listeCombattants[i] == NULL);
-        }
+        // printf(("hello\n"));
+        // for (int i = 0; i < NBRMAXCOMBATTANTS; i++)
+        // {
+        //     printf("listeCombattants[%d] == %d\n", i, listeCombattants[i] == NULL);
+        // }
     }
 
     // printf(" juste avant end_sdl\n");
