@@ -238,6 +238,11 @@ int main(int argc, char *argv[])
         SDL_RenderPresent(renderer);
         SDL_RenderClear(renderer);
         SDL_Delay(20);
+printf(("hello\n"));
+        for (int i = 0; i < NBRMAXCOMBATTANTS; i++)
+        {
+            printf("listeCombattants[%d] == %d\n", i, listeCombattants[i] == NULL);
+        }
     }
 
     // printf(" juste avant end_sdl\n");
