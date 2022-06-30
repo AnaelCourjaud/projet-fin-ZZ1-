@@ -2,7 +2,7 @@
 
 void applicationDegats(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS])
 {
-    printf("debut applicationdegats\n");
+    // printf("debut applicationdegats\n");
     int nombreDegatsPhysique = 0;
     int nombreDegatsMagique = 0;
 
@@ -17,7 +17,7 @@ void applicationDegats(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS])
             }
         }
     }
-    printf("degats pghysiques %d  degats magiques %d\n",nombreDegatsPhysique, nombreDegatsMagique);
+    // printf("degats pghysiques %d  degats magiques %d\n",nombreDegatsPhysique, nombreDegatsMagique);
 
     for (int j = 0; j < nombreDegatsPhysique; j++)
     {

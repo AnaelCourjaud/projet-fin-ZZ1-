@@ -1,5 +1,5 @@
-#ifndef RIPOSTE_H
-#define RIPOSTE_H
+#ifndef RIPOSTENULLE_H
+#define RIPOSTENULLE_H
 
 #include "general.h"
 

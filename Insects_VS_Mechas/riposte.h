@@ -18,6 +18,7 @@ int rechercheMagieNulle( combattant_t *[]);
 int recherchePhysNulle( combattant_t *[]);
 void degatInflige(combattant_t *[]);
 
+void creerAttaquantSansSprite(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], int indiceEmplacement);
 
 
 #endif
