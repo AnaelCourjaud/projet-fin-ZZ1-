@@ -311,7 +311,24 @@ int main(int argc, char *argv[])
             }
             if (nombreInsectesMorts < 0)
             {
-                ETATJEU = ATTENTECHOIXRIPOSTE;
+                int nombreCombattantsExistants = 0;
+                for (int i = 0; i < NBRMAXCOMBATTANTS; i++)
+                {
+                    if (listeCombattants[i] != NULL)
+                    {
+                        nombreCombattantsExistants++;
+                    }
+                }
+
+                if (nombreCombattantsExistants == 0)
+                {
+                    creationVague(spritesDeBase, listeCombattants, listeCourants);
+                    ETATJEU = ARRIVEEVAGUE;
+                }
+                else
+                {
+                    ETATJEU = ATTENTECHOIXRIPOSTE;
+                }
             }
 
             break;
