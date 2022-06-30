@@ -224,13 +224,12 @@ int main(int argc, char *argv[])
             animation(window, renderer, listeCourants);
 
             break;
-        case VAGUE:
+        case ARRIVEEVAGUE:
+            printf("ARRIVEEVAGUE\n");
             printf("vague\n");
             if(changermusique == 1 ){
                 Mix_PlayMusic(jeu, -1);
             }
-        case ARRIVEEVAGUE:
-            printf("ARRIVEEVAGUE\n");
             animation(window, renderer, listeCourants);
             int attaquantsArrives = 0;
             attaquantsArrives = faireAvancerCombattants(listeCombattants, BUGFIRE);
