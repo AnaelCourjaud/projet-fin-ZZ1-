@@ -80,6 +80,7 @@ int main(int argc, char *argv[])
     int changermusique = 1;
     int compteurAnimationMort = 0;
     int nombreInsectesMorts = 0;
+    int numeroDeVague = 0;
 
     creerSpriteCourant(spritesDeBase, listeCourants, indiceFondAccueil, 0.0, 0.0);
 
@@ -115,6 +116,7 @@ int main(int argc, char *argv[])
                     {
                         cleanListeCourants(listeCourants);
                         creerSpriteCourant(spritesDeBase, listeCourants, indiceLore1, 0.0, 0.0);
+                        numeroDeVague = 0;
                         ETATJEU = LORE1;
                     }
                     else if (ETATJEU == LORE1)
@@ -136,6 +138,7 @@ int main(int argc, char *argv[])
                         creerSpriteCourant(spritesDeBase, listeCourants, indicePasserelleAnimee, 0.0, 0.0);
                         creerSpriteCourant(spritesDeBase, listeCourants, indiceBatiment2, -0.12, 0.27);
                         creationVague(spritesDeBase, listeCombattants, listeCourants);
+                        numeroDeVague++;
                         ETATJEU = ARRIVEEVAGUE;
                     }
                     interessant = 1;
@@ -269,6 +272,7 @@ int main(int argc, char *argv[])
             {
                 // résolution
                 applicationDegats(listeCombattants);
+                // degatInflige(listeCombattants);
                 // switch etat mort
                 nombreInsectesMorts = switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, BUGFIRE, MORT);
                 switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, MORT);
@@ -323,8 +327,14 @@ int main(int argc, char *argv[])
 
                 if (nombreCombattantsExistants == 0)
                 {
-                    creationVague(spritesDeBase, listeCombattants, listeCourants);
-                    ETATJEU = ARRIVEEVAGUE;
+                    if (numeroDeVague < NBRDEVAGUES)
+                    {
+                        creationVague(spritesDeBase, listeCombattants, listeCourants);
+                        numeroDeVague++;
+                        ETATJEU = ARRIVEEVAGUE;
+                    }else{
+                        ETATJEU = FINDEVAGUE;
+                    }
                 }
                 else
                 {
@@ -336,9 +346,11 @@ int main(int argc, char *argv[])
         case FINDEVAGUE:
             printf("fin de vague\n");
             animation(window, renderer, listeCourants);
+            ETATJEU = FINJEU;
             break;
         case FINJEU:
             printf("fin du jeu\n");
+            cleanListeCourants(listeCourants);
             animation(window, renderer, listeCourants);
             break;
         default:

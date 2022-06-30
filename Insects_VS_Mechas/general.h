@@ -52,6 +52,8 @@
 
 #define NBRATTAQUESDEFENSEURAVANTMORT 3
 
+#define NBRDEVAGUES 3
+
 // #define wHypothetiqueFenetre 1500
 // #define hHypothetiqueFenetre 1000
 

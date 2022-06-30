@@ -111,7 +111,7 @@ emplacementestAttaquant->typeCombattant = typeCombattant;
     {
         // emplacementestAttaquant->typeCombattant = BUGFIRE;
         emplacementestAttaquant->physiqueRestant = 3;
-        emplacementestAttaquant->magieRestante = 1;
+        emplacementestAttaquant->magieRestante = 4;
         emplacementestAttaquant->speedX = 0.99;
         emplacementestAttaquant->speedY = 1.0;
     }
@@ -119,7 +119,7 @@ emplacementestAttaquant->typeCombattant = typeCombattant;
     {
         // emplacementestAttaquant->typeCombattant = FLY;
         emplacementestAttaquant->physiqueRestant = 2;
-        emplacementestAttaquant->magieRestante = 1;
+        emplacementestAttaquant->magieRestante = 2;
         emplacementestAttaquant->speedX = 0.99;
         emplacementestAttaquant->speedY = 1.0;
     }
@@ -127,15 +127,15 @@ emplacementestAttaquant->typeCombattant = typeCombattant;
     {
         // emplacementestAttaquant->typeCombattant = MANTIS;
         emplacementestAttaquant->physiqueRestant = 5;
-        emplacementestAttaquant->magieRestante = 1;
+        emplacementestAttaquant->magieRestante = 0;
         emplacementestAttaquant->speedX = 0.99;
         emplacementestAttaquant->speedY = 1.0;
     }
     else if (indicePNG == indiceRobotGrosWalk)
     {
         // emplacementestAttaquant->typeCombattant = ROBOTGROS;
-        emplacementestAttaquant->physiqueRestant = 15;
-        emplacementestAttaquant->magieRestante = 3;
+        emplacementestAttaquant->physiqueRestant = 5;
+        emplacementestAttaquant->magieRestante = 0;
         emplacementestAttaquant->speedX = 1.01;
         emplacementestAttaquant->speedY = 1.0;
     }
