@@ -220,7 +220,7 @@ void degatInflige(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS])
             {
                 printf("debut if magie grand\n");
                 printf("stat phys:%d\n", rechercheIndPhysInf(statPhys, physDef, tableauCombattants));
-                if ((tableauCombattants[statPhys[rechercheIndPhysInf(statPhys, physDef, tableauCombattants)]]->physiqueRestant > physDef)&&(statMagie[0] !=0))
+                if ((physDef ==0) || ((tableauCombattants[statPhys[rechercheIndPhysInf(statPhys, physDef, tableauCombattants)]]->physiqueRestant > physDef)&&(statMagie[0] !=0)))
                 // si il n'y a pas d'indice de physique plus petit que celui du defenseur && que le max de magie est non nul
                 {
                     printf("debut if magie max\n");
@@ -278,7 +278,7 @@ void degatInflige(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS])
             // si il n'y a pas d'indice de magie plus petit que celui du defenseur
             {
                 printf("debut if phys grand\n");
-                if ((tableauCombattants[statMagie[rechercheIndMagieInf(statMagie, magieDef, tableauCombattants)]]->magieRestante > magieDef)&&(statPhys[0] !=0))
+                if ((magieDef == 0) || ((tableauCombattants[statMagie[rechercheIndMagieInf(statMagie, magieDef, tableauCombattants)]]->magieRestante > magieDef)&&(statPhys[0] !=0)))
                 // si il n'y a pas d'indice de physique plus petit que celui du defenseur
                 {
                     printf("debut if phys max\n");

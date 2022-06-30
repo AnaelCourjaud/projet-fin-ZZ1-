@@ -81,6 +81,7 @@ int main(int argc, char *argv[])
     int compteurAnimationMort = 0;
     int nombreInsectesMorts = 0;
     int numeroDeVague = 0;
+    int compteurDeCoups = 0;
 
     creerSpriteCourant(spritesDeBase, listeCourants, indiceFondAccueil, 0.0, 0.0);
 
@@ -164,6 +165,7 @@ int main(int argc, char *argv[])
                         // cleanListeCourants(listeCourants);
                         // creerSpriteCourant(spritesDeBase, listeCourants, indiceFondAccueil, 0.0, 0.0);
                         creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
+                        compteurDeCoups++;
                         ETATJEU = ARRIVEERIPOSTE;
                     }
                     interessant = 1;
@@ -173,6 +175,7 @@ int main(int argc, char *argv[])
                     if (ETATJEU == ATTENTECHOIXRIPOSTE)
                     {
                         creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTPETIT, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
+                        compteurDeCoups++;
                         ETATJEU = ARRIVEERIPOSTE;
                     }
                     interessant = 1;
@@ -182,6 +185,7 @@ int main(int argc, char *argv[])
                     if (ETATJEU == ATTENTECHOIXRIPOSTE)
                     {
                         creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTMETAL, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
+                        compteurDeCoups++;
                         ETATJEU = ARRIVEERIPOSTE;
                     }
                     interessant = 1;
