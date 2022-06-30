@@ -3,6 +3,7 @@
 #include "general.h"
 #include "vague.h"
 #include "riposte.h"
+#include "resolutionNulle.h"
 
 int main(int argc, char *argv[])
 {
@@ -267,7 +268,7 @@ int main(int argc, char *argv[])
             if (compteurAnimationMort == NBRATTAQUESDEFENSEURAVANTMORT * listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->nbrImagesHorizontales * listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->nbrImagesVerticales * (listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->ralenti + 1))
             {
                 // résolution
-                degatInflige(listeCombattants);
+                applicationDegats(listeCombattants);
                 // switch etat mort
                 nombreInsectesMorts = switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, BUGFIRE, MORT);
                 switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, MORT);
