@@ -158,7 +158,7 @@ int main(int argc, char *argv[])
                         // cleanListeCombattants(listeCombattants);
                         // cleanListeCourants(listeCourants);
                         // creerSpriteCourant(spritesDeBase, listeCourants, indiceFondAccueil, 0.0, 0.0);
-                        creerAttaquant(spritesDeBase, listeCourants, listeCombattants, indiceRobotGrosWalk, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
+                        creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
                         ETATJEU = ARRIVEERIPOSTE;
                     }
                     interessant = 1;
@@ -167,7 +167,7 @@ int main(int argc, char *argv[])
 
                     if (ETATJEU == ATTENTECHOIXRIPOSTE)
                     {
-                        creerAttaquant(spritesDeBase, listeCourants, listeCombattants, indiceRobotpetitwalk, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
+                        creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTPETIT, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
                         ETATJEU = ARRIVEERIPOSTE;
                     }
                     interessant = 1;
@@ -176,7 +176,7 @@ int main(int argc, char *argv[])
 
                     if (ETATJEU == ATTENTECHOIXRIPOSTE)
                     {
-                        creerAttaquant(spritesDeBase, listeCourants, listeCombattants, indiceRobotmetalWalk, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
+                        creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTMETAL, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
                         ETATJEU = ARRIVEERIPOSTE;
                     }
                     interessant = 1;
@@ -253,11 +253,11 @@ int main(int argc, char *argv[])
             {
                 switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, ATTAQUE);
                 compteurAnimationMort = 0;
-                ETATJEU = ANIMATIONMORT;
+                ETATJEU = ATTAQUESDEFENSEUR;
             }
             break;
-        case ANIMATIONMORT:
-            printf("animation mort\n");
+        case ATTAQUESDEFENSEUR:
+            printf("attaques défenseur\n");
             if (compteurAnimationMort == NBRATTAQUESDEFENSEURAVANTMORT * listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->nbrImagesHorizontales * listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->nbrImagesVerticales * (listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->ralenti + 1))
             {
                 // résolution
@@ -265,9 +265,44 @@ int main(int argc, char *argv[])
                 // switch etat mort
                 switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, BUGFIRE, MORT);
                 switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, MORT);
+                ETATJEU = ANIMATIONMORT;
             }
             animation(window, renderer, listeCourants);
             compteurAnimationMort++;
+            break;
+        case ANIMATIONMORT:
+            printf("animation mort\n");
+            // if (compteurAnimationMort == NBRATTAQUESDEFENSEURAVANTMORT * listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->nbrImagesHorizontales * listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->nbrImagesVerticales * (listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->ralenti + 1))
+            // {
+            //     // résolution
+            //     degatInflige(listeCombattants);
+            //     // switch etat mort
+            //     switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, BUGFIRE, MORT);
+            //     switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, MORT);
+            // }
+            animation(window, renderer, listeCourants);
+            for (int i = 0; i < NBRMAXCOMBATTANTS; i++)
+            {
+                if (listeCombattants[i] != NULL)
+                {
+                    if (listeCombattants[i]->spriteCourant->animationTerminee == 1) // supprimer le combattant i
+                    {
+                        for (int j = 0; j < tailleMaxSpritesCourants; j++)
+                        {
+                            if (listeCourants[j] == listeCombattants[i]->spriteCourant)
+                            {
+                                free(listeCombattants[i]->spriteCourant);
+                                listeCombattants[i]->spriteCourant = NULL;
+                                listeCourants[j] = NULL;
+                                printf("sprite de combattant supprimé main\n");
+                            }
+                        }
+                        free(listeCombattants[i]);
+                        listeCombattants[i] = NULL;
+                    }
+                }
+            }
+
             break;
         case FINDEVAGUE:
             printf("fin de vague\n");

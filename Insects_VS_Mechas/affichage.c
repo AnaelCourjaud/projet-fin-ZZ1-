@@ -71,7 +71,10 @@ void animation(SDL_Window *window, SDL_Renderer *renderer, spriteCourant_t *list
             {
                 listeCourants[i]->numImageEnCours++;
                 if (listeCourants[i]->numImageEnCours >= listeCourants[i]->spriteDeBase->nbrImagesHorizontales * listeCourants[i]->spriteDeBase->nbrImagesVerticales)
-                {
+                {   
+                    if(listeCourants[i]->spriteDeBase->animationInfinie == 0){
+                        listeCourants[i]->animationTerminee = 1;
+                    }
                     listeCourants[i]->numImageEnCours = 0;
                 }
                 listeCourants[i]->retardateurRalenti = listeCourants[i]->spriteDeBase->ralenti;
@@ -83,26 +86,30 @@ void animation(SDL_Window *window, SDL_Renderer *renderer, spriteCourant_t *list
 
             SDL_RenderCopy(renderer, listeCourants[i]->spriteDeBase->textureSprite, &source, &destination);
             // printf("apres copy\n");
+            
         }
     }
 }
 
-void creerAttaquant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], indicesPNGs indicePNG, int indiceEmplacement, float proportionPosX, float proportionPosY)
+void creerAttaquant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], typeCombattant_t typeCombattant, etatCombattant_t etatArrivee, int indiceEmplacement, float proportionPosX, float proportionPosY)
 {
 
     // printf("début créer estAttaquant\n");
 
     int indiceEmplacementDansListeCourants;
+    int indicePNG = retourIndicePNG(typeCombattant, etatArrivee);
 
     indiceEmplacementDansListeCourants = creerSpriteCourant(spritesDeBase, listeCourants, indicePNG, proportionPosX, proportionPosY);
 
     combattant_t *emplacementestAttaquant = malloc(sizeof(combattant_t));
 
-    emplacementestAttaquant->etatCombattant = WALK;
+emplacementestAttaquant->typeCombattant = typeCombattant;
+    emplacementestAttaquant->etatCombattant = etatArrivee;
+
 
     if (indicePNG == indiceBugfirewalk)
     {
-        emplacementestAttaquant->typeCombattant = BUGFIRE;
+        // emplacementestAttaquant->typeCombattant = BUGFIRE;
         emplacementestAttaquant->physiqueRestant = 3;
         emplacementestAttaquant->magieRestante = 4;
         emplacementestAttaquant->speedX = 0.99;
@@ -110,7 +117,7 @@ void creerAttaquant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *l
     }
     else if (indicePNG == indiceFlyWalk)
     {
-        emplacementestAttaquant->typeCombattant = FLY;
+        // emplacementestAttaquant->typeCombattant = FLY;
         emplacementestAttaquant->physiqueRestant = 2;
         emplacementestAttaquant->magieRestante = 2;
         emplacementestAttaquant->speedX = 0.99;
@@ -118,7 +125,7 @@ void creerAttaquant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *l
     }
     else if (indicePNG == indiceMantiswalk)
     {
-        emplacementestAttaquant->typeCombattant = MANTIS;
+        // emplacementestAttaquant->typeCombattant = MANTIS;
         emplacementestAttaquant->physiqueRestant = 5;
         emplacementestAttaquant->magieRestante = 0;
         emplacementestAttaquant->speedX = 0.99;
@@ -126,7 +133,7 @@ void creerAttaquant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *l
     }
     else if (indicePNG == indiceRobotGrosWalk)
     {
-        emplacementestAttaquant->typeCombattant = ROBOTGROS;
+        // emplacementestAttaquant->typeCombattant = ROBOTGROS;
         emplacementestAttaquant->physiqueRestant = 5;
         emplacementestAttaquant->magieRestante = 0;
         emplacementestAttaquant->speedX = 1.01;
@@ -134,7 +141,7 @@ void creerAttaquant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *l
     }
     else if (indicePNG == indiceRobotmetalWalk)
     {
-        emplacementestAttaquant->typeCombattant = ROBOTMETAL;
+        // emplacementestAttaquant->typeCombattant = ROBOTMETAL;
         emplacementestAttaquant->physiqueRestant = 5;
         emplacementestAttaquant->magieRestante = 0;
         emplacementestAttaquant->speedX = 1.01;
@@ -142,7 +149,7 @@ void creerAttaquant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *l
     }
     else if (indicePNG == indiceRobotpetitwalk)
     {
-        emplacementestAttaquant->typeCombattant = ROBOTPETIT;
+        // emplacementestAttaquant->typeCombattant = ROBOTPETIT;
         emplacementestAttaquant->physiqueRestant = 5;
         emplacementestAttaquant->magieRestante = 0;
         emplacementestAttaquant->speedX = 1.01;
@@ -191,6 +198,7 @@ int creerSpriteCourant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t
     maillonSpriteCourant->xProportionPosFenetre = proportionPosX;
     maillonSpriteCourant->yProportionPosFenetre = proportionPosY;
 
+    maillonSpriteCourant->animationTerminee = 0;
     maillonSpriteCourant->numImageEnCours = 0;
     maillonSpriteCourant->retardateurRalenti = maillonSpriteCourant->spriteDeBase->ralenti;
 
@@ -238,7 +246,7 @@ void cleanListeCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS]) 
     }
 }
 
-void switchEtatCombattants(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], typesCombattants_t familleCombattants, etatsCombattants_t etatArrivee)
+void switchEtatCombattants(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], typeCombattant_t familleCombattants, etatCombattant_t etatArrivee)
 {
     for (int i = 0; i < NBRMAXCOMBATTANTS; i++)
     {
@@ -271,6 +279,13 @@ void switchEtatCombattants(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCoura
             tableauCombattants[i]->etatCombattant = etatArrivee;
             float proportionPosX = tableauCombattants[i]->spriteCourant->xProportionPosFenetre;
             float proportionPosY = tableauCombattants[i]->spriteCourant->yProportionPosFenetre;
+
+            typeCombattant_t typeCombattant = tableauCombattants[i]->typeCombattant;
+            etatCombattant_t etatCombattant = tableauCombattants[i]->etatCombattant;
+            float speedX = tableauCombattants[i]->speedX;
+            float speedY = tableauCombattants[i]->speedY;
+            int physiqueRestant = tableauCombattants[i]->physiqueRestant;
+            int magieRestante = tableauCombattants[i]->magieRestante;
             // int indiceCreationDeSpriteCourant;
             // indiceCreationDeSpriteCourant = creerSpriteCourant(spritesDeBase, listeCourants, retourIndicePNG(familleCombattants, etatArrivee));
             for (int j = 0; j < tailleMaxSpritesCourants; j++)
@@ -280,16 +295,26 @@ void switchEtatCombattants(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCoura
                     free(tableauCombattants[i]->spriteCourant);
                     tableauCombattants[i]->spriteCourant = NULL;
                     listeCourants[j] = NULL;
+                    printf("sprite de combattant supprimé switch etat\n");
                 }
             }
+            free(tableauCombattants[i]);
+            tableauCombattants[i]=NULL;
 
-            tableauCombattants[i]->spriteCourant = listeCourants[creerSpriteCourant(spritesDeBase, listeCourants, retourIndicePNG(tableauCombattants[i]->typeCombattant, etatArrivee), proportionPosX, proportionPosY)];
-            printf(" idice PNG : %d\n", retourIndicePNG(tableauCombattants[i]->typeCombattant, etatArrivee));
+            creerAttaquant(spritesDeBase, listeCourants, tableauCombattants, typeCombattant, etatArrivee, i, proportionPosX, proportionPosY);
+            tableauCombattants[i]->speedX =speedX;
+            tableauCombattants[i]->speedY = speedY;
+            tableauCombattants[i]->physiqueRestant = physiqueRestant;
+            tableauCombattants[i]->magieRestante = magieRestante;
+            // tableauCombattants[i]->spriteCourant = listeCourants[creerSpriteCourant(spritesDeBase, listeCourants, retourIndicePNG(tableauCombattants[i]->typeCombattant, etatArrivee), proportionPosX, proportionPosY)];
+            //printf(" idice PNG : %d\n", retourIndicePNG(tableauCombattants[i]->typeCombattant, etatArrivee));
         }
     }
 }
 
-int retourIndicePNG(typesCombattants_t typeCombattants, etatsCombattants_t etatArrivee)
+
+
+int retourIndicePNG(typeCombattant_t typeCombattants, etatCombattant_t etatArrivee)
 {
 
     int bonIndicePNG;
@@ -298,7 +323,7 @@ int retourIndicePNG(typesCombattants_t typeCombattants, etatsCombattants_t etatA
     return bonIndicePNG;
 }
 
-int faireAvancerCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], typesCombattants_t familleCombattants)
+int faireAvancerCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], typeCombattant_t familleCombattants)
 {
     int avanceeFinie = 0;
 
