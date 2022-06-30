@@ -25,11 +25,24 @@ int main(int argc, char *argv[])
     // ************** Initialisation de la SDL  + gestion de l'échec possible *********
     // ********************************************************************************
 
-    if (SDL_Init(SDL_INIT_VIDEO) != 0)
+    if (SDL_Init(SDL_INIT_VIDEO| SDL_INIT_AUDIO ) != 0)
     {
         SDL_Log("Error : SDL initialisation - %s\n", SDL_GetError()); // l'initialisation de la SDL a échoué
         exit(EXIT_FAILURE);
     }
+
+    //************************ Chargement musique *************************************
+
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+
+    /* Chargement musique */
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+
+    Mix_Music *accueil= Mix_LoadMUS("./Musiques/accueil.mp3");
+    Mix_Music *lore1 = Mix_LoadMUS("./Musiques/lore1.mp3");
+    Mix_Music *lore2 = Mix_LoadMUS("./Musiques/lore2.mp3");
+    Mix_Music *lore3 = Mix_LoadMUS("./Musiques/lore3.mp3");
+    Mix_Music *jeu = Mix_LoadMUS("./Musiques/jeu.mp3");
 
     // ***************************** Texte ********************************************
 
@@ -63,6 +76,7 @@ int main(int argc, char *argv[])
     SDL_Event event;                // c'est le type IMPORTANT !!
 
     int ETATJEU = ACCUEIL;
+    int changermusique = 1;
     int compteurAnimationMort = 0;
 
     creerSpriteCourant(spritesDeBase, listeCourants, indiceFondAccueil, 0.0, 0.0);
@@ -123,6 +137,7 @@ int main(int argc, char *argv[])
                         ETATJEU = ARRIVEEVAGUE;
                     }
                     interessant = 1;
+                    changermusique = 1;
                     break;
                 case SDLK_q:
 
@@ -134,6 +149,7 @@ int main(int argc, char *argv[])
                         ETATJEU = ACCUEIL;
                     }
                     interessant = 1;
+                    changermusique = 1;
                     break;
                 case SDLK_g:
 
@@ -180,25 +196,40 @@ int main(int argc, char *argv[])
             break;
         case ACCUEIL:
             printf("Accueil\n");
+            if(changermusique == 1 ){
+                Mix_PlayMusic(accueil, -1);
+            }
             animation(window, renderer, listeCourants);
             break;
         case LORE1:
             printf("lore1\n");
+            if(changermusique == 1 ){
+                Mix_PlayMusic(lore1, 0);
+            }
             animation(window, renderer, listeCourants);
-
             break;
         case LORE2:
             printf("lore2\n");
+            if(changermusique == 1 ){
+                Mix_PlayMusic(lore2, 0);
+            }
             animation(window, renderer, listeCourants);
 
             break;
         case LORE3:
             printf("lore3\n");
+            if(changermusique == 1 ){
+                Mix_PlayMusic(lore3, 0);
+            }
             animation(window, renderer, listeCourants);
 
             break;
         case ARRIVEEVAGUE:
             printf("ARRIVEEVAGUE\n");
+            printf("vague\n");
+            if(changermusique == 1 ){
+                Mix_PlayMusic(jeu, -1);
+            }
             animation(window, renderer, listeCourants);
             int attaquantsArrives = 0;
             attaquantsArrives = faireAvancerCombattants(listeCombattants, BUGFIRE);
@@ -286,6 +317,8 @@ int main(int argc, char *argv[])
             break;
         }
 
+        changermusique = 0;
+
         SDL_RenderPresent(renderer);
         SDL_RenderClear(renderer);
         SDL_Delay(20);
@@ -298,5 +331,6 @@ int main(int argc, char *argv[])
 
     // printf(" juste avant end_sdl\n");
     end_sdl(1, "FIN NORMALE", window, renderer, spritesDeBase, listeCourants);
+    Mix_CloseAudio(); 
     return 0;
 }
