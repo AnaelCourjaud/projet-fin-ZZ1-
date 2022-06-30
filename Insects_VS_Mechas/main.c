@@ -390,8 +390,8 @@ int main()
             if (compteurAnimationMort == NBRATTAQUESDEFENSEURAVANTMORT * listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->nbrImagesHorizontales * listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->nbrImagesVerticales * (listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->ralenti + 1))
             {
                 // résolution
-                applicationDegats(listeCombattants);
-                // degatInflige(listeCombattants);
+                // applicationDegats(listeCombattants);
+                degatInflige(listeCombattants);
                 // switch etat mort
                 nombreInsectesMorts = switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, BUGFIRE, MORT);
                 switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, MORT);
@@ -475,6 +475,7 @@ int main()
             // printf("fin du jeu\n");
             cleanListeCourants(listeCourants);
             animation(window, renderer, listeCourants);
+            printf("FIN");
             break;
         default:
             ETATJEU = ERREUR;

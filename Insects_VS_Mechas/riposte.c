@@ -90,10 +90,12 @@ void tristat(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], int statMagie[
             if ((tableauCombattants[i]->physiqueRestant >= tableauCombattants[indmax]->physiqueRestant) && (appartient(i, statPhys) == 1000))
                 // si la valeur est plus grande que le max, et n'est pas déjà dans le tableau
                 indmax = i;
-            while ((appartient(tableauCombattants[indmax]->physiqueRestant, statPhys) != 1000))
+            while ((indmax<NBENNEMIVAGUE) && (appartient(tableauCombattants[indmax]->physiqueRestant, statPhys) != 1000))
                 indmax++;
             // printf("indmaxP2 : %d\n", indmax);
         }
+        if (indmax == NBENNEMIVAGUE)
+            indmax = indmax - 1;
         statPhys[cour] = indmax;
         // printf("%d\n", statPhys[cour]);
         cour++;
@@ -108,6 +110,8 @@ void tristat(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], int statMagie[
         while ((appartient(indmax, statMagie) != 1000))
             indmax++;
         // printf("%d\n", indmax);
+        if (indmax == NBENNEMIVAGUE)
+            indmax = indmax - 1;
         for (int i = 0; i < NBENNEMIVAGUE; i++)
         {
             // printf("%deme valeur Magie: %d\n", i, tableauCombattants[i]->magieRestante);
@@ -115,10 +119,12 @@ void tristat(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], int statMagie[
             if ((tableauCombattants[i]->magieRestante >= tableauCombattants[indmax]->magieRestante) && (appartient(i, statMagie) == 1000))
                 // si la valeur est plus grande que le max, et n'est pas déjà dans le tableau
                 indmax = i;
-            while ((appartient(indmax, statMagie) != 1000))
+            while ((indmax<NBENNEMIVAGUE) && (appartient(indmax, statMagie) != 1000))
                 indmax++;
             // printf("indmaxM : %d\n", indmax);
         }
+        if (indmax == NBENNEMIVAGUE)
+            indmax = indmax - 1;
         statMagie[cour] = indmax;
         // printf("%d\n", statMagie[cour]);
         cour++;
