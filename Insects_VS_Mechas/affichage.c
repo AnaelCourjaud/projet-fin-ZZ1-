@@ -142,16 +142,16 @@ emplacementestAttaquant->typeCombattant = typeCombattant;
     else if (indicePNG == indiceRobotmetalWalk)
     {
         // emplacementestAttaquant->typeCombattant = ROBOTMETAL;
-        emplacementestAttaquant->physiqueRestant = 5;
-        emplacementestAttaquant->magieRestante = 0;
+        emplacementestAttaquant->physiqueRestant = 0;
+        emplacementestAttaquant->magieRestante = 5;
         emplacementestAttaquant->speedX = 1.01;
         emplacementestAttaquant->speedY = 1.0;
     }
     else if (indicePNG == indiceRobotpetitwalk)
     {
         // emplacementestAttaquant->typeCombattant = ROBOTPETIT;
-        emplacementestAttaquant->physiqueRestant = 5;
-        emplacementestAttaquant->magieRestante = 0;
+        emplacementestAttaquant->physiqueRestant = 3;
+        emplacementestAttaquant->magieRestante = 3;
         emplacementestAttaquant->speedX = 1.01;
         emplacementestAttaquant->speedY = 1.0;
     }

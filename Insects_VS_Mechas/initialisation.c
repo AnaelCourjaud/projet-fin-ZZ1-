@@ -67,40 +67,54 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
         }
         else if (i >= indiceBugfirewalk)
         {
-            spritesDeBase[i]->ralenti = 0;
+            spritesDeBase[i]->wCoefReductionDestination = 0.10;
+            spritesDeBase[i]->hCoefReductionDestination = 0.20;
+
             if (i == indiceBugfirewalk)
             {
+                spritesDeBase[i]->wCoefReductionDestination = 0.40;
+                spritesDeBase[i]->hCoefReductionDestination = 0.20;
                 spritesDeBase[i]->nbrImagesHorizontales = 3;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 2;
             }
             else if (i == indiceBugfireattaque)
             {
-                spritesDeBase[i]->nbrImagesHorizontales = 5;
+                spritesDeBase[i]->wCoefReductionDestination = 0.40;
+                spritesDeBase[i]->hCoefReductionDestination = 0.20;
+                spritesDeBase[i]->nbrImagesHorizontales = 10;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 2;
             }
             else if (i == indiceBugfiremort)
             {
-                spritesDeBase[i]->nbrImagesHorizontales = 1;
+                spritesDeBase[i]->wCoefReductionDestination = 0.40;
+                spritesDeBase[i]->hCoefReductionDestination = 0.20;
+                spritesDeBase[i]->nbrImagesHorizontales = 3;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 5;
                 spritesDeBase[i]->animationInfinie = 0;
             }
             else if (i == indiceFlyWalk)
             {
+                spritesDeBase[i]->wCoefReductionDestination = 0.10;
+                spritesDeBase[i]->hCoefReductionDestination = 0.20;
                 spritesDeBase[i]->nbrImagesHorizontales = 4;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 2;
             }
             else if (i == indiceFlyattaque)
             {
+                spritesDeBase[i]->wCoefReductionDestination = 0.10;
+                spritesDeBase[i]->hCoefReductionDestination = 0.20;
                 spritesDeBase[i]->nbrImagesHorizontales = 1;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 1;
             }
             else if (i == indiceFlymort)
             {
+                spritesDeBase[i]->wCoefReductionDestination = 0.10;
+                spritesDeBase[i]->hCoefReductionDestination = 0.20;
                 spritesDeBase[i]->nbrImagesHorizontales = 7;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 0;
@@ -108,20 +122,25 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
             }
             else if (i == indiceMantiswalk)
             {
+                spritesDeBase[i]->wCoefReductionDestination = 0.10;
+                spritesDeBase[i]->hCoefReductionDestination = 0.20;
                 spritesDeBase[i]->nbrImagesHorizontales = 3;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 4;
             }
-            
-            
+
             else if (i == indiceMantisAttaque)
             {
+                spritesDeBase[i]->wCoefReductionDestination = 0.10;
+                spritesDeBase[i]->hCoefReductionDestination = 0.20;
                 spritesDeBase[i]->nbrImagesHorizontales = 3;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 4;
             }
             else if (i == indiceMantismort)
             {
+                spritesDeBase[i]->wCoefReductionDestination = 0.10;
+                spritesDeBase[i]->hCoefReductionDestination = 0.20;
                 spritesDeBase[i]->nbrImagesHorizontales = 3;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 1;
@@ -129,18 +148,24 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
             }
             else if (i == indiceRobotGrosWalk)
             {
+                spritesDeBase[i]->wCoefReductionDestination = 0.10;
+                spritesDeBase[i]->hCoefReductionDestination = 0.20;
                 spritesDeBase[i]->nbrImagesHorizontales = 5;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 4;
             }
             else if (i == indiceRobotGrosattaque)
             {
+                spritesDeBase[i]->wCoefReductionDestination = 0.10;
+                spritesDeBase[i]->hCoefReductionDestination = 0.20;
                 spritesDeBase[i]->nbrImagesHorizontales = 7;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 2;
             }
             else if (i == indiceRobotGrosMort)
             {
+                spritesDeBase[i]->wCoefReductionDestination = 0.10;
+                spritesDeBase[i]->hCoefReductionDestination = 0.20;
                 spritesDeBase[i]->nbrImagesHorizontales = 12;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 0;
@@ -148,18 +173,24 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
             }
             else if (i == indiceRobotpetitwalk)
             {
+                spritesDeBase[i]->wCoefReductionDestination = 0.10;
+                spritesDeBase[i]->hCoefReductionDestination = 0.20;
                 spritesDeBase[i]->nbrImagesHorizontales = 6;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 4;
             }
             else if (i == indiceRobotpetitattaque)
             {
+                spritesDeBase[i]->wCoefReductionDestination = 0.10;
+                spritesDeBase[i]->hCoefReductionDestination = 0.20;
                 spritesDeBase[i]->nbrImagesHorizontales = 6;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 2;
             }
             else if (i == indiceRobotpetitmort)
             {
+                spritesDeBase[i]->wCoefReductionDestination = 0.10;
+                spritesDeBase[i]->hCoefReductionDestination = 0.20;
                 spritesDeBase[i]->nbrImagesHorizontales = 3;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 2;
@@ -167,27 +198,30 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
             }
             else if (i == indiceRobotmetalWalk)
             {
+                spritesDeBase[i]->wCoefReductionDestination = 0.10;
+                spritesDeBase[i]->hCoefReductionDestination = 0.20;
                 spritesDeBase[i]->nbrImagesHorizontales = 2;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 4;
             }
             else if (i == indiceRobotmetalattaque)
             {
+                spritesDeBase[i]->wCoefReductionDestination = 0.10;
+                spritesDeBase[i]->hCoefReductionDestination = 0.20;
                 spritesDeBase[i]->nbrImagesHorizontales = 2;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 2;
             }
             else if (i == indiceRobotmetalmort)
             {
+                spritesDeBase[i]->wCoefReductionDestination = 0.10;
+                spritesDeBase[i]->hCoefReductionDestination = 0.20;
                 spritesDeBase[i]->nbrImagesHorizontales = 7;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 1;
                 spritesDeBase[i]->animationInfinie = 0;
             }
-            
 
-            spritesDeBase[i]->wCoefReductionDestination = 0.10;
-            spritesDeBase[i]->hCoefReductionDestination = 0.20;
             spritesDeBase[i]->prioriteAffichage = DEVANT;
         }
         else

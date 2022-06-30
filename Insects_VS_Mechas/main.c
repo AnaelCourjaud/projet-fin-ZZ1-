@@ -3,6 +3,7 @@
 #include "general.h"
 #include "vague.h"
 #include "riposte.h"
+#include "resolutionNulle.h"
 
 int main(int argc, char *argv[])
 {
@@ -79,6 +80,7 @@ int main(int argc, char *argv[])
     int changermusique = 1;
     int compteurAnimationMort = 0;
     int nombreInsectesMorts = 0;
+    int numeroDeVague = 0;
 
     creerSpriteCourant(spritesDeBase, listeCourants, indiceFondAccueil, 0.0, 0.0);
 
@@ -114,6 +116,7 @@ int main(int argc, char *argv[])
                     {
                         cleanListeCourants(listeCourants);
                         creerSpriteCourant(spritesDeBase, listeCourants, indiceLore1, 0.0, 0.0);
+                        numeroDeVague = 0;
                         ETATJEU = LORE1;
                     }
                     else if (ETATJEU == LORE1)
@@ -135,6 +138,7 @@ int main(int argc, char *argv[])
                         creerSpriteCourant(spritesDeBase, listeCourants, indicePasserelleAnimee, 0.0, 0.0);
                         creerSpriteCourant(spritesDeBase, listeCourants, indiceBatiment2, -0.12, 0.27);
                         creationVague(spritesDeBase, listeCombattants, listeCourants);
+                        numeroDeVague++;
                         ETATJEU = ARRIVEEVAGUE;
                     }
                     interessant = 1;
@@ -267,7 +271,8 @@ int main(int argc, char *argv[])
             if (compteurAnimationMort == NBRATTAQUESDEFENSEURAVANTMORT * listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->nbrImagesHorizontales * listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->nbrImagesVerticales * (listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->ralenti + 1))
             {
                 // résolution
-                degatInflige(listeCombattants);
+                applicationDegats(listeCombattants);
+                // degatInflige(listeCombattants);
                 // switch etat mort
                 nombreInsectesMorts = switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, BUGFIRE, MORT);
                 switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, MORT);
@@ -311,16 +316,41 @@ int main(int argc, char *argv[])
             }
             if (nombreInsectesMorts < 0)
             {
-                ETATJEU = ATTENTECHOIXRIPOSTE;
+                int nombreCombattantsExistants = 0;
+                for (int i = 0; i < NBRMAXCOMBATTANTS; i++)
+                {
+                    if (listeCombattants[i] != NULL)
+                    {
+                        nombreCombattantsExistants++;
+                    }
+                }
+
+                if (nombreCombattantsExistants == 0)
+                {
+                    if (numeroDeVague < NBRDEVAGUES)
+                    {
+                        creationVague(spritesDeBase, listeCombattants, listeCourants);
+                        numeroDeVague++;
+                        ETATJEU = ARRIVEEVAGUE;
+                    }else{
+                        ETATJEU = FINDEVAGUE;
+                    }
+                }
+                else
+                {
+                    ETATJEU = ATTENTECHOIXRIPOSTE;
+                }
             }
 
             break;
         case FINDEVAGUE:
             printf("fin de vague\n");
             animation(window, renderer, listeCourants);
+            ETATJEU = FINJEU;
             break;
         case FINJEU:
             printf("fin du jeu\n");
+            cleanListeCourants(listeCourants);
             animation(window, renderer, listeCourants);
             break;
         default:
