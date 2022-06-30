@@ -45,6 +45,21 @@ int preferencelearning(int perception, float tableQ[NBPERCEPTION][NBDEFENSES], f
     return defense;
 }
 
+int noaleatoire(int perception, float tableQ[NBPERCEPTION][NBDEFENSES])
+{
+    int i;
+    int defense = rand() % 3;
+
+    for(i=0;i<NBDEFENSES;i++){
+        if( tableQ[perception][i] >= tableQ[perception][defense] ){
+            defense = i;
+        }
+
+    }   
+
+    return defense;
+}
+
 /*
 Entrées :
   - s la situation
@@ -154,8 +169,6 @@ int loadConfig(float tableQ[NBPERCEPTION][NBDEFENSES], char nom_fic[100])
     fichier = fopen(nom_fic, "r");
     if (fichier == NULL)
         erreur = 0;
-    char ligne[NBDEFENSES + 1];
-    ligne[0] = '\0';
 
     if (fichier)
     {
@@ -198,13 +211,15 @@ int main()
     gestionTable(tableQ, tablesauv, gamma, epsilon);
     affichageTable(tableQ);
 
-    int perception = 0;
+    int perception = 1;
     int defense = preferencelearning(perception, tableQ, epsilon);
     printf("defense a effectuer%d\n", defense);
 
     sauvegarder(tableQ);
-    loadConfig(tableQ, "yo.txt");
-        affichageTable(tableQ);
+
+    int defense2 = noaleatoire(perception, tableQ);
+    printf("defense a effectuer sans alea %d\n", defense2);
 
     return 0;
-}*/
+}
+*/
