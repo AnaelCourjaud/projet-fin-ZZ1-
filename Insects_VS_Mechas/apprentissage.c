@@ -1,47 +1,51 @@
 #include "apprentissage.h"
 
-void gestionTable(float tableQ[NBPERCEPTION][NBDEFENSES], int tablesauv[2][NBPERCEPTION], int taille, float gamma, float epsilon)
+void gestionTable(float tableQ[NBPERCEPTION][NBDEFENSES], int tablesauv[2][NBRCOUPSMAXENREGISTRABLES], int nombreDeCoupsIA, float gamma, float epsilon)
 {
-    //int taille = tailleTableau(tablesauv);
-    int i;
+    // int taille = tailleTableau(tablesauv);
+    // int i;
     float p = 0.0;
 
-    for(i = taille-1; i > -1; i--)
+    for (int i = nombreDeCoupsIA - 1; i >= 0; i--)
     {
         int perception = tablesauv[0][i];
         int action = tablesauv[1][i];
-        tableQ[perception][action] = epsilon*pow(gamma,p);                    
+        tableQ[perception][action] += epsilon * powf(gamma, p);
 
-        p ++;
+        p++;
     }
 }
 
-int preferencelearning(int perception, float tableQ[NBPERCEPTION][NBDEFENSES], float epsilon)
+int preferencelearning(int perception, float tableQ[NBPERCEPTION][NBDEFENSES], float temperature)
 {
     float E[NBDEFENSES];
     float z = 0;
     float cumul = 0;
     int i;
 
-    for(i=0;i<NBDEFENSES;i++){
+    for (i = 0; i < NBDEFENSES; i++)
+    {
         float Q = tableQ[perception][i];
-        E[i] = expf(Q/epsilon);
+        E[i] = expf(Q / temperature);
         z += E[i];
-    }   
+    }
 
-    float alpha = reelAleatoireUniforme();
+    // float alpha = reelAleatoireUniforme();
+    float alpha = rand()/(RAND_MAX+1.0);
 
-    int defense = rand() % 3;
-    //printf("defense : %d\n", defense);
+    int defense = NBDEFENSES-1;
+    // printf("defense : %d\n", defense);
 
-    for(i=0;i<NBDEFENSES;i++){
-        cumul += E[i]/z;
-        if(alpha <= cumul){
+    for (i = 0; i < NBDEFENSES; i++)
+    {
+        cumul += E[i] / z;
+        if (alpha <= cumul)
+        {
             defense = i;
             break;
         }
-    }   
-
+    }
+    
     return defense;
 }
 
@@ -50,12 +54,13 @@ int noaleatoire(int perception, float tableQ[NBPERCEPTION][NBDEFENSES])
     int i;
     int defense = rand() % 3;
 
-    for(i=0;i<NBDEFENSES;i++){
-        if( tableQ[perception][i] >= tableQ[perception][defense] ){
+    for (i = 0; i < NBDEFENSES; i++)
+    {
+        if (tableQ[perception][i] >= tableQ[perception][defense])
+        {
             defense = i;
         }
-
-    }   
+    }
 
     return defense;
 }
@@ -85,11 +90,11 @@ float reelAleatoireUniforme()
 {
     int digit = 1000000;
     int r = rand() % digit;
-    //printf("r : %d\n", r);
-    float reel = r/(float)digit;
+    // printf("r : %d\n", r);
+    float reel = r / (float)digit;
 
     return reel;
-}        
+}
 /*
 int tailleTableau(int tablesauv[2][NBPERCEPTION], int compteur){
 
@@ -104,50 +109,98 @@ int tailleTableau(int tablesauv[2][NBPERCEPTION], int compteur){
 
 void initTableQ(float tableQ[NBPERCEPTION][NBDEFENSES])
 {
-    int i; int j;
+    int i;
+    int j;
     int r;
 
-    for(i=0; i<NBPERCEPTION ; i++){
-        for(j=0; j<NBDEFENSES; j++)
+    for (i = 0; i < NBPERCEPTION; i++)
+    {
+        for (j = 0; j < NBDEFENSES; j++)
         {
-            r = rand() % 4;
-            if (r == 0){ 
-                tableQ[i][j] = 0.01;}
-            else if (r == 1){ 
-                tableQ[i][j] = -0.01;}
-            else if (r == 2){ 
-                tableQ[i][j] = 0.001;}
-            else if (r == 3){ 
-                tableQ[i][j] = -0.001;}
+            tableQ[i][j] = 0;
+            // r = rand() % 4;
+            // if (r == 0)
+            // {
+            //     tableQ[i][j] = 0.01;
+            // }
+            // else if (r == 1)
+            // {
+            //     tableQ[i][j] = -0.01;
+            // }
+            // else if (r == 2)
+            // {
+            //     tableQ[i][j] = 0.001;
+            // }
+            // else if (r == 3)
+            // {
+            //     tableQ[i][j] = -0.001;
+            // }
         }
     }
 }
 
-void affichageTable(float tableQ[NBPERCEPTION][NBDEFENSES]){
+void affichageTable(float tableQ[NBPERCEPTION][NBDEFENSES])
+{
 
     char nomperception[PERCEPTIONMAX][TAILLECHAR];
-    strcpy(nomperception[0], "B   ");strcpy(nomperception[1], "F   ");strcpy(nomperception[2], "M   ");strcpy(nomperception[3], "BB  ");strcpy(nomperception[4], "FF  ");strcpy(nomperception[5], "MM  ");strcpy(nomperception[6], "BF  ");strcpy(nomperception[7], "BM  ");strcpy(nomperception[8], "FM  ");strcpy(nomperception[9], "BBB ");strcpy(nomperception[10], "FFF ");strcpy(nomperception[11], "MMM ");strcpy(nomperception[12], "BBF ");strcpy(nomperception[13], "BBM ");strcpy(nomperception[14], "FFB ");strcpy(nomperception[15], "FFM ");strcpy(nomperception[16], "MMB ");strcpy(nomperception[17], "MMF ");strcpy(nomperception[18], "MFB ");strcpy(nomperception[19], "BBBB");strcpy(nomperception[20], "FFFF");strcpy(nomperception[21], "MMMM");strcpy(nomperception[22], "BBBF");strcpy(nomperception[23], "BBBM");strcpy(nomperception[24], "FFFM");strcpy(nomperception[25], "FFFB");strcpy(nomperception[26], "MMMF");strcpy(nomperception[27], "MMMB");strcpy(nomperception[28], "BBMM");strcpy(nomperception[29], "BBFF");strcpy(nomperception[30], "BBFM");strcpy(nomperception[31], "FFMM");strcpy(nomperception[32], "FFBM");strcpy(nomperception[33], "MMFB");
+    strcpy(nomperception[0], "B   ");
+    strcpy(nomperception[1], "F   ");
+    strcpy(nomperception[2], "M   ");
+    strcpy(nomperception[3], "BB  ");
+    strcpy(nomperception[4], "FF  ");
+    strcpy(nomperception[5], "MM  ");
+    strcpy(nomperception[6], "BF  ");
+    strcpy(nomperception[7], "BM  ");
+    strcpy(nomperception[8], "FM  ");
+    strcpy(nomperception[9], "BBB ");
+    strcpy(nomperception[10], "FFF ");
+    strcpy(nomperception[11], "MMM ");
+    strcpy(nomperception[12], "BBF ");
+    strcpy(nomperception[13], "BBM ");
+    strcpy(nomperception[14], "FFB ");
+    strcpy(nomperception[15], "FFM ");
+    strcpy(nomperception[16], "MMB ");
+    strcpy(nomperception[17], "MMF ");
+    strcpy(nomperception[18], "MFB ");
+    strcpy(nomperception[19], "BBBB");
+    strcpy(nomperception[20], "FFFF");
+    strcpy(nomperception[21], "MMMM");
+    strcpy(nomperception[22], "BBBF");
+    strcpy(nomperception[23], "BBBM");
+    strcpy(nomperception[24], "FFFM");
+    strcpy(nomperception[25], "FFFB");
+    strcpy(nomperception[26], "MMMF");
+    strcpy(nomperception[27], "MMMB");
+    strcpy(nomperception[28], "BBMM");
+    strcpy(nomperception[29], "BBFF");
+    strcpy(nomperception[30], "BBFM");
+    strcpy(nomperception[31], "FFMM");
+    strcpy(nomperception[32], "FFBM");
+    strcpy(nomperception[33], "MMFB");
 
-    int i; 
+    int i;
 
     printf("--------------------------------------------------------------------------------------------------\n");
     printf("    |         Defense Robot        |      Defense Robot Metal     |      Defense Robot Petit     |\n");
     printf("--------------------------------------------------------------------------------------------------\n");
-    for(i=0; i<NBPERCEPTION;i++){
+    for (i = 0; i < NBPERCEPTION; i++)
+    {
         printf("%s|           %f                       %f                       %f            \n", nomperception[i], tableQ[i][0], tableQ[i][1], tableQ[i][2]);
     }
     printf("\n");
 }
 
-void affichageSauv( int tablesauv[2][NBPERCEPTION], int taille){
+void affichageSauv(int tablesauv[2][NBRCOUPSMAXENREGISTRABLES], int taille)
+{
 
     int i;
 
     printf("Perception| Defense -----------------------------------------------------------------------------------\n");
-    for(i=0;i <= taille; i++){
+    for (i = 0; i <= taille; i++)
+    {
         printf(" %d    |   %d \n", tablesauv[0][i], tablesauv[1][i]);
     }
-    
+
     printf("\n");
 }
 
@@ -171,7 +224,6 @@ void sauvegarder(float tableQ[NBPERCEPTION][NBDEFENSES])
     }
     fclose(fichier);
 }
-
 
 int loadConfig(float tableQ[NBPERCEPTION][NBDEFENSES], char nom_fic[100])
 {

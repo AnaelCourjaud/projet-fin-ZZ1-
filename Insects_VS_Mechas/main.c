@@ -94,7 +94,7 @@ int main()
     float tableQ[NBPERCEPTION][NBDEFENSES];
     initTableQ(tableQ);
 
-    int tablesauv[2][NBPERCEPTION];
+    int tablesauv[2][NBRCOUPSMAXENREGISTRABLES];
 
     float epsilon = 1.0;
     float gamma = 0.5;
@@ -216,6 +216,7 @@ int main()
                 case SDLK_t:
                     if (ETATJEU == ACCUEIL)
                     {
+                        affichageTable(tableQ);
                         modeAffichage = 0;
                         cleanListeCombattants(listeCombattants);
                         cleanListeCourants(listeCourants);
@@ -224,16 +225,26 @@ int main()
 
                         for (int i = 1; i <= NBRVAGUESTRAIN; i++)
                         {
-                            printf("début vague %d\n", i);
+                            // printf("début vague %d\n", i);
                             creationVague(spritesDeBase, listeCombattants, listeCourants, modeAffichage);
                             int estVide = 1;
                             int compteurdeCoupsIA = 0;
                             while (estVide == 1)
                             {
                                 int perception = reconnaitreCompo(listeCompo, listeCombattants);
-                                int ordreIA = preferencelearning(perception, tableQ, epsilon);
+                                int ordreIA = preferencelearning(perception, tableQ, NBRVAGUESTRAIN - i);
 
-                                creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ordreIA, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur, modeAffichage);
+                                if (compteurdeCoupsIA < NBRCOUPSMAXENREGISTRABLES) // si tablesauv est suffisamment gros pour stocker tous les coups
+                                {
+                                    tablesauv[0][compteurdeCoupsIA] = perception;
+                                    tablesauv[1][compteurdeCoupsIA] = ordreIA;
+                                }
+                                else // sinon on abandonne cette vague
+                                { 
+                                    estVide = -1;
+                                }
+
+                                creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ordreIA + 3, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur, modeAffichage);
                                 compteurdeCoupsIA++;
                                 // switch (ordreIA)
                                 // {
@@ -251,6 +262,8 @@ int main()
                                 //     break;
                                 // }
                                 applicationDegats(listeCombattants);
+                                // printf("compteur de coups : %d\n", compteurdeCoupsIA);
+
                                 // degatInflige(listeCombattants);
                                 for (int j = 0; j < NBRMAXCOMBATTANTS; j++)
                                 {
@@ -279,11 +292,17 @@ int main()
                                     }
                                 }
                             }
+                            if (estVide != -1) // si la vague n'a pas été abandonnée
+                            {
+                                // affichageSauv(tablesauv, compteurdeCoupsIA);
+                                gestionTable(tableQ, tablesauv, compteurdeCoupsIA, gamma, epsilon);
+                            }
                         }
                         cleanListeCombattants(listeCombattants);
                         cleanListeCourants(listeCourants);
                         creerSpriteCourant(spritesDeBase, listeCourants, indiceFondAccueil, 0.0, 0.0);
                         modeAffichage = 1;
+                        affichageTable(tableQ);
                     }
                     break;
                 default: // L'évènement défilé ne nous intéresse pas
