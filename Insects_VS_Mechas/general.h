@@ -57,7 +57,7 @@
 #define NBRATTAQUESDEFENSEURAVANTMORT 3
 
 #define NBRDEVAGUES 3
-#define NBRVAGUESTRAIN 1000
+#define NBRVAGUESTRAIN 100000
 
 // #define wHypothetiqueFenetre 1500
 // #define hHypothetiqueFenetre 1000

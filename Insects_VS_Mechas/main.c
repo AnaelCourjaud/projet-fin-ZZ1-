@@ -96,8 +96,8 @@ int main()
 
     int tablesauv[2][NBPERCEPTION];
 
-    float epsilon = 1.0;
-    float gamma = 0.5;
+    float epsilon = 0.005;
+    float gamma = 0.695;
 
     creerSpriteCourant(spritesDeBase, listeCourants, indiceFondAccueil, 0.0, 0.0);
 
@@ -231,7 +231,10 @@ int main()
                             while (estVide == 1)
                             {
                                 int perception = reconnaitreCompo(listeCompo, listeCombattants);
-                                int ordreIA = preferencelearning(perception, tableQ, epsilon);
+                                int ordreIA = preferencelearning(perception, tableQ, 1.0/(float)i);
+
+                                tablesauv[0][compteurdeCoupsIA] = perception;
+                                tablesauv[1][compteurdeCoupsIA] = ordreIA;
 
                                 creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ordreIA, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur, modeAffichage);
                                 compteurdeCoupsIA++;
@@ -279,6 +282,10 @@ int main()
                                     }
                                 }
                             }
+                            printf("compteur de coups : %d\n", compteurdeCoupsIA);
+                            affichageSauv(tablesauv, compteurdeCoupsIA);
+                            gestionTable(tableQ, tablesauv, compteurdeCoupsIA, gamma, epsilon);
+                            affichageTable(tableQ);
                         }
                         cleanListeCombattants(listeCombattants);
                         cleanListeCourants(listeCourants);
@@ -334,6 +341,7 @@ int main()
 
             break;
         case ARRIVEEVAGUE:
+
             // printf("ARRIVEEVAGUE\n");
             // printf("vague\n");
             if (changermusique == 1)

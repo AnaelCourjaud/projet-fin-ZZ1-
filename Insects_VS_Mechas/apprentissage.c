@@ -6,11 +6,13 @@ void gestionTable(float tableQ[NBPERCEPTION][NBDEFENSES], int tablesauv[2][NBPER
     int i;
     float p = 0.0;
 
-    for(i = taille-1; i > -1; i--)
+    tableQ[tablesauv[0][taille-1]][tablesauv[1][taille-1]] += epsilon*(1 - tableQ[tablesauv[0][taille-1]][tablesauv[1][taille-1]]);
+
+    for(i = taille-2; i > -1; i--)
     {
         int perception = tablesauv[0][i];
         int action = tablesauv[1][i];
-        tableQ[perception][action] = epsilon*pow(gamma,p);                    
+        tableQ[perception][action] += epsilon*((1+gamma*maxLigne(tablesauv[0][i+1], tableQ)) - tableQ[perception][action]);           
 
         p ++;
     }
@@ -45,19 +47,19 @@ int preferencelearning(int perception, float tableQ[NBPERCEPTION][NBDEFENSES], f
     return defense;
 }
 
-int noaleatoire(int perception, float tableQ[NBPERCEPTION][NBDEFENSES])
+int maxLigne(int perception, float tableQ[NBPERCEPTION][NBDEFENSES])
 {
     int i;
-    int defense = rand() % 3;
+    int max = rand() % 3;
 
     for(i=0;i<NBDEFENSES;i++){
-        if( tableQ[perception][i] >= tableQ[perception][defense] ){
-            defense = i;
+        if( tableQ[perception][i] >= tableQ[perception][max] ){
+            max = i;
         }
 
     }   
 
-    return defense;
+    return max;
 }
 
 /*
@@ -69,7 +71,7 @@ Sortie :
   - une action tirée selon la distribution de Gibbs
 Processus :
   - Pour chaque action a de L:
-      - Définir E(a) : l'énergie de a est E(a) = exp(Q(s,a)/T)
+      - Définir E(a) : l'énergie de a est E(a) = exp(Q(s,a)/epsilon)
   - Définir Z : la somme des énergies des éléments de L
   - Définir defense = L[r], avec r un nombre aléatoire entre 0 et 2
   - Définir alpha : un réel tiré en aléatoire uniforme dans [0 ; 1[
@@ -201,6 +203,7 @@ int loadConfig(float tableQ[NBPERCEPTION][NBDEFENSES], char nom_fic[100])
     }
     return erreur;
 }
+
 /*
 int main()
 {
