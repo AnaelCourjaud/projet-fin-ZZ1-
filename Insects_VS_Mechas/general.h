@@ -39,6 +39,7 @@
 #define NBENNEMIVAGUE 3 //nb d'ennemis au debut de la vague
 #define NBRMAXCOMBATTANTS 10
 #define NBRTYPEINSECTES 3
+#define NBCOMPO 20 ///----/!\ 34 quand 4 ennemis par vague
 
 
 #define NBPERCEPTION 19
