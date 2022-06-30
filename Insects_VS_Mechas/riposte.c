@@ -80,7 +80,8 @@ void tristat(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], int statMagie[
             // printf("indmax : %d\n", indmax);
         }
         // printf("indmaxP1 : %d\n", indmax);
-
+        if (indmax == NBENNEMIVAGUE)
+            indmax = indmax - 1;
         for (int i = 0; i < NBENNEMIVAGUE; i++)
         {
             // printf("%deme valeur Phys: %d\n", i, tableauCombattants[i]->physiqueRestant);
