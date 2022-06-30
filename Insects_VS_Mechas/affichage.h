@@ -7,6 +7,7 @@ void creationTexte(char texte[], char style[], char police[], SDL_Renderer *rend
 //void creationFond(SDL_Texture *my_texture,SDL_Window *window, SDL_Renderer *renderer, int x, int y);
 void animation(SDL_Window *window, SDL_Renderer *renderer, spriteCourant_t *listeCourants[tailleMaxSpritesCourants]);
 void creerAttaquant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], indicesPNGs indicePNG, int indiceEmplacement, float posX, float posY);
+void creerAttaquantSansSprite(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], int indiceEmplacement);
 int creerSpriteCourant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], indicesPNGs indicePNG, float posX, float posY);
 
 void cleanListeCourants(spriteCourant_t *listeCourants[tailleMaxSpritesCourants]);

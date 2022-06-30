@@ -158,6 +158,18 @@ void creerAttaquant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *l
     tableauCombattants[indiceEmplacement] = emplacementestAttaquant;
 }
 
+void creerAttaquantSansSprite(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], int indiceEmplacement)
+{
+
+    combattant_t *emplacementestAttaquant = malloc(sizeof(combattant_t));
+
+    emplacementestAttaquant->magieRestante = 0;
+    emplacementestAttaquant->physiqueRestant = 0;
+
+    tableauCombattants[indiceEmplacement] = emplacementestAttaquant;
+
+}
+
 int creerSpriteCourant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], indicesPNGs indicePNG, float proportionPosX, float proportionPosY)
 {
 
@@ -230,28 +242,49 @@ void switchEtatCombattants(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCoura
 {
     for (int i = 0; i < NBRMAXCOMBATTANTS; i++)
     {
+        int goChanger = 0;
         if (tableauCombattants[i] != NULL)
         {
             if (tableauCombattants[i]->typeCombattant >= familleCombattants && tableauCombattants[i]->typeCombattant <= familleCombattants + 2)
             {
-                tableauCombattants[i]->etatCombattant = etatArrivee;
-                float proportionPosX = tableauCombattants[i]->spriteCourant->xProportionPosFenetre;
-                float proportionPosY = tableauCombattants[i]->spriteCourant->yProportionPosFenetre;
-                // int indiceCreationDeSpriteCourant;
-                // indiceCreationDeSpriteCourant = creerSpriteCourant(spritesDeBase, listeCourants, retourIndicePNG(familleCombattants, etatArrivee));
-                for (int j = 0; j < tailleMaxSpritesCourants; j++)
+                if (etatArrivee == MORT)
                 {
-                    if (listeCourants[j] == tableauCombattants[i]->spriteCourant)
+                    if (familleCombattants == BUGFIRE)
                     {
-                        free(tableauCombattants[i]->spriteCourant);
-                        tableauCombattants[i]->spriteCourant = NULL;
-                        listeCourants[j] = NULL;
+                        if(tableauCombattants[i]->magieRestante <= 0 && tableauCombattants[i]->physiqueRestant <= 0){
+                            goChanger = 1;
+                        }
+                    }
+                    else
+                    {
+                        goChanger = 1;
                     }
                 }
-
-                tableauCombattants[i]->spriteCourant = listeCourants[creerSpriteCourant(spritesDeBase, listeCourants, retourIndicePNG(tableauCombattants[i]->typeCombattant, etatArrivee), proportionPosX, proportionPosY)];
-                printf(" idice PNG : %d\n", retourIndicePNG(tableauCombattants[i]->typeCombattant, etatArrivee));
+                else
+                {
+                    goChanger = 1;
+                }
             }
+        }
+        if (goChanger == 1)
+        {
+            tableauCombattants[i]->etatCombattant = etatArrivee;
+            float proportionPosX = tableauCombattants[i]->spriteCourant->xProportionPosFenetre;
+            float proportionPosY = tableauCombattants[i]->spriteCourant->yProportionPosFenetre;
+            // int indiceCreationDeSpriteCourant;
+            // indiceCreationDeSpriteCourant = creerSpriteCourant(spritesDeBase, listeCourants, retourIndicePNG(familleCombattants, etatArrivee));
+            for (int j = 0; j < tailleMaxSpritesCourants; j++)
+            {
+                if (listeCourants[j] == tableauCombattants[i]->spriteCourant)
+                {
+                    free(tableauCombattants[i]->spriteCourant);
+                    tableauCombattants[i]->spriteCourant = NULL;
+                    listeCourants[j] = NULL;
+                }
+            }
+
+            tableauCombattants[i]->spriteCourant = listeCourants[creerSpriteCourant(spritesDeBase, listeCourants, retourIndicePNG(tableauCombattants[i]->typeCombattant, etatArrivee), proportionPosX, proportionPosY)];
+            printf(" idice PNG : %d\n", retourIndicePNG(tableauCombattants[i]->typeCombattant, etatArrivee));
         }
     }
 }
