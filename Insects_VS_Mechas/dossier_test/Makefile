@@ -1,4 +1,4 @@
-SRC=analyseVague.c analyseVague.h general.h affichage.c affichage.h
+SRC=riposte.c riposte.h general.h affichage.c affichage.h
 #SRC+=world.c etc1.c etc2.c
 #SRC=$(wildcard *.c)  # en commentaire, je ne suis pas un grand amateur
 EXE=exe.out
