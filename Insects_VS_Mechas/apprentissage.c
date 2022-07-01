@@ -2,17 +2,35 @@
 
 void gestionTable(float tableQ[NBPERCEPTION][NBDEFENSES], int tablesauv[2][NBRCOUPSMAXENREGISTRABLES], int nombreDeCoupsIA, float gamma, float epsilon)
 {
-    // int taille = tailleTableau(tablesauv);
-    // int i;
-    float p = 0.0;
-
     for (int i = nombreDeCoupsIA - 1; i >= 0; i--)
     {
         int perception = tablesauv[0][i];
         int action = tablesauv[1][i];
-        tableQ[perception][action] += epsilon * powf(gamma, p);
+        float RsPrime;
 
-        p++;
+        if (i == nombreDeCoupsIA - 1)
+        {
+            RsPrime = 1.0;
+            tableQ[perception][action] += epsilon * (RsPrime - tableQ[perception][action]);
+        }
+        else
+        {
+            int iActionMax = 0;
+            int perceptionSuivante = tablesauv[0][i + 1];
+            float maxQualityEtatSuivant = 0.0;
+            RsPrime = 0.0;
+
+            for (int j = 1; j < NBDEFENSES; j++)
+            {
+                if (tableQ[perceptionSuivante][j] > tableQ[perceptionSuivante][iActionMax])
+                {
+                    iActionMax = j;
+                }
+            }
+            maxQualityEtatSuivant = tableQ[perceptionSuivante][iActionMax];
+
+            tableQ[perception][action] += epsilon * (RsPrime + gamma * maxQualityEtatSuivant - tableQ[perception][action]);
+        }
     }
 }
 
@@ -31,9 +49,9 @@ int preferencelearning(int perception, float tableQ[NBPERCEPTION][NBDEFENSES], f
     }
 
     // float alpha = reelAleatoireUniforme();
-    float alpha = rand()/(RAND_MAX+1.0);
+    float alpha = rand() / (RAND_MAX + 1.0);
 
-    int defense = NBDEFENSES-1;
+    int defense = NBDEFENSES - 1;
     // printf("defense : %d\n", defense);
 
     for (i = 0; i < NBDEFENSES; i++)
@@ -45,7 +63,7 @@ int preferencelearning(int perception, float tableQ[NBPERCEPTION][NBDEFENSES], f
             break;
         }
     }
-    
+
     return defense;
 }
 
@@ -196,7 +214,7 @@ void affichageSauv(int tablesauv[2][NBRCOUPSMAXENREGISTRABLES], int taille)
     int i;
 
     printf("Perception| Defense -----------------------------------------------------------------------------------\n");
-    for (i = 0; i <= taille; i++)
+    for (i = 0; i < taille; i++)
     {
         printf(" %d    |   %d \n", tablesauv[0][i], tablesauv[1][i]);
     }
