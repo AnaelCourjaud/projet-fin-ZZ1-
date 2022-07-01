@@ -78,7 +78,7 @@ indiceFond,
 indiceFondAccueil,
 indiceLore1,
 indiceLore2,
-indiceLore3, 
+indiceLore3,
 indiceBugfirewalk, 
 indiceBugfireattaque,
 indiceBugfiremort,
@@ -96,7 +96,9 @@ indiceRobotmetalattaque,
 indiceRobotmetalmort,
 indiceRobotpetitwalk,
 indiceRobotpetitattaque,
-indiceRobotpetitmort} indicesPNGs;
+indiceRobotpetitmort,
+indiceEcranFin
+} indicesPNGs;
 
 typedef enum typeC {BUGFIRE, FLY, MANTIS, ROBOTGROS, ROBOTMETAL, ROBOTPETIT}typeCombattant_t;
 typedef enum typePA {TOUTDEVANT, DEVANT, MILIEU, DERRIERE, TOUTDERRIERE}prioriteAffichage_t;

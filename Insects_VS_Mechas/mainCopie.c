@@ -144,7 +144,7 @@ int main()
                         creerSpriteCourant(spritesDeBase, listeCourants, indicePasserelleAnimee, 0.0, 0.0);
                         creerSpriteCourant(spritesDeBase, listeCourants, indiceBatiment2, -0.12, 0.27);
                         creerSpriteCourant(spritesDeBase, listeCourants, indiceBatiment2coupe, -0.12, 0.27);
-                        creationVague(spritesDeBase, listeCombattants, listeCourants);
+                        creationVague(spritesDeBase, listeCombattants, listeCourants, DEVANT);
                         numeroDeVague++;
                         ETATJEU = ARRIVEEVAGUE;
                     }
@@ -171,7 +171,7 @@ int main()
                             // cleanListeCombattants(listeCombattants);
                             // cleanListeCourants(listeCourants);
                             // creerSpriteCourant(spritesDeBase, listeCourants, indiceFondAccueil, 0.0, 0.0);
-                            creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, WALK, NBENNEMIVAGUE, xSponeDefenseur0, ySponeDefenseur0);
+                            creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, WALK, NBENNEMIVAGUE, xSponeDefenseur0, ySponeDefenseur0, DEVANT);
                             compteurDeCoups++;
                             ETATJEU = ARRIVEERIPOSTE;
                         }
@@ -183,7 +183,7 @@ int main()
                     {
                         if (ETATJEU == ATTENTECHOIXRIPOSTE)
                         {
-                            creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTPETIT, WALK, NBENNEMIVAGUE, xSponeDefenseur1, ySponeDefenseur1);
+                            creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTPETIT, WALK, NBENNEMIVAGUE, xSponeDefenseur1, ySponeDefenseur1, DEVANT);
                             compteurDeCoups++;
                             ETATJEU = ARRIVEERIPOSTE;
                         }
@@ -195,7 +195,7 @@ int main()
                     {
                         if (ETATJEU == ATTENTECHOIXRIPOSTE)
                         {
-                            creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTMETAL, WALK, NBENNEMIVAGUE, xSponeDefenseur2, ySponeDefenseur2);
+                            creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTMETAL, WALK, NBENNEMIVAGUE, xSponeDefenseur2, ySponeDefenseur2, DEVANT);
                             compteurDeCoups++;
                             ETATJEU = ARRIVEERIPOSTE;
                         }
@@ -324,7 +324,7 @@ int main()
             attaquantsArrives = faireAvancerCombattants(listeCombattants, BUGFIRE);
             if (attaquantsArrives == 1)
             {
-                switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, BUGFIRE, ATTAQUE);
+                switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, BUGFIRE, ATTAQUE, DEVANT);
                 ETATJEU = ATTENTECHOIXRIPOSTE;
             }
             // listeCombattants[0]->spriteCourant->destination.x++;
@@ -363,7 +363,7 @@ int main()
             defenseursArrives = faireAvancerCombattants(listeCombattants, ROBOTGROS);
             if (defenseursArrives == 1)
             {
-                switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, ATTAQUE);
+                switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, ATTAQUE, DEVANT);
                 compteurAnimationMort = 0;
                 ETATJEU = ATTAQUESDEFENSEUR;
             }
@@ -376,8 +376,9 @@ int main()
                 // applicationDegats(listeCombattants);
                 degatInflige(listeCombattants);
                 // switch etat mort
-                nombreInsectesMorts = switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, BUGFIRE, MORT);
-                switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, MORT);
+                nombreInsectesMorts = switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, BUGFIRE, MORT, DEVANT);
+                switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, MORT, DEVANT);
+
                 ETATJEU = ANIMATIONMORT;
             }
             animation(window, renderer, listeCourants);
@@ -431,7 +432,8 @@ int main()
                 {
                     if (numeroDeVague < NBRDEVAGUES)
                     {
-                        creationVague(spritesDeBase, listeCombattants, listeCourants);
+                        creationVague(spritesDeBase, listeCombattants, listeCourants, DEVANT);
+
                         numeroDeVague++;
                         ETATJEU = ARRIVEEVAGUE;
                     }
@@ -455,8 +457,8 @@ int main()
         case FINJEU:
             // printf("fin du jeu\n");
             cleanListeCourants(listeCourants);
+            creerSpriteCourant(spritesDeBase, listeCourants, indiceEcranFin, 0.0, 0.0);
             animation(window, renderer, listeCourants);
-            printf("FIN");
             break;
         default:
             ETATJEU = ERREUR;
