@@ -398,7 +398,7 @@ int main()
             if (IAquiJoue == 1)
             {
                 int perception = reconnaitreCompo(listeCompo, listeCombattants);
-                int ordreIA = preferencelearning(perception, tableQ, 0.0);
+                int ordreIA = greedy(perception, tableQ, 0.0);
                 printf("ordreIA:%d\n", ordreIA);
 
                 // Sauvegardes des perceptions et des defenses
