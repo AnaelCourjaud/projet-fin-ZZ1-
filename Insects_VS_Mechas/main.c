@@ -96,8 +96,8 @@ int main()
 
     int tablesauv[2][NBRCOUPSMAXENREGISTRABLES];
 
-    float epsilon = 0.99;
-    float gamma = 0.0000001;
+    float epsilon = 0.8;
+    float gamma = 0.65;
 
     creerSpriteCourant(spritesDeBase, listeCourants, indiceFondAccueil, 0.0, 0.0);
 
@@ -226,9 +226,9 @@ int main()
 
                         for (int i = 1; i <= NBRVAGUESTRAIN; i++)
                         {
-                            printf("début vague %d\n", i);
+                            // printf("début vague %d\n", i);
                             creationVague(spritesDeBase, listeCombattants, listeCourants, modeAffichage);
-                            printf("apres creation vague\n");
+                            // printf("apres creation vague\n");
                             int estVide = 1;
                             int compteurdeCoupsIA = 0;
                             while (estVide == 1)
@@ -301,7 +301,7 @@ int main()
                             // printf("fin while\n");
                             if (estVide != -1) // si la vague n'a pas été abandonnée
                             {
-                                affichageSauv(tablesauv, compteurdeCoupsIA);
+                                // affichageSauv(tablesauv, compteurdeCoupsIA);
                                 gestionTable(tableQ, tablesauv, compteurdeCoupsIA, gamma, epsilon);
                                 // printf("apres gestion table\n");
                             }
@@ -525,6 +525,7 @@ int main()
         case FINJEU:
             // printf("fin du jeu\n");
             cleanListeCourants(listeCourants);
+            creerSpriteCourant(spritesDeBase, listeCourants, indiceEcranFin, 0.0, 0.0);
             animation(window, renderer, listeCourants);
             printf("FIN");
             break;
