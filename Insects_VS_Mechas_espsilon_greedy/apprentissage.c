@@ -67,6 +67,44 @@ int preferencelearning(int perception, float tableQ[NBPERCEPTION][NBDEFENSES], f
     return defense;
 }
 
+int greedy(int perception, float tableQ[NBPERCEPTION][NBDEFENSES], float chi)
+{ // chi est décroissante et ça détermine si ça va plus explorer que utiliser l'expérience passée
+
+    float tirage = rand() / RAND_MAX;
+    int defense;
+
+    if (tirage <= chi) // on explore
+    {
+        defense = rand() % NBDEFENSES;
+    }
+    else // on utilise l'expérience passée
+    {
+        int iQualityMax = 0;
+        for (int i = 0; i < NBDEFENSES; i++)
+        {
+            if (tableQ[perception][i] >= tableQ[perception][iQualityMax])
+            {
+                iQualityMax = i;
+            }
+        }
+        defense = iQualityMax;
+    }
+
+    return defense;
+}
+
+float changerChi(float chi, int numeroDeVague)
+{
+    return 1.0 - (1.0/NBRVAGUESTRAIN) * numeroDeVague;
+}
+
+float changerGamma(float gamma, int numeroDeVague)
+{
+    return GAMMADEPART - ((GAMMADEPART-GAMMAARRIVEE)/NBRVAGUESTRAIN) * numeroDeVague;
+}
+
+
+
 int noaleatoire(int perception, float tableQ[NBPERCEPTION][NBDEFENSES])
 {
     int i;

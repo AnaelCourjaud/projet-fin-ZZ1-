@@ -5,6 +5,10 @@
 
 void gestionTable(float tableQ[NBPERCEPTION][NBDEFENSES], int tablesauv[2][NBRCOUPSMAXENREGISTRABLES],int nombreDeCoupsIA, float gamma, float epsilon);
 int preferencelearning(int perception, float tableQ[NBPERCEPTION][NBDEFENSES], float temperature);
+int greedy(int perception, float tableQ[NBPERCEPTION][NBDEFENSES], float chi);
+float changerChi(float chi, int numeroDeVague);
+float changerGamma(float gamma, int numeroDeVague)
+
 int noaleatoire(int perception, float tableQ[NBPERCEPTION][NBDEFENSES]);
 float reelAleatoireUniforme();
 //int tailleTableau(int tablesauv[2][NBPERCEPTION]);

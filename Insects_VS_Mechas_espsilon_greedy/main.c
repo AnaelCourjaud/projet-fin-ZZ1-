@@ -97,7 +97,8 @@ int main()
     int tablesauv[2][NBRCOUPSMAXENREGISTRABLES];
 
     float epsilon = 0.8;
-    float gamma = 0.65;
+    float gamma = GAMMADEPART;
+
 
     creerSpriteCourant(spritesDeBase, listeCourants, indiceFondAccueil, 0.0, 0.0);
 
@@ -224,7 +225,9 @@ int main()
                         // ETATJEU = TRAIN;
                         interessant = 1;
 
-                        for (int i = 1; i <= NBRVAGUESTRAIN; i++)
+                        float chi = 1.0;
+
+                        for (int i = 0; i < NBRVAGUESTRAIN; i++)
                         {
                             // printf("début vague %d\n", i);
                             creationVague(spritesDeBase, listeCombattants, listeCourants, modeAffichage);
@@ -233,13 +236,20 @@ int main()
                             int compteurdeCoupsIA = 0;
                             while (estVide == 1)
                             {
-                                int perception = reconnaitreCompo(listeCompo, listeCombattants);
-                                int ordreIA = preferencelearning(perception, tableQ, NBRVAGUESTRAIN - i);
 
+                                int perception = reconnaitreCompo(listeCompo, listeCombattants);
+                                chi = changerChi(chi, i);
+                                gamma = changerGamma(gamma, i);
+                                // printf("chi : %f \n", chi);
+                                int ordreIA = preferencelearning(perception, tableQ, chi);
+                                // printf("compteur de coups IA : %d\n", compteurdeCoupsIA);
                                 if (compteurdeCoupsIA < NBRCOUPSMAXENREGISTRABLES) // si tablesauv est suffisamment gros pour stocker tous les coups
                                 {
+                                    // printf("debut tables sauv\n");
                                     tablesauv[0][compteurdeCoupsIA] = perception;
                                     tablesauv[1][compteurdeCoupsIA] = ordreIA;
+                                    compteurdeCoupsIA++;
+                                    // printf("fin tables sauv\n");
                                 }
                                 else // sinon on abandonne cette vague
                                 {
@@ -247,7 +257,7 @@ int main()
                                 }
 
                                 // creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ordreIA + 3, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur, modeAffichage);
-                                compteurdeCoupsIA++;
+                                
                                 switch (ordreIA + 3)
                                 {
                                 case ROBOTGROS:
@@ -290,22 +300,25 @@ int main()
                                     }
                                     // printf("fin for\n");
                                 }
-                                estVide = 0;
-                                for (int j = 0; j < NBRMAXCOMBATTANTS; j++) // est-ce qu'il reste des combattants vivants ? si oui : nouvelle défense, si non : nouvelle vague
+                                if (estVide != -1)
                                 {
-                                    if (listeCombattants[j] != NULL)
+                                    estVide = 0;
+                                    for (int j = 0; j < NBRMAXCOMBATTANTS; j++) // est-ce qu'il reste des combattants vivants ? si oui : nouvelle défense, si non : nouvelle vague
                                     {
-                                        estVide = 1;
+                                        if (listeCombattants[j] != NULL)
+                                        {
+                                            estVide = 1;
+                                        }
                                     }
                                 }
                             }
                             // printf("fin while\n");
-                            if (estVide != -1) // si la vague n'a pas été abandonnée
-                            {
-                                // affichageSauv(tablesauv, compteurdeCoupsIA);
-                                gestionTable(tableQ, tablesauv, compteurdeCoupsIA, gamma, epsilon);
-                                // printf("apres gestion table\n");
-                            }
+                            // if (estVide != -1) // si la vague n'a pas été abandonnée
+                            // {
+                            // affichageSauv(tablesauv, compteurdeCoupsIA);
+                            gestionTable(tableQ, tablesauv, compteurdeCoupsIA, gamma, epsilon);
+                            // printf("apres gestion table\n");
+                            // }
                         }
                         cleanListeCombattants(listeCombattants);
                         cleanListeCourants(listeCourants);
@@ -382,7 +395,7 @@ int main()
             if (IAquiJoue == 1)
             {
                 int perception = reconnaitreCompo(listeCompo, listeCombattants);
-                int ordreIA = preferencelearning(perception, tableQ, NBRVAGUESTRAIN - numeroDeVague);
+                int ordreIA = preferencelearning(perception, tableQ, 0.0);
                 printf("ordreIA:%d\n", ordreIA);
 
                 // Sauvegardes des perceptions et des defenses
@@ -432,8 +445,8 @@ int main()
             if (compteurAnimationMort == NBRATTAQUESDEFENSEURAVANTMORT * listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->nbrImagesHorizontales * listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->nbrImagesVerticales * (listeCombattants[NBENNEMIVAGUE]->spriteCourant->spriteDeBase->ralenti + 1))
             {
                 // résolution
-                applicationDegats(listeCombattants);
-                // degatInflige(listeCombattants);
+                // applicationDegats(listeCombattants);
+                degatInflige(listeCombattants);
                 // switch etat mort
                 nombreInsectesMorts = switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, BUGFIRE, MORT, modeAffichage);
                 switchEtatCombattants(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, MORT, modeAffichage);
@@ -493,8 +506,8 @@ int main()
                     if (IAquiJoue == 1)
                     {
                         printf("compteur de coups : %d\n", compteurDeCoups);
-                        affichageSauv(tablesauv, compteurDeCoups);
-                        gestionTable(tableQ, tablesauv, compteurDeCoups, gamma, epsilon);
+                        // affichageSauv(tablesauv, compteurDeCoups);
+                        // gestionTable(tableQ, tablesauv, compteurDeCoups, gamma, epsilon);
                         nbrDeVagues = NBRVAGUESTRAIN;
                     }
                     compteurDeCoups = 0;
