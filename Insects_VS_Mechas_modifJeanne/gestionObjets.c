@@ -2,28 +2,28 @@
 
 void creationVague(spriteBase_t *spritesDeBase[NBRTEXTURES], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], spriteCourant_t *listeCourant[tailleMaxSpritesCourants], int modeAffichage) // il faut bien que listeCombattants soit vide à l'execution de cette fonction
 {
-    float xSpone = 1.0*wFenetreVirtuelle; //!\//
+    float xSpone = 1.0 * wFenetreVirtuelle; //!\//
 
     for (int j = 0; j < NBENNEMIVAGUE; j++)
     {
         int r = rand() % NBRTYPEINSECTES;
         if (r == BUGFIRE)
         {
-            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, BUGFIRE, WALK, j, xSpone, 0.7*hFenetreVirtuelle, modeAffichage);  //!\//
+            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, BUGFIRE, WALK, j, xSpone, 0.7 * hFenetreVirtuelle, modeAffichage); //!\//
         }
         else if (r == FLY)
         {
-            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, FLY, WALK, j, xSpone, 0.62*hFenetreVirtuelle, modeAffichage);
+            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, FLY, WALK, j, xSpone, 0.62 * hFenetreVirtuelle, modeAffichage);
         }
         else if (r == MANTIS)
         {
-            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, MANTIS, WALK, j, xSpone, 0.75*hFenetreVirtuelle, modeAffichage);
+            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, MANTIS, WALK, j, xSpone, 0.75 * hFenetreVirtuelle, modeAffichage);
         }
         else
         {
             printf("erreur de création de vagues\n");
         }
-        xSpone += 0.1*wFenetreVirtuelle;
+        xSpone += 0.1 * wFenetreVirtuelle;
     }
 }
 
@@ -253,13 +253,34 @@ int retourIndicePNG(typeCombattant_t typeCombattants, etatCombattant_t etatArriv
     return bonIndicePNG;
 }
 
-
 // float positionArret(float borneGauche, float borneDroite){
 //     float arret = rand()%100/100;
 //     while((arret<borneGauche)||(arret>borneDroite)) arret = rand()%100/100;
 //     return (arret);
 // }
 
+void faireAvancerParalaxe(spriteCourant_t *listeCourants[tailleMaxSpritesCourants])
+{
+    for (int i = 0; i < tailleMaxSpritesCourants; i++)
+    {
+        if (listeCourants[i] != NULL)
+        {
+            if (listeCourants[i]->spriteDeBase->indicePNG >= indiceFond1 && listeCourants[i]->spriteDeBase->indicePNG <= indiceFond3)
+            {
+
+                if (listeCourants[i]->xProportionPosFenetre <= -wFenetreVirtuelle) // dégueulasse, c'est pas du tout paramètrable mdr
+                {
+                    listeCourants[i]->xProportionPosFenetre = 0.0;
+                }
+                else
+                {
+                    listeCourants[i]->xProportionPosFenetre += listeCourants[i]->spriteDeBase->speedFondX;
+                }
+            }
+        }
+    }
+    // return avanceeFinie; //recommencer le parallaxe
+}
 
 int faireAvancerCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], typeCombattant_t familleCombattants)
 {
@@ -274,13 +295,11 @@ int faireAvancerCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS],
             {
 
                 //////////////////////:dégeulasse
-                float borneGauche = 0.6;
-                float borneDroite = 0.4;
 
                 if (tableauCombattants[i]->typeCombattant == BUGFIRE)
                 {
                     // printf("%f",positionArret(borneGauche, borneDroite));
-                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre <= (0.25+i/50.0)*wFenetreVirtuelle) // dégueulasse, c'est pas du tout paramètrable mdr
+                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre <= (0.25 + i / 50.0) * wFenetreVirtuelle) // dégueulasse, c'est pas du tout paramètrable mdr
                     {
                         nbrCombattantsArrives++;
                     }
@@ -292,7 +311,7 @@ int faireAvancerCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS],
                 }
                 else if (tableauCombattants[i]->typeCombattant == MANTIS)
                 {
-                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre <= (0.4+i/50.0)*wFenetreVirtuelle) // dégueulasse, c'est pas du tout paramètrable mdr
+                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre <= (0.4 + i / 50.0) * wFenetreVirtuelle) // dégueulasse, c'est pas du tout paramètrable mdr
                     {
                         nbrCombattantsArrives++;
                     }
@@ -304,7 +323,7 @@ int faireAvancerCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS],
                 }
                 else if (tableauCombattants[i]->typeCombattant == FLY)
                 {
-                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre <= (0.4+i/50.0)*wFenetreVirtuelle) // dégueulasse, c'est pas du tout paramètrable mdr
+                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre <= (0.4 + i / 50.0) * wFenetreVirtuelle) // dégueulasse, c'est pas du tout paramètrable mdr
                     {
                         nbrCombattantsArrives++;
                     }
@@ -316,7 +335,7 @@ int faireAvancerCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS],
                 }
                 else if (tableauCombattants[i]->typeCombattant == ROBOTGROS)
                 {
-                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre >= 0.4*wFenetreVirtuelle) // dégueulasse, c'est pas du tout paramètrable mdr
+                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre >= 0.4 * wFenetreVirtuelle) // dégueulasse, c'est pas du tout paramètrable mdr
                     {
                         nbrCombattantsArrives++;
                     }
@@ -328,7 +347,7 @@ int faireAvancerCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS],
                 }
                 else if (tableauCombattants[i]->typeCombattant == ROBOTMETAL)
                 {
-                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre >= 0.3*wFenetreVirtuelle) // dégueulasse, c'est pas du tout paramètrable mdr
+                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre >= 0.3 * wFenetreVirtuelle) // dégueulasse, c'est pas du tout paramètrable mdr
                     {
                         nbrCombattantsArrives++;
                     }
@@ -340,7 +359,7 @@ int faireAvancerCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS],
                 }
                 else if (tableauCombattants[i]->typeCombattant == ROBOTPETIT)
                 {
-                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre >= 0.4*wFenetreVirtuelle) // dégueulasse, c'est pas du tout paramètrable mdr
+                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre >= 0.4 * wFenetreVirtuelle) // dégueulasse, c'est pas du tout paramètrable mdr
                     {
                         nbrCombattantsArrives++;
                     }

@@ -5,7 +5,7 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
 
     ///////////// Chargement des polices et des textures et stockage des pointeurs dans les tableaux
 
-    char nomFichiers[NBRTEXTURES][tailleMaxFichiers] = {"./Sprites/ecranfin.png","./Sprites/passerelleanimee.png", "./Sprites/batiment2.png", "./Sprites/batiment2coupe.png", "./Sprites/fond.png", "./Sprites/fondaccueil.png", "./Sprites/lore1.png", "./Sprites/lore2.png", "./Sprites/lore3.png", "./Sprites/bugfirewalk.png", "./Sprites/bugfireattaque.png", "./Sprites/bugfiremort.png", "./Sprites/flyvolant.png", "./Sprites/flyvolant.png", "./Sprites/flymort.png", "./Sprites/mantiswalk.png", "./Sprites/mantiswalk.png", "./Sprites/mantismort.png", "./Sprites/robot.png", "./Sprites/robotattaque.png", "./Sprites/robotmort.png", "./Sprites/robotmetal.png", "./Sprites/robotmetalattaquedeb.png", "./Sprites/robotmetalmort.png", "./Sprites/robotpetitwalk.png", "./Sprites/robotpetitattaque.png", "./Sprites/robotpetitmort.png"};
+    char nomFichiers[NBRTEXTURES][tailleMaxFichiers] = {"./Sprites/ecranfin.png", "./Sprites/passerelleanimee.png", "./Sprites/batiment2.png", "./Sprites/batiment2coupe.png", "./Sprites/fond1.png", "./Sprites/fond2.png", "./Sprites/fond3.png", "./Sprites/fondaccueil.png", "./Sprites/lore1.png", "./Sprites/lore2.png", "./Sprites/lore3.png", "./Sprites/bugfirewalk.png", "./Sprites/bugfireattaque.png", "./Sprites/bugfiremort.png", "./Sprites/flyvolant.png", "./Sprites/flyvolant.png", "./Sprites/flymort.png", "./Sprites/mantiswalk.png", "./Sprites/mantiswalk.png", "./Sprites/mantismort.png", "./Sprites/robot.png", "./Sprites/robotattaque.png", "./Sprites/robotmort.png", "./Sprites/robotmetal.png", "./Sprites/robotmetalattaquedeb.png", "./Sprites/robotmetalmort.png", "./Sprites/robotpetitwalk.png", "./Sprites/robotpetitattaque.png", "./Sprites/robotpetitmort.png"};
 
     // 0 : premier batiment | 1 et 2 : deuxieme batiment avec en 2 celui coupé | 3 : fond du jeu animé | 4 : fond d'accueil | 5 à 7 : fond du Lore |||
 
@@ -35,16 +35,35 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
             // spritesDeBase[i]->animation = 0;
             spritesDeBase[i]->nbrImagesHorizontales = 1;
             spritesDeBase[i]->nbrImagesVerticales = 1;
-            spritesDeBase[i]->wCoefReductionDestination = 0.35;  
+            spritesDeBase[i]->wCoefReductionDestination = 0.35;
             spritesDeBase[i]->hCoefReductionDestination = 0.60;
         }
-        else if (i == indiceFond)
+        else if (i == indiceFond1)
         {
             spritesDeBase[i]->prioriteAffichage = TOUTDERRIERE;
-            spritesDeBase[i]->nbrImagesHorizontales = 7;
-            spritesDeBase[i]->nbrImagesVerticales = 4;
-            spritesDeBase[i]->wCoefReductionDestination = 1.0; 
+            spritesDeBase[i]->nbrImagesHorizontales = 1;
+            spritesDeBase[i]->nbrImagesVerticales = 1;
+            spritesDeBase[i]->wCoefReductionDestination = 2.0;
             spritesDeBase[i]->hCoefReductionDestination = 1.0;
+            spritesDeBase[i]->speedFondX = -6.0;
+        }
+        else if (i == indiceFond2)
+        {
+            spritesDeBase[i]->prioriteAffichage = TOUTDERRIERE;
+            spritesDeBase[i]->nbrImagesHorizontales = 1;
+            spritesDeBase[i]->nbrImagesVerticales = 1;
+            spritesDeBase[i]->wCoefReductionDestination = 2.0;
+            spritesDeBase[i]->hCoefReductionDestination = 1.0;
+            spritesDeBase[i]->speedFondX = -3.0;
+        }
+        else if (i == indiceFond3)
+        {
+            spritesDeBase[i]->prioriteAffichage = TOUTDERRIERE;
+            spritesDeBase[i]->nbrImagesHorizontales = 1;
+            spritesDeBase[i]->nbrImagesVerticales = 1;
+            spritesDeBase[i]->wCoefReductionDestination = 2.0;
+            spritesDeBase[i]->hCoefReductionDestination = 1.0;
+            spritesDeBase[i]->speedFondX = 0.0;
         }
         else if (i == indicePasserelleAnimee)
         {
@@ -105,8 +124,8 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
             }
             else if (i == indiceFlyattaque)
             {
-                spritesDeBase[i]->wCoefReductionDestination = 0.15;//0.075;
-                spritesDeBase[i]->hCoefReductionDestination = 0.20;//0.15;
+                spritesDeBase[i]->wCoefReductionDestination = 0.15; // 0.075;
+                spritesDeBase[i]->hCoefReductionDestination = 0.20; // 0.15;
                 spritesDeBase[i]->nbrImagesHorizontales = 4;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 4;

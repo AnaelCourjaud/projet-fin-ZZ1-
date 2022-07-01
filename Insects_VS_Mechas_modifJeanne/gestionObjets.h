@@ -20,6 +20,7 @@ int retourIndicePNG(typeCombattant_t typeCombattants, etatCombattant_t etatArriv
 
 float positionArret(float borneGauche, float borneDroite);
 int faireAvancerCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], typeCombattant_t familleCombattants);
+void faireAvancerParalaxe(spriteCourant_t *listeCourants[tailleMaxSpritesCourants]);
 
 
 #endif
