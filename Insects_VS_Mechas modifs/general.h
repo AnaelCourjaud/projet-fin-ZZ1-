@@ -26,13 +26,7 @@
 #define ATTAQUESDEFENSEUR 120
 #define ANIMATIONMORT 90
 #define FINDEVAGUE 100
-#define FINJEU 110
-
-#define NBRTEXTURES 27
-#define nbrPolices 2
-
-//#define nombreFichier 18
-#define tailleMaxFichiers 50
+#define FINJEU 110ex
 
 #define nbrImageSpriteFini 10 // toutes les animations finies sont des sprites avec 10 images
 
@@ -53,8 +47,8 @@
 
 #define NBRATTAQUESDEFENSEURAVANTMORT 3
 
-#define NBRDEVAGUES 3
-#define NBRVAGUESTRAIN 10000000
+#define NBRDEVAGUES 1
+#define NBRVAGUESTRAIN 100000000
 #define NBRCOUPSMAXENREGISTRABLES 100
 
 // #define wHypothetiqueFenetre 1500
