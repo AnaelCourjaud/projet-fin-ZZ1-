@@ -26,7 +26,7 @@
 #define ATTAQUESDEFENSEUR 120
 #define ANIMATIONMORT 90
 #define FINDEVAGUE 100
-#define FINJEU 110
+#define FINJEU 110ex
 
 #define nbrImageSpriteFini 10 // toutes les animations finies sont des sprites avec 10 images
 
