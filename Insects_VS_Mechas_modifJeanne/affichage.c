@@ -61,8 +61,8 @@ void animation(SDL_Window *window, SDL_Renderer *renderer, spriteCourant_t *list
             source.w = listeCourants[i]->spriteDeBase->wImageSprite;
             source.h = listeCourants[i]->spriteDeBase->hImageSprite;
 
-            destination.x = window_dimensions.w * listeCourants[i]->xProportionPosFenetre;
-            destination.y = window_dimensions.h * listeCourants[i]->yProportionPosFenetre;
+            destination.x = window_dimensions.w * (listeCourants[i]->xProportionPosFenetre/wFenetreVirtuelle);
+            destination.y = window_dimensions.h * (listeCourants[i]->yProportionPosFenetre/hFenetreVirtuelle);
             destination.w = window_dimensions.w * listeCourants[i]->spriteDeBase->wCoefReductionDestination;
             destination.h = window_dimensions.h * listeCourants[i]->spriteDeBase->hCoefReductionDestination;
 
@@ -90,6 +90,10 @@ void animation(SDL_Window *window, SDL_Renderer *renderer, spriteCourant_t *list
         }
     }
 }
+
+
+
+
 
 // void creerAttaquant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *listeCourants[tailleMaxSpritesCourants], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], typeCombattant_t typeCombattant, etatCombattant_t etatArrivee, int indiceEmplacement, float proportionPosX, float proportionPosY)
 // {
@@ -175,7 +179,6 @@ void animation(SDL_Window *window, SDL_Renderer *renderer, spriteCourant_t *list
 //     {
 //         emplacementLibreDansListeCourants++;
 
-//         if (emplacementLibreDansListeCourants >= tailleMaxSpritesCourants)
 //         {
 //             printf("Erreur : plus d'emplacement libre dans listeCourants\n");
 //         }

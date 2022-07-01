@@ -12,6 +12,9 @@ int main()
     srand(time(NULL));
 
     int listeCompo[20][3] = {{BUGFIRE, -1, -1}, {FLY, -1, -1}, {MANTIS, -1, -1}, {BUGFIRE, BUGFIRE, -1}, {FLY, FLY, -1}, {MANTIS, MANTIS, -1}, {BUGFIRE, FLY, -1}, {BUGFIRE, MANTIS, -1}, {FLY, MANTIS, -1}, {BUGFIRE, BUGFIRE, BUGFIRE}, {FLY, FLY, FLY}, {MANTIS, MANTIS, MANTIS}, {BUGFIRE, BUGFIRE, FLY}, {BUGFIRE, BUGFIRE, MANTIS}, {BUGFIRE, FLY, FLY}, {FLY, FLY, MANTIS}, {BUGFIRE, MANTIS, MANTIS}, {FLY, MANTIS, MANTIS}, {BUGFIRE, FLY, MANTIS}};
+    // int listeCompo[34][4] = {{BUGFIRE, -1, -1, -1}, {FLY, -1, -1, -1}, {MANTIS, -1, -1, -1}, {BUGFIRE, BUGFIRE, -1, -1}, {FLY, FLY, -1, -1}, {MANTIS, MANTIS, -1, -1}, {BUGFIRE, FLY, -1, -1}, {BUGFIRE, MANTIS, -1, -1}, {FLY, MANTIS, -1, -1}, {BUGFIRE, BUGFIRE, BUGFIRE, -1}, {FLY, FLY, FLY, -1}, {MANTIS, MANTIS, MANTIS, -1}, {BUGFIRE, BUGFIRE, FLY, -1}, {BUGFIRE, BUGFIRE, MANTIS, -1}, {BUGFIRE, FLY, FLY, -1}, {FLY, FLY, MANTIS, -1}, {BUGFIRE, MANTIS, MANTIS, -1}, {FLY, MANTIS, MANTIS, -1}, {BUGFIRE, FLY, MANTIS, -1}, {BUGFIRE, BUGFIRE, BUGFIRE, BUGFIRE}, {FLY, FLY, FLY, FLY}, {MANTIS, MANTIS, MANTIS, MANTIS}, {BUGFIRE, BUGFIRE, BUGFIRE, FLY}, {BUGFIRE, BUGFIRE, BUGFIRE, MANTIS}, {BUGFIRE, FLY, FLY, FLY}, {FLY, FLY, FLY, MANTIS}, {BUGFIRE, MANTIS, MANTIS, MANTIS}, {FLY, MANTIS, MANTIS, MANTIS}, {BUGFIRE, BUGFIRE, MANTIS, MANTIS}, {BUGFIRE, BUGFIRE, FLY, FLY}, {BUGFIRE, BUGFIRE, FLY, MANTIS}, {FLY, FLY, MANTIS, MANTIS}, {BUGFIRE, FLY, FLY, MANTIS}, {BUGFIRE, FLY, MANTIS, MANTIS}};
+
+
 
     SDL_Window *window = NULL;
     SDL_Renderer *renderer = NULL;
@@ -88,7 +91,7 @@ int main()
     int numeroDeVague = 0;
     int compteurDeCoups = 0;
     int modeAffichage = 1;
-    int IAquiJoue = 1;
+    int IAquiJoue = 0;
 
     // Initialisation ia
     float tableQ[NBPERCEPTION][NBDEFENSES];
@@ -152,10 +155,13 @@ int main()
                     {
                         cleanListeCourants(listeCourants);
                         cleanListeCombattants(listeCombattants);
-                        creerSpriteCourant(spritesDeBase, listeCourants, indiceBatiment2coupe, 0.0, 0.0);
-                        creerSpriteCourant(spritesDeBase, listeCourants, indiceFond, 0.0, 0.0);
+                        creerSpriteCourant(spritesDeBase, listeCourants, indiceFond3, 0.0, 0.0);
+                        creerSpriteCourant(spritesDeBase, listeCourants, indiceFond2, 0.0, 0.0);
+                        creerSpriteCourant(spritesDeBase, listeCourants, indiceFond1, 0.0, 0.0);
+                        // creerSpriteCourant(spritesDeBase, listeCourants, indiceBatiment2coupe, 0.0, 0.0);
+                        // creerSpriteCourant(spritesDeBase, listeCourants, indiceFond, 0.0, 0.0);
                         creerSpriteCourant(spritesDeBase, listeCourants, indicePasserelleAnimee, 0.0, 0.0);
-                        creerSpriteCourant(spritesDeBase, listeCourants, indiceBatiment2, -0.12, 0.27);
+                        creerSpriteCourant(spritesDeBase, listeCourants, indiceBatiment2, -0.12*wFenetreVirtuelle, 0.27*hFenetreVirtuelle);
                         creationVague(spritesDeBase, listeCombattants, listeCourants, modeAffichage);
                         numeroDeVague++;
                         ETATJEU = ARRIVEEVAGUE;
@@ -536,6 +542,10 @@ int main()
         }
 
         changermusique = 0;
+
+        if((ETATJEU >= ARRIVEEVAGUE && ETATJEU <= ANIMATIONMORT) || (ETATJEU == ATTAQUESDEFENSEUR)){
+            faireAvancerParalaxe(listeCourants);
+        }
 
         SDL_RenderPresent(renderer);
         SDL_RenderClear(renderer);
