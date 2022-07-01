@@ -65,7 +65,6 @@ void supprValNull(int listIndice[NBENNEMIVAGUE], combattant_t *tableauCombattant
 void tristat(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], int statMagie[NBRMAXCOMBATTANTS], int statPhys[NBRMAXCOMBATTANTS])
 // tri les indices des combattants par valeur decroissante de leur stat magie et physique.
 {
-    // printf("AAAAAAAAAAAA llleme valeur Phys: %d\n", tableauCombattants[0]->physiqueRestant);
     int indmax = 0;
     int cour = 0;
 
@@ -73,31 +72,28 @@ void tristat(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], int statMagie[
     // on trie la liste des indices par valeur des stats
     {
         indmax = 0;
-        // printf("indmaxP0 : %d\n", (appartient(indmax, statPhys)));
+ 
         while (appartient(indmax, statPhys) != 1000)
         {
-            // printf("indmaxP0 : %d\n", (appartient(indmax, statPhys)));
             indmax++;
-            // printf("indmax : %d\n", indmax);
         }
-        // printf("indmaxP1 : %d\n", indmax);
+      
         if (indmax == NBENNEMIVAGUE)
             indmax = indmax - 1;
         for (int i = 0; i < NBENNEMIVAGUE; i++)
         {
-            // printf("%deme valeur Phys: %d\n", i, tableauCombattants[i]->physiqueRestant);
-            // while((appartient(indmax, statPhys) != 1000)) indmax ++;
+
             if ((tableauCombattants[i]->physiqueRestant >= tableauCombattants[indmax]->physiqueRestant) && (appartient(i, statPhys) == 1000))
                 // si la valeur est plus grande que le max, et n'est pas déjà dans le tableau
                 indmax = i;
             while ((indmax<NBENNEMIVAGUE) && (appartient(tableauCombattants[indmax]->physiqueRestant, statPhys) != 1000))
                 indmax++;
-            // printf("indmaxP2 : %d\n", indmax);
+
         }
         if (indmax == NBENNEMIVAGUE)
             indmax = indmax - 1;
         statPhys[cour] = indmax;
-        // printf("%d\n", statPhys[cour]);
+
         cour++;
     }
 
@@ -109,24 +105,23 @@ void tristat(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], int statMagie[
         indmax = 0;
         while ((appartient(indmax, statMagie) != 1000))
             indmax++;
-        // printf("%d\n", indmax);
+
         if (indmax == NBENNEMIVAGUE)
             indmax = indmax - 1;
         for (int i = 0; i < NBENNEMIVAGUE; i++)
         {
-            // printf("%deme valeur Magie: %d\n", i, tableauCombattants[i]->magieRestante);
-            // while((appartient(indmax, statPhys) != 1000)) indmax ++;
+
             if ((tableauCombattants[i]->magieRestante >= tableauCombattants[indmax]->magieRestante) && (appartient(i, statMagie) == 1000))
                 // si la valeur est plus grande que le max, et n'est pas déjà dans le tableau
                 indmax = i;
             while ((indmax<NBENNEMIVAGUE) && (appartient(indmax, statMagie) != 1000))
                 indmax++;
-            // printf("indmaxM : %d\n", indmax);
+     
         }
         if (indmax == NBENNEMIVAGUE)
             indmax = indmax - 1;
         statMagie[cour] = indmax;
-        // printf("%d\n", statMagie[cour]);
+
         cour++;
     }
 }
@@ -135,15 +130,10 @@ int rechercheIndPhysInf(int tableau[NBRMAXCOMBATTANTS], int valeur, combattant_t
 // on cherche le dernier indice de l'indice du tableau de stat physique dont la stat physique est strictement inferieur à valeur, sinon on renvoie celui de la plus petite
 {
     int i = 0;
-    // printf("tableau%d:%d\n",i, tableauCombattants[tableau[i]]->physiqueRestant);
     while( (i < NBENNEMIVAGUE) && (valeur < tableauCombattants[tableau[i]]->physiqueRestant)){ // tant que superieure et pas au bout de tous les attaquants
-        printf("%d\n", tableau[i]);
-        printf("tableau%d:%d\n",i, tableauCombattants[tableau[i]]->physiqueRestant);
         i++;
-
-
     }
-    printf("%dfin", i);
+
     if (i == NBENNEMIVAGUE)
         i = i - 1;
     return i;
@@ -183,16 +173,13 @@ void degatInflige(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS])
     // calculStat(tableauCombattants[NBENNEMIVAGUE], valStat[2]);
     // valStat[0] -= defenseur.physiqueRestant;
     // valStat[1] -= defenseur.magieRestante;
-    printf("DEBUT\n");
     //--------init variable
     int listeIndice[NBENNEMIVAGUE];
     for (int i = 0; i< NBENNEMIVAGUE; i++)
         listeIndice[i] = 999;
     initValNull(listeIndice, tableauCombattants);
     int magieDef = tableauCombattants[NBENNEMIVAGUE]->magieRestante;
-    printf("magieDefFonc: %d\n", magieDef);
     int physDef = tableauCombattants[NBENNEMIVAGUE]->physiqueRestant;
-    printf("physDefFonc: %d\n", physDef);
     int nbStatMagieNul = rechercheMagieNulle(tableauCombattants);
     int nbStatPhysiqueNul = recherchePhysNulle(tableauCombattants);
     int statMagie[NBRMAXCOMBATTANTS];
@@ -206,7 +193,6 @@ void degatInflige(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS])
     statPhys[NBENNEMIVAGUE] = 1000;  // marque la fin du tableau
     int indchoisi;
     tristat(tableauCombattants, statMagie, statPhys);
-    printf("avant debut while\n");
     int uneSuppr = 0;
 
     while ((
@@ -215,44 +201,34 @@ void degatInflige(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS])
         ((tableauCombattants[NBENNEMIVAGUE]->physiqueRestant != 0) && (nbStatPhysiqueNul != NBENNEMIVAGUE)))
     // tant qu'il reste de la magie au defenseur et que toutes les stats de magie ne sont pas nul ou pareil pour le physique
     {
-        printf("DEBUT while\n");
         //----------Choix de l'insecte a buté
         if (magieDef >= physDef)
         // si la stat de magie du defenseur est + grande que sa stat de physique
         {
-            printf("debut if magie\n");
-            printf("indmagiemin: %d\n", rechercheIndMagieInf(statMagie, magieDef, tableauCombattants));
             if ((tableauCombattants[statMagie[rechercheIndMagieInf(statMagie, magieDef, tableauCombattants)]]->magieRestante > magieDef)||(tableauCombattants[statMagie[rechercheIndMagieInf(statMagie, magieDef, tableauCombattants)]]->magieRestante ==0))
             // si il n'y a pas d'indice de magie plus petit que celui du defenseur ou que la stat magie + petite est nulle
             {
-                printf("debut if magie grand\n");
-                printf("stat phys:%d\n", rechercheIndPhysInf(statPhys, physDef, tableauCombattants));
                 if ((physDef ==0) || ((tableauCombattants[statPhys[rechercheIndPhysInf(statPhys, physDef, tableauCombattants)]]->physiqueRestant > physDef)&&(statMagie[0] !=0)))
                 // si il n'y a pas d'indice de physique plus petit que celui du defenseur && que le max de magie est non nul
                 {
-                    printf("debut if magie max\n");
                     indchoisi = statMagie[0];
                 }
                 else if (tableauCombattants[statPhys[rechercheIndPhysInf(statPhys, physDef, tableauCombattants)]]->physiqueRestant != 0)
                 {
-                    printf("debut if phys petit\n");
                     indchoisi = statPhys[rechercheIndPhysInf(statPhys, physDef, tableauCombattants)];
                 }
                 else // si le plus haute stat phys attaquant completement killable est nulle
                 {
-                    printf("debut if ĥys max\n");
                     indchoisi = statPhys[0];
                 }
-                printf("indchoisi0:%d\n", indchoisi);
             }
             else
             {
-                printf("debut if magie petit\n");
+                //printf("debut if magie petit\n");
                 int iMagieChoisie = rechercheIndMagieInf(statMagie, magieDef, tableauCombattants); // indice de stat magie du combattant choisi dans statMagie
                 int iPhysChoisie = appartient(statMagie[iMagieChoisie], statPhys);                 // indice de stat phys du combattant choisi dans statPhys
                 // int iPhysCour = rechercheIndPhysInf(statPhys, physDef, tableauCombattants);        // indice du combattant ayant la + grande stat phys <= a physDef
                 // int iMagieCour = appartient(statPhys[iMagieChoisie], statMagie);                   // indice de stat magie du combattant courant dans statMagie
-                printf("indchoisi1b:%d\n", iMagieChoisie);
                 int iMagieCour = iMagieChoisie + 1;
                 while ((statMagie[iMagieCour] != 1000) && (tableauCombattants[statPhys[iPhysChoisie]]->physiqueRestant > physDef))
                 {
@@ -261,7 +237,7 @@ void degatInflige(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS])
                     if ((((iPhysCour > iPhysChoisie) && (tableauCombattants[statPhys[iPhysCour]]->physiqueRestant < physDef)) && (tableauCombattants[statPhys[iPhysCour]]->physiqueRestant > physDef)) && ((tableauCombattants[statPhys[iPhysChoisie]]->physiqueRestant > physDef) && (tableauCombattants[statPhys[iPhysCour]]->physiqueRestant < physDef)))
                     // si le magie plus petit suivant a une  meilleur stat de physique realisable ou que le magie choisi n'avait pas de stat realisable
                     {
-                        printf("indchoisi1:%d\n", statMagie[iMagieChoisie]);
+                        //printf("indchoisi1:%d\n", statMagie[iMagieChoisie]);
                         iMagieChoisie++;
                         iPhysChoisie = appartient(statMagie[iMagieChoisie], statPhys);
                     }
@@ -274,34 +250,27 @@ void degatInflige(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS])
                 // {
                 //     if (appartient(statPhys[iMagieChoisie], statMagie) > magieDef)
                 // }
-                printf("indchoisi2:%d\n", indchoisi);
             }
         }
         else
         // si la stat de physique du defenseur est + grande que sa stat de magie
         {
-            printf("debut if physique\n");
             if ((tableauCombattants[statPhys[rechercheIndPhysInf(statPhys, physDef, tableauCombattants)]]->physiqueRestant > physDef)||(tableauCombattants[statPhys[rechercheIndPhysInf(statPhys, physDef, tableauCombattants)]]->physiqueRestant ==0))
             // si il n'y a pas d'indice de magie plus petit que celui du defenseur
             {
-                printf("debut if phys grand\n");
                 if ((magieDef == 0) || ((tableauCombattants[statMagie[rechercheIndMagieInf(statMagie, magieDef, tableauCombattants)]]->magieRestante > magieDef)&&(statPhys[0] !=0)))
                 // si il n'y a pas d'indice de physique plus petit que celui du defenseur
-                {
-                    printf("debut if phys max\n");
+                {;
                     indchoisi = statPhys[0];
                 }
                 else if (tableauCombattants[statMagie[rechercheIndMagieInf(statMagie, magieDef, tableauCombattants)]]->magieRestante != 0)
                 {
-                    printf("debut if magie petit\n");
                     indchoisi = statMagie[rechercheIndMagieInf(statMagie, magieDef, tableauCombattants)];
                 }
                 else // si le plus haute stat magie attaquant completement killable est nulle
                 {
-                    printf("debut if magie max\n");
                     indchoisi = statPhys[0];
                 }
-                printf("indchoisi0:%d\n", indchoisi);
             }
             else
             {
@@ -334,38 +303,26 @@ void degatInflige(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS])
         }
         //-----------------Butage de l'insecte en question
         // on a récupéré l'indice du combattants a buté --> il est temps d'agir en consequence
-        printf("debut degat\n");
-        printf("indchoisi:%d\n", indchoisi);
         int magieAttak = tableauCombattants[indchoisi]->magieRestante;
         int physAttak = tableauCombattants[indchoisi]->physiqueRestant;
-        printf("magieAttak:%d\n", magieAttak);
-        printf("physAttak:%d\n", physAttak);
         if (magieAttak > magieDef)
         {
-            printf("debut if1\n");
             tableauCombattants[indchoisi]->magieRestante = magieAttak - magieDef;
             tableauCombattants[NBENNEMIVAGUE]->magieRestante = 0;
         }
         else
         {
-            printf("debut if2\n");
             tableauCombattants[indchoisi]->magieRestante = 0;
-            printf("suppr20\n");
             tableauCombattants[NBENNEMIVAGUE]->magieRestante = magieDef - magieAttak;
-            printf("suppr21\n");
         }
         if (physAttak > physDef)
         {
-            printf("debut if3\n");
             tableauCombattants[indchoisi]->physiqueRestant = physAttak - physDef;
             tableauCombattants[NBENNEMIVAGUE]->physiqueRestant = 0;
         }
         else
         {
-            printf("debut if4\n");
             tableauCombattants[indchoisi]->physiqueRestant = 0;
-            printf("physDef: %d physAttak : %d\n", physDef, physAttak);
-            printf("physDef - physAttak: %d\n", physDef - physAttak);
             tableauCombattants[NBENNEMIVAGUE]->physiqueRestant = physDef - physAttak;
         }
         uneSuppr = 1;
@@ -380,15 +337,6 @@ void degatInflige(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS])
         tristat(tableauCombattants, statMagie, statPhys);
         magieDef = tableauCombattants[NBENNEMIVAGUE]->magieRestante;
         physDef = tableauCombattants[NBENNEMIVAGUE]->physiqueRestant;
-        printf("Stat mantis avec degat: %d %d \n", tableauCombattants[0]->physiqueRestant, tableauCombattants[0]->magieRestante);
-        printf("Stat Bugfire avec degat: %d %d \n", tableauCombattants[1]->physiqueRestant, tableauCombattants[1]->magieRestante);
-        printf("Stat Fly avec degat: %d %d \n", tableauCombattants[2]->physiqueRestant, tableauCombattants[2]->magieRestante);
-        printf("Valeur de magie %d %d %d\n", statMagie[0], statMagie[1], statMagie[2]);
-        printf("Valeur de physique %d %d %d\n", statPhys[0], statPhys[1], statPhys[2]);
-        printf("nbStatMagieNul:%d\n", nbStatMagieNul);
-        printf("nbStatPhysiqueNul:%d\n", nbStatPhysiqueNul);
-        printf("magieDefFinBoucle: %d\n", magieDef);
-        printf("physDefFinBoucle: %d\n", physDef);
 
     }
     supprValNull(listeIndice, tableauCombattants);
