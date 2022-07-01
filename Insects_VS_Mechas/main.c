@@ -226,8 +226,9 @@ int main()
 
                         for (int i = 1; i <= NBRVAGUESTRAIN; i++)
                         {
-                            // printf("début vague %d\n", i);
+                            printf("début vague %d\n", i);
                             creationVague(spritesDeBase, listeCombattants, listeCourants, modeAffichage);
+                            printf("apres creation vague\n");
                             int estVide = 1;
                             int compteurdeCoupsIA = 0;
                             while (estVide == 1)
@@ -241,33 +242,35 @@ int main()
                                     tablesauv[1][compteurdeCoupsIA] = ordreIA;
                                 }
                                 else // sinon on abandonne cette vague
-                                { 
+                                {
                                     estVide = -1;
                                 }
 
                                 // creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ordreIA + 3, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur, modeAffichage);
                                 compteurdeCoupsIA++;
-                                switch (ordreIA)
+                                switch (ordreIA + 3)
                                 {
                                 case ROBOTGROS:
                                     creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, WALK, NBENNEMIVAGUE, xSponeDefenseur0, ySponeDefenseur0, modeAffichage);
-                                    compteurdeCoupsIA++;
+                                    // compteurdeCoupsIA++;
                                     break;
                                 case ROBOTMETAL:
                                     creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTMETAL, WALK, NBENNEMIVAGUE, xSponeDefenseur2, ySponeDefenseur2, modeAffichage);
-                                    compteurdeCoupsIA++;
+                                    // compteurdeCoupsIA++;
                                     break;
                                 case ROBOTPETIT:
                                     creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTPETIT, WALK, NBENNEMIVAGUE, xSponeDefenseur1, ySponeDefenseur1, modeAffichage);
-                                    compteurdeCoupsIA++;
+                                    // compteurdeCoupsIA++;
                                     break;
                                 }
+                                // printf("avant application degats\n");
                                 applicationDegats(listeCombattants);
                                 // printf("compteur de coups : %d\n", compteurdeCoupsIA);
 
                                 // degatInflige(listeCombattants);
                                 for (int j = 0; j < NBRMAXCOMBATTANTS; j++)
                                 {
+                                    // printf("debut for\n");
                                     if (listeCombattants[j] != NULL)
                                     {
                                         if (listeCombattants[j]->typeCombattant >= ROBOTGROS && listeCombattants[j]->typeCombattant <= ROBOTGROS + 2)
@@ -284,19 +287,23 @@ int main()
                                             }
                                         }
                                     }
+                                    // printf("fin for\n");
                                 }
+                                estVide = 0;
                                 for (int j = 0; j < NBRMAXCOMBATTANTS; j++) // est-ce qu'il reste des combattants vivants ? si oui : nouvelle défense, si non : nouvelle vague
                                 {
                                     if (listeCombattants[j] != NULL)
                                     {
-                                        estVide = 0;
+                                        estVide = 1;
                                     }
                                 }
                             }
+                            // printf("fin while\n");
                             if (estVide != -1) // si la vague n'a pas été abandonnée
                             {
-                                // affichageSauv(tablesauv, compteurdeCoupsIA);
+                                affichageSauv(tablesauv, compteurdeCoupsIA);
                                 gestionTable(tableQ, tablesauv, compteurdeCoupsIA, gamma, epsilon);
+                                // printf("apres gestion table\n");
                             }
                         }
                         cleanListeCombattants(listeCombattants);
@@ -389,17 +396,17 @@ int main()
                 {
                 case ROBOTGROS:
                     creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, WALK, NBENNEMIVAGUE, xSponeDefenseur0, ySponeDefenseur0, modeAffichage);
-                    compteurDeCoups++;
+                    // compteurDeCoups++;
                     ETATJEU = ARRIVEERIPOSTE;
                     break;
                 case ROBOTMETAL:
                     creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTMETAL, WALK, NBENNEMIVAGUE, xSponeDefenseur2, ySponeDefenseur2, modeAffichage);
-                    compteurDeCoups++;
+                    // compteurDeCoups++;
                     ETATJEU = ARRIVEERIPOSTE;
                     break;
                 case ROBOTPETIT:
                     creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTPETIT, WALK, NBENNEMIVAGUE, xSponeDefenseur1, ySponeDefenseur1, modeAffichage);
-                    compteurDeCoups++;
+                    // compteurDeCoups++;
                     ETATJEU = ARRIVEERIPOSTE;
                     break;
                 }
@@ -490,7 +497,6 @@ int main()
                         nbrDeVagues = NBRVAGUESTRAIN;
                     }
                     compteurDeCoups = 0;
-                    
 
                     if (numeroDeVague < nbrDeVagues)
                     {

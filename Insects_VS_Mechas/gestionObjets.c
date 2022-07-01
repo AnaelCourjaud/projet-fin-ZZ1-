@@ -256,6 +256,7 @@ int retourIndicePNG(typeCombattant_t typeCombattants, etatCombattant_t etatArriv
 int faireAvancerCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], typeCombattant_t familleCombattants)
 {
     int avanceeFinie = 0;
+    int nbrCombattantsArrives = 0;
 
     for (int i = 0; i < NBRMAXCOMBATTANTS; i++)
     {
@@ -263,40 +264,97 @@ int faireAvancerCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS],
         {
             if (tableauCombattants[i]->typeCombattant >= familleCombattants && tableauCombattants[i]->typeCombattant <= familleCombattants + 2)
             {
-                tableauCombattants[i]->spriteCourant->xProportionPosFenetre *= tableauCombattants[i]->speedX;
-                tableauCombattants[i]->spriteCourant->yProportionPosFenetre *= tableauCombattants[i]->speedY;
 
                 //////////////////////:dégeulasse
                 if (tableauCombattants[i]->typeCombattant == BUGFIRE)
                 {
-                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre <= 0.0) // dégueulasse, c'est pas du tout paramètrable mdr
+                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre <= 0.3) // dégueulasse, c'est pas du tout paramètrable mdr
                     {
-                        avanceeFinie = 1;
+                        nbrCombattantsArrives++;
+                    }
+                    else
+                    {
+                        tableauCombattants[i]->spriteCourant->xProportionPosFenetre *= tableauCombattants[i]->speedX;
+                        tableauCombattants[i]->spriteCourant->yProportionPosFenetre *= tableauCombattants[i]->speedY;
                     }
                 }
-                if (tableauCombattants[i]->typeCombattant == MANTIS)
+                else if (tableauCombattants[i]->typeCombattant == MANTIS)
                 {
                     if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre <= 0.55) // dégueulasse, c'est pas du tout paramètrable mdr
                     {
-                        avanceeFinie = 1;
+                        nbrCombattantsArrives++;
+                    }
+                    else
+                    {
+                        tableauCombattants[i]->spriteCourant->xProportionPosFenetre *= tableauCombattants[i]->speedX;
+                        tableauCombattants[i]->spriteCourant->yProportionPosFenetre *= tableauCombattants[i]->speedY;
                     }
                 }
-                if (tableauCombattants[i]->typeCombattant == FLY)
+                else if (tableauCombattants[i]->typeCombattant == FLY)
                 {
                     if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre <= 0.55) // dégueulasse, c'est pas du tout paramètrable mdr
                     {
-                        avanceeFinie = 1;
+                        nbrCombattantsArrives++;
+                    }
+                    else
+                    {
+                        tableauCombattants[i]->spriteCourant->xProportionPosFenetre *= tableauCombattants[i]->speedX;
+                        tableauCombattants[i]->spriteCourant->yProportionPosFenetre *= tableauCombattants[i]->speedY;
                     }
                 }
-                if (familleCombattants == ROBOTGROS)
+                else if (tableauCombattants[i]->typeCombattant == ROBOTGROS)
                 {
                     if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre >= 0.5) // dégueulasse, c'est pas du tout paramètrable mdr
                     {
-                        avanceeFinie = 1;
+                        nbrCombattantsArrives++;
+                    }
+                    else
+                    {
+                        tableauCombattants[i]->spriteCourant->xProportionPosFenetre *= tableauCombattants[i]->speedX;
+                        tableauCombattants[i]->spriteCourant->yProportionPosFenetre *= tableauCombattants[i]->speedY;
+                    }
+                }
+                else if (tableauCombattants[i]->typeCombattant == ROBOTMETAL)
+                {
+                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre >= 0.50) // dégueulasse, c'est pas du tout paramètrable mdr
+                    {
+                        nbrCombattantsArrives++;
+                    }
+                    else
+                    {
+                        tableauCombattants[i]->spriteCourant->xProportionPosFenetre *= tableauCombattants[i]->speedX;
+                        tableauCombattants[i]->spriteCourant->yProportionPosFenetre *= tableauCombattants[i]->speedY;
+                    }
+                }
+                else if (tableauCombattants[i]->typeCombattant == ROBOTPETIT)
+                {
+                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre >= 0.50) // dégueulasse, c'est pas du tout paramètrable mdr
+                    {
+                        nbrCombattantsArrives++;
+                    }
+                    else
+                    {
+                        tableauCombattants[i]->spriteCourant->xProportionPosFenetre *= tableauCombattants[i]->speedX;
+                        tableauCombattants[i]->spriteCourant->yProportionPosFenetre *= tableauCombattants[i]->speedY;
                     }
                 }
                 ////////////////////////
             }
+        }
+    }
+
+    if (familleCombattants == BUGFIRE)
+    {
+        if (nbrCombattantsArrives == NBENNEMIVAGUE)
+        {
+            avanceeFinie = 1;
+        }
+    }
+    else
+    {
+        if (nbrCombattantsArrives == 1)
+        {
+            avanceeFinie = 1;
         }
     }
 
