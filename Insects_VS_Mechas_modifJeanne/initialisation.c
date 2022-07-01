@@ -35,7 +35,7 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
             // spritesDeBase[i]->animation = 0;
             spritesDeBase[i]->nbrImagesHorizontales = 1;
             spritesDeBase[i]->nbrImagesVerticales = 1;
-            spritesDeBase[i]->wCoefReductionDestination = 0.35;
+            spritesDeBase[i]->wCoefReductionDestination = 0.35;  
             spritesDeBase[i]->hCoefReductionDestination = 0.60;
         }
         else if (i == indiceFond)
@@ -43,7 +43,7 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
             spritesDeBase[i]->prioriteAffichage = TOUTDERRIERE;
             spritesDeBase[i]->nbrImagesHorizontales = 7;
             spritesDeBase[i]->nbrImagesVerticales = 4;
-            spritesDeBase[i]->wCoefReductionDestination = 1.0;
+            spritesDeBase[i]->wCoefReductionDestination = 1.0; 
             spritesDeBase[i]->hCoefReductionDestination = 1.0;
         }
         else if (i == indicePasserelleAnimee)
@@ -72,24 +72,24 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
 
             if (i == indiceBugfirewalk)
             {
-                spritesDeBase[i]->wCoefReductionDestination = 0.40;
-                spritesDeBase[i]->hCoefReductionDestination = 0.20;
+                spritesDeBase[i]->wCoefReductionDestination = 0.20;
+                spritesDeBase[i]->hCoefReductionDestination = 0.10;
                 spritesDeBase[i]->nbrImagesHorizontales = 3;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 2;
             }
             else if (i == indiceBugfireattaque)
             {
-                spritesDeBase[i]->wCoefReductionDestination = 0.40;
-                spritesDeBase[i]->hCoefReductionDestination = 0.20;
+                spritesDeBase[i]->wCoefReductionDestination = 0.20;
+                spritesDeBase[i]->hCoefReductionDestination = 0.10;
                 spritesDeBase[i]->nbrImagesHorizontales = 10;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 2;
             }
             else if (i == indiceBugfiremort)
             {
-                spritesDeBase[i]->wCoefReductionDestination = 0.40;
-                spritesDeBase[i]->hCoefReductionDestination = 0.20;
+                spritesDeBase[i]->wCoefReductionDestination = 0.20;
+                spritesDeBase[i]->hCoefReductionDestination = 0.10;
                 spritesDeBase[i]->nbrImagesHorizontales = 3;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 5;

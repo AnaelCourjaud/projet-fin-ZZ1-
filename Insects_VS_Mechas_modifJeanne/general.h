@@ -57,15 +57,15 @@
 #define NBRVAGUESTRAIN 1000000
 #define NBRCOUPSMAXENREGISTRABLES 100
 
-// #define wHypothetiqueFenetre 1500
-// #define hHypothetiqueFenetre 1000
+#define wFenetreVirtuelle 1500  //!\//
+#define hFenetreVirtuelle 1000
 
-#define xSponeDefenseur0 0.05
-#define ySponeDefenseur0 0.775
-#define xSponeDefenseur1 0.05
-#define ySponeDefenseur1 0.77
-#define xSponeDefenseur2 0.05
-#define ySponeDefenseur2 0.64
+#define xSponeDefenseur0 75 //!\//
+#define ySponeDefenseur0 775
+#define xSponeDefenseur1 75
+#define ySponeDefenseur1 770
+#define xSponeDefenseur2 75
+#define ySponeDefenseur2 640
 
 typedef enum typePNG
 {
