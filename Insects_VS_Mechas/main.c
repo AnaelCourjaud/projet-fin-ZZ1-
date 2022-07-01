@@ -213,7 +213,7 @@ int main()
                         interessant = 1;
                     }
                     break;
-                case SDLK_t:
+                /*case SDLK_t:
                     if (ETATJEU == ACCUEIL)
                     {
                         modeAffichage = 0;
@@ -292,6 +292,102 @@ int main()
                         cleanListeCourants(listeCourants);
                         creerSpriteCourant(spritesDeBase, listeCourants, indiceFondAccueil, 0.0, 0.0);
                         modeAffichage = 1;
+                    }
+                    break;*/
+                    case SDLK_t:
+                    if (ETATJEU == ACCUEIL)
+                    {
+                        affichageTable(tableQ);
+                        modeAffichage = 0;
+                        cleanListeCombattants(listeCombattants);
+                        cleanListeCourants(listeCourants);
+                        // ETATJEU = TRAIN;
+                        interessant = 1;
+
+                        for (int i = 1; i <= NBRVAGUESTRAIN; i++)
+                        {
+                            // printf("début vague %d\n", i);
+                            creationVague(spritesDeBase, listeCombattants, listeCourants, modeAffichage);
+                            int estVide = 1;
+                            int compteurdeCoupsIA = 0;
+                            while (estVide == 1)
+                            {
+                                int perception = reconnaitreCompo(listeCompo, listeCombattants);
+                                int ordreIA = preferencelearning(perception, tableQ, NBRVAGUESTRAIN - i);
+
+                                if (compteurdeCoupsIA < NBPERCEPTION) // si tablesauv est suffisamment gros pour stocker tous les coups
+                                {
+                                    tablesauv[0][compteurdeCoupsIA] = perception;
+                                    tablesauv[1][compteurdeCoupsIA] = ordreIA;
+                                }
+                                else // sinon on abandonne cette vague
+                                { 
+                                    estVide = -1;
+                                }
+
+                                // creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ordreIA + 3, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur, modeAffichage);
+                                compteurdeCoupsIA++;
+                                 /*switch (ordreIA)
+                                    {
+                                    case ROBOTGROS:
+                                        creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
+                                        compteurdeCoupsIA++;
+                                        break;
+                                    case ROBOTMETAL:
+                                        creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTMETAL, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
+                                        compteurdeCoupsIA++;
+                                        break;
+                                    case ROBOTPETIT:
+                                        creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTPETIT, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
+                                        compteurdeCoupsIA++;
+                                        break;
+                                }*/
+                                applicationDegats(listeCombattants);
+                                // printf("compteur de coups : %d\n", compteurdeCoupsIA);
+
+                                // degatInflige(listeCombattants);
+                                for (int j = 0; j < NBRMAXCOMBATTANTS; j++)
+                                {
+                                    if (listeCombattants[j] != NULL)
+                                    {
+                                        if (listeCombattants[j]->typeCombattant >= ROBOTGROS && listeCombattants[j]->typeCombattant <= ROBOTGROS + 2)
+                                        {
+                                            free(listeCombattants[j]);
+                                            listeCombattants[j] = NULL;
+                                        }
+                                        else
+                                        {
+                                            if (listeCombattants[j]->magieRestante <= 0 && listeCombattants[j]->physiqueRestant <= 0)
+                                            {
+                                                free(listeCombattants[j]);
+                                                listeCombattants[j] = NULL;
+                                            }
+                                        }
+                                    }
+                                }
+                                for (int j = 0; j < NBRMAXCOMBATTANTS; j++) // est-ce qu'il reste des combattants vivants ? si oui : nouvelle défense, si non : nouvelle vague
+                                {
+                                    if (listeCombattants[j] != NULL)
+                                    {
+                                        printf("listeCombattants: %d",listeCombattants[j]); 
+                                        estVide = 1;
+                                    }
+                                }
+                            }
+                            if (estVide != -1) // si la vague n'a pas été abandonnée
+                            {
+                                // affichageSauv(tablesauv, compteurdeCoupsIA);
+                                printf("compteur de coups : %d\n", compteurdeCoupsIA);
+                                affichageSauv(tablesauv, compteurdeCoupsIA);
+                                gestionTable(tableQ, tablesauv, compteurdeCoupsIA, gamma, epsilon);
+                            }
+                        }
+                        cleanListeCombattants(listeCombattants);
+                        cleanListeCourants(listeCourants);
+
+                        creerSpriteCourant(spritesDeBase, listeCourants, indiceFondAccueil, 0.0, 0.0);
+                        modeAffichage = 1;
+                        affichageTable(tableQ);
                     }
                     break;
                 default: // L'évènement défilé ne nous intéresse pas
