@@ -63,8 +63,12 @@
 // #define wHypothetiqueFenetre 1500
 // #define hHypothetiqueFenetre 1000
 
-#define xSponeDefenseur 0.2
-#define ySponeDefenseur 0.7
+#define xSponeDefenseur0 0.05
+#define ySponeDefenseur0 0.775
+#define xSponeDefenseur1 0.05
+#define ySponeDefenseur1 0.77
+#define xSponeDefenseur2 0.05
+#define ySponeDefenseur2 0.64
 
 typedef enum typePNG{
 indicePasserelleAnimee,

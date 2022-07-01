@@ -143,6 +143,7 @@ int main()
                         creerSpriteCourant(spritesDeBase, listeCourants, indiceFond, 0.0, 0.0);
                         creerSpriteCourant(spritesDeBase, listeCourants, indicePasserelleAnimee, 0.0, 0.0);
                         creerSpriteCourant(spritesDeBase, listeCourants, indiceBatiment2, -0.12, 0.27);
+                        creerSpriteCourant(spritesDeBase, listeCourants, indiceBatiment2coupe, -0.12, 0.27);
                         creationVague(spritesDeBase, listeCombattants, listeCourants);
                         numeroDeVague++;
                         ETATJEU = ARRIVEEVAGUE;
@@ -170,7 +171,7 @@ int main()
                             // cleanListeCombattants(listeCombattants);
                             // cleanListeCourants(listeCourants);
                             // creerSpriteCourant(spritesDeBase, listeCourants, indiceFondAccueil, 0.0, 0.0);
-                            creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
+                            creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTGROS, WALK, NBENNEMIVAGUE, xSponeDefenseur0, ySponeDefenseur0);
                             compteurDeCoups++;
                             ETATJEU = ARRIVEERIPOSTE;
                         }
@@ -182,7 +183,7 @@ int main()
                     {
                         if (ETATJEU == ATTENTECHOIXRIPOSTE)
                         {
-                            creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTPETIT, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
+                            creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTPETIT, WALK, NBENNEMIVAGUE, xSponeDefenseur1, ySponeDefenseur1);
                             compteurDeCoups++;
                             ETATJEU = ARRIVEERIPOSTE;
                         }
@@ -194,7 +195,7 @@ int main()
                     {
                         if (ETATJEU == ATTENTECHOIXRIPOSTE)
                         {
-                            creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTMETAL, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur);
+                            creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ROBOTMETAL, WALK, NBENNEMIVAGUE, xSponeDefenseur2, ySponeDefenseur2);
                             compteurDeCoups++;
                             ETATJEU = ARRIVEERIPOSTE;
                         }

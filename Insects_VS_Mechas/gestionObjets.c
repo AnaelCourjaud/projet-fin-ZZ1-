@@ -6,24 +6,23 @@ void creationVague(spriteBase_t *spritesDeBase[NBRTEXTURES], combattant_t *table
 
     for (int j = 0; j < NBENNEMIVAGUE; j++)
     {
-        int typeInsecte = rand() % NBRTYPEINSECTES;
-        creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, typeInsecte, WALK, j, xSpone, 0.5, modeAffichage);
-        // if (r == BUGFIRE)
-        // {
-        //     creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, BUGFIRE, WALK, j, xSpone, 0.5, modeAffichage);
-        // }
-        // else if (r == FLY)
-        // {
-        //     creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, FLY, WALK, j, xSpone, 0.5, train);
-        // }
-        // else if (r == MANTIS)
-        // {
-        //     creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, MANTIS, WALK, j, xSpone, 0.5, train);
-        // }
-        // else
-        // {
-        //     printf("erreur de création de vagues\n");
-        // }
+        int r = rand() % NBRTYPEINSECTES;
+        if (r == BUGFIRE)
+        {
+            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, BUGFIRE, WALK, j, xSpone, 0.7);
+        }
+        else if (r == FLY)
+        {
+            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, FLY, WALK, j, xSpone, 0.62);
+        }
+        else if (r == MANTIS)
+        {
+            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, MANTIS, WALK, j, xSpone, 0.75);
+        }
+        else
+        {
+            printf("erreur de création de vagues\n");
+        }
         xSpone += 0.1;
     }
 }
@@ -75,7 +74,7 @@ void creerAttaquant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *l
         // emplacementestAttaquant->typeCombattant = ROBOTGROS;
         emplacementestAttaquant->physiqueRestant = 5;
         emplacementestAttaquant->magieRestante = 0;
-        emplacementestAttaquant->speedX = 1.01;
+        emplacementestAttaquant->speedX = 1.015;
         emplacementestAttaquant->speedY = 1.0;
     }
     else if (indicePNG == indiceRobotmetalWalk)
@@ -83,7 +82,7 @@ void creerAttaquant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *l
         // emplacementestAttaquant->typeCombattant = ROBOTMETAL;
         emplacementestAttaquant->physiqueRestant = 0;
         emplacementestAttaquant->magieRestante = 5;
-        emplacementestAttaquant->speedX = 1.01;
+        emplacementestAttaquant->speedX = 1.015;
         emplacementestAttaquant->speedY = 1.0;
     }
     else if (indicePNG == indiceRobotpetitwalk)
@@ -91,7 +90,7 @@ void creerAttaquant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *l
         // emplacementestAttaquant->typeCombattant = ROBOTPETIT;
         emplacementestAttaquant->physiqueRestant = 3;
         emplacementestAttaquant->magieRestante = 3;
-        emplacementestAttaquant->speedX = 1.01;
+        emplacementestAttaquant->speedX = 1.015;
         emplacementestAttaquant->speedY = 1.0;
     }
     // else
@@ -268,16 +267,30 @@ int faireAvancerCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS],
                 tableauCombattants[i]->spriteCourant->yProportionPosFenetre *= tableauCombattants[i]->speedY;
 
                 //////////////////////:dégeulasse
-                if (familleCombattants == BUGFIRE)
+                if (tableauCombattants[i]->typeCombattant == BUGFIRE)
                 {
-                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre <= 0.5) // dégueulasse, c'est pas du tout paramètrable mdr
+                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre <= 0.0) // dégueulasse, c'est pas du tout paramètrable mdr
+                    {
+                        avanceeFinie = 1;
+                    }
+                }
+                if (tableauCombattants[i]->typeCombattant == MANTIS)
+                {
+                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre <= 0.55) // dégueulasse, c'est pas du tout paramètrable mdr
+                    {
+                        avanceeFinie = 1;
+                    }
+                }
+                if (tableauCombattants[i]->typeCombattant == FLY)
+                {
+                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre <= 0.55) // dégueulasse, c'est pas du tout paramètrable mdr
                     {
                         avanceeFinie = 1;
                     }
                 }
                 if (familleCombattants == ROBOTGROS)
                 {
-                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre >= 0.4) // dégueulasse, c'est pas du tout paramètrable mdr
+                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre >= 0.5) // dégueulasse, c'est pas du tout paramètrable mdr
                     {
                         avanceeFinie = 1;
                     }

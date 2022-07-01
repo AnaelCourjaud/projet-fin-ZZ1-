@@ -1,5 +1,5 @@
-#ifndef RIPOSTE_H
-#define RIPOSTE_H
+#ifndef RIPOSTECOPY2_H
+#define RIPOSTECOPY2_H
 
 
 #define NBENNEMIVAGUE 3 //nb d'ennemis au debut de la vague
