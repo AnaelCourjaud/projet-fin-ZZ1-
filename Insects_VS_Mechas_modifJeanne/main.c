@@ -543,7 +543,7 @@ int main()
 
         changermusique = 0;
 
-        if(ETATJEU >= ARRIVEEVAGUE && ETATJEU <= ANIMATIONMORT){
+        if((ETATJEU >= ARRIVEEVAGUE && ETATJEU <= ANIMATIONMORT) || (ETATJEU == ATTAQUESDEFENSEUR)){
             faireAvancerParalaxe(listeCourants);
         }
 

@@ -60,11 +60,11 @@
 #define wFenetreVirtuelle 1500 //!\//
 #define hFenetreVirtuelle 1000
 
-#define xSponeDefenseur0 75 //!\//
+#define xSponeDefenseur0 125 //!\//
 #define ySponeDefenseur0 775
-#define xSponeDefenseur1 75
+#define xSponeDefenseur1 125
 #define ySponeDefenseur1 770
-#define xSponeDefenseur2 75
+#define xSponeDefenseur2 125
 #define ySponeDefenseur2 640
 
 typedef enum typePNG
