@@ -152,9 +152,11 @@ int main()
                     {
                         cleanListeCourants(listeCourants);
                         cleanListeCombattants(listeCombattants);
+                        creerSpriteCourant(spritesDeBase, listeCourants, indiceBatiment2coupe, 0.0, 0.0);
                         creerSpriteCourant(spritesDeBase, listeCourants, indiceFond, 0.0, 0.0);
                         creerSpriteCourant(spritesDeBase, listeCourants, indicePasserelleAnimee, 0.0, 0.0);
                         creerSpriteCourant(spritesDeBase, listeCourants, indiceBatiment2, -0.12, 0.27);
+                        
                         creationVague(spritesDeBase, listeCombattants, listeCourants);
                         numeroDeVague++;
                         ETATJEU = ARRIVEEVAGUE;

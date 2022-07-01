@@ -35,8 +35,8 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
             // spritesDeBase[i]->animation = 0;
             spritesDeBase[i]->nbrImagesHorizontales = 1;
             spritesDeBase[i]->nbrImagesVerticales = 1;
-            spritesDeBase[i]->wCoefReductionDestination = 1.0;
-            spritesDeBase[i]->hCoefReductionDestination = 1.0;
+            spritesDeBase[i]->wCoefReductionDestination = 0.35;
+            spritesDeBase[i]->hCoefReductionDestination = 0.60;
         }
         else if (i == indiceFond)
         {
@@ -105,8 +105,8 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
             }
             else if (i == indiceFlyattaque)
             {
-                spritesDeBase[i]->wCoefReductionDestination = 0.10;
-                spritesDeBase[i]->hCoefReductionDestination = 0.20;
+                spritesDeBase[i]->wCoefReductionDestination = 0.075;
+                spritesDeBase[i]->hCoefReductionDestination = 0.15;
                 spritesDeBase[i]->nbrImagesHorizontales = 1;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 1;
@@ -122,8 +122,8 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
             }
             else if (i == indiceMantiswalk)
             {
-                spritesDeBase[i]->wCoefReductionDestination = 0.10;
-                spritesDeBase[i]->hCoefReductionDestination = 0.20;
+                spritesDeBase[i]->wCoefReductionDestination = 0.05;
+                spritesDeBase[i]->hCoefReductionDestination = 0.10;
                 spritesDeBase[i]->nbrImagesHorizontales = 3;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 4;
@@ -131,16 +131,16 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
 
             else if (i == indiceMantisAttaque)
             {
-                spritesDeBase[i]->wCoefReductionDestination = 0.10;
-                spritesDeBase[i]->hCoefReductionDestination = 0.20;
+                spritesDeBase[i]->wCoefReductionDestination = 0.05;
+                spritesDeBase[i]->hCoefReductionDestination = 0.10;
                 spritesDeBase[i]->nbrImagesHorizontales = 3;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 4;
             }
             else if (i == indiceMantismort)
             {
-                spritesDeBase[i]->wCoefReductionDestination = 0.10;
-                spritesDeBase[i]->hCoefReductionDestination = 0.20;
+                spritesDeBase[i]->wCoefReductionDestination = 0.05;
+                spritesDeBase[i]->hCoefReductionDestination = 0.10;
                 spritesDeBase[i]->nbrImagesHorizontales = 3;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 1;
@@ -148,24 +148,24 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
             }
             else if (i == indiceRobotGrosWalk)
             {
-                spritesDeBase[i]->wCoefReductionDestination = 0.10;
-                spritesDeBase[i]->hCoefReductionDestination = 0.20;
+                spritesDeBase[i]->wCoefReductionDestination = 0.025;
+                spritesDeBase[i]->hCoefReductionDestination = 0.075;
                 spritesDeBase[i]->nbrImagesHorizontales = 5;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 4;
             }
             else if (i == indiceRobotGrosattaque)
             {
-                spritesDeBase[i]->wCoefReductionDestination = 0.10;
-                spritesDeBase[i]->hCoefReductionDestination = 0.20;
+                spritesDeBase[i]->wCoefReductionDestination = 0.0575;
+                spritesDeBase[i]->hCoefReductionDestination = 0.115;
                 spritesDeBase[i]->nbrImagesHorizontales = 7;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 2;
             }
             else if (i == indiceRobotGrosMort)
             {
-                spritesDeBase[i]->wCoefReductionDestination = 0.10;
-                spritesDeBase[i]->hCoefReductionDestination = 0.20;
+                spritesDeBase[i]->wCoefReductionDestination = 0.0575;
+                spritesDeBase[i]->hCoefReductionDestination = 0.115;
                 spritesDeBase[i]->nbrImagesHorizontales = 12;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 0;
@@ -173,24 +173,24 @@ void init(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *tabPolices[nbrPo
             }
             else if (i == indiceRobotpetitwalk)
             {
-                spritesDeBase[i]->wCoefReductionDestination = 0.10;
-                spritesDeBase[i]->hCoefReductionDestination = 0.20;
+                spritesDeBase[i]->wCoefReductionDestination = 0.035;
+                spritesDeBase[i]->hCoefReductionDestination = 0.07;
                 spritesDeBase[i]->nbrImagesHorizontales = 6;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 4;
             }
             else if (i == indiceRobotpetitattaque)
             {
-                spritesDeBase[i]->wCoefReductionDestination = 0.10;
-                spritesDeBase[i]->hCoefReductionDestination = 0.20;
+                spritesDeBase[i]->wCoefReductionDestination = 0.035;
+                spritesDeBase[i]->hCoefReductionDestination = 0.07;
                 spritesDeBase[i]->nbrImagesHorizontales = 6;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 2;
             }
             else if (i == indiceRobotpetitmort)
             {
-                spritesDeBase[i]->wCoefReductionDestination = 0.10;
-                spritesDeBase[i]->hCoefReductionDestination = 0.20;
+                spritesDeBase[i]->wCoefReductionDestination = 0.035;
+                spritesDeBase[i]->hCoefReductionDestination = 0.07;
                 spritesDeBase[i]->nbrImagesHorizontales = 3;
                 spritesDeBase[i]->nbrImagesVerticales = 1;
                 spritesDeBase[i]->ralenti = 2;
