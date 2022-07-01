@@ -235,6 +235,7 @@ int main()
 
                                 tablesauv[0][compteurdeCoupsIA] = perception;
                                 tablesauv[1][compteurdeCoupsIA] = ordreIA;
+                                printf("compteurdeCoupsIA:%d", compteurdeCoupsIA);
 
                                 creerAttaquant(spritesDeBase, listeCourants, listeCombattants, ordreIA, WALK, NBENNEMIVAGUE, xSponeDefenseur, ySponeDefenseur, modeAffichage);
                                 compteurdeCoupsIA++;
@@ -503,7 +504,6 @@ int main()
             // printf("fin du jeu\n");
             cleanListeCourants(listeCourants);
             animation(window, renderer, listeCourants);
-            printf("FIN");
             break;
         default:
             ETATJEU = ERREUR;

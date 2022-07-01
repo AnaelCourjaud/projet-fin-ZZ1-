@@ -6,9 +6,9 @@ void gestionTable(float tableQ[NBPERCEPTION][NBDEFENSES], int tablesauv[2][NBPER
     int i;
     float p = 0.0;
 
-    tableQ[tablesauv[0][taille-1]][tablesauv[1][taille-1]] += epsilon*(1 - tableQ[tablesauv[0][taille-1]][tablesauv[1][taille-1]]);
+    tableQ[tablesauv[0][0]][tablesauv[1][0]] += epsilon*(1 - tableQ[tablesauv[0][taille-1]][tablesauv[1][taille-1]]);
 
-    for(i = taille-2; i > -1; i--)
+    for(i = taille-1; i > 0; i--)
     {
         int perception = tablesauv[0][i];
         int action = tablesauv[1][i];
@@ -107,12 +107,13 @@ int tailleTableau(int tablesauv[2][NBPERCEPTION], int compteur){
 void initTableQ(float tableQ[NBPERCEPTION][NBDEFENSES])
 {
     int i; int j;
-    int r;
+    //int r;
 
     for(i=0; i<NBPERCEPTION ; i++){
         for(j=0; j<NBDEFENSES; j++)
         {
-            r = rand() % 4;
+            tableQ[i][j] = 0;
+            /*r = rand() % 4;
             if (r == 0){ 
                 tableQ[i][j] = 0.01;}
             else if (r == 1){ 
@@ -120,7 +121,7 @@ void initTableQ(float tableQ[NBPERCEPTION][NBDEFENSES])
             else if (r == 2){ 
                 tableQ[i][j] = 0.001;}
             else if (r == 3){ 
-                tableQ[i][j] = -0.001;}
+                tableQ[i][j] = -0.001;}*/
         }
     }
 }
