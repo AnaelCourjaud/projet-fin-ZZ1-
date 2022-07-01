@@ -9,15 +9,17 @@ void creationVague(spriteBase_t *spritesDeBase[NBRTEXTURES], combattant_t *table
         int r = rand() % NBRTYPEINSECTES;
         if (r == BUGFIRE)
         {
-            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, BUGFIRE, WALK, j, xSpone, 0.7);
+            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, BUGFIRE, WALK, j, xSpone, 0.7, DEVANT);
+            //(spritesDeBase, listeCourants, tableauCombattants, typeCombattant, etatArrivee, indiceEmplacement, float proportionPosX, float proportionPosY, int modeAffichage)
+
         }
         else if (r == FLY)
         {
-            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, FLY, WALK, j, xSpone, 0.62);
+            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, FLY, WALK, j, xSpone, 0.62, DEVANT);
         }
         else if (r == MANTIS)
         {
-            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, MANTIS, WALK, j, xSpone, 0.75);
+            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, MANTIS, WALK, j, xSpone, 0.75, DEVANT);
         }
         else
         {
