@@ -2,28 +2,28 @@
 
 void creationVague(spriteBase_t *spritesDeBase[NBRTEXTURES], combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], spriteCourant_t *listeCourant[tailleMaxSpritesCourants], int modeAffichage) // il faut bien que listeCombattants soit vide à l'execution de cette fonction
 {
-    float xSpone = 1.0;
+    float xSpone = 1.0 * wFenetreVirtuelle; //!\//
 
     for (int j = 0; j < NBENNEMIVAGUE; j++)
     {
         int r = rand() % NBRTYPEINSECTES;
         if (r == BUGFIRE)
         {
-            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, BUGFIRE, WALK, j, xSpone, 0.7, modeAffichage);
+            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, BUGFIRE, WALK, j, xSpone, 0.7 * hFenetreVirtuelle, modeAffichage); //!\//
         }
         else if (r == FLY)
         {
-            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, FLY, WALK, j, xSpone, 0.62, modeAffichage);
+            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, FLY, WALK, j, xSpone, 0.62 * hFenetreVirtuelle, modeAffichage);
         }
         else if (r == MANTIS)
         {
-            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, MANTIS, WALK, j, xSpone, 0.75, modeAffichage);
+            creerAttaquant(spritesDeBase, listeCourant, tableauCombattants, MANTIS, WALK, j, xSpone, 0.75 * hFenetreVirtuelle, modeAffichage);
         }
         else
         {
             printf("erreur de création de vagues\n");
         }
-        xSpone += 0.1;
+        xSpone += 0.1 * wFenetreVirtuelle;
     }
 }
 
@@ -50,48 +50,48 @@ void creerAttaquant(spriteBase_t *spritesDeBase[NBRTEXTURES], spriteCourant_t *l
         // emplacementestAttaquant->typeCombattant = BUGFIRE;
         emplacementestAttaquant->physiqueRestant = 3;
         emplacementestAttaquant->magieRestante = 4;
-        emplacementestAttaquant->speedX = 0.99;
-        emplacementestAttaquant->speedY = 1.0;
+        emplacementestAttaquant->speedX = -3.0;
+        emplacementestAttaquant->speedY = 0.0;
     }
     else if (indicePNG == indiceFlyWalk)
     {
         // emplacementestAttaquant->typeCombattant = FLY;
         emplacementestAttaquant->physiqueRestant = 2;
         emplacementestAttaquant->magieRestante = 2;
-        emplacementestAttaquant->speedX = 0.99;
-        emplacementestAttaquant->speedY = 1.0;
+        emplacementestAttaquant->speedX = -5.0;
+        emplacementestAttaquant->speedY = 0.0;
     }
     else if (indicePNG == indiceMantiswalk)
     {
         // emplacementestAttaquant->typeCombattant = MANTIS;
         emplacementestAttaquant->physiqueRestant = 5;
         emplacementestAttaquant->magieRestante = 0;
-        emplacementestAttaquant->speedX = 0.99;
-        emplacementestAttaquant->speedY = 1.0;
+        emplacementestAttaquant->speedX = -5.0;
+        emplacementestAttaquant->speedY = 0.0;
     }
     else if (indicePNG == indiceRobotGrosWalk)
     {
         // emplacementestAttaquant->typeCombattant = ROBOTGROS;
         emplacementestAttaquant->physiqueRestant = 5;
         emplacementestAttaquant->magieRestante = 0;
-        emplacementestAttaquant->speedX = 1.015;
-        emplacementestAttaquant->speedY = 1.0;
+        emplacementestAttaquant->speedX = 3.0;
+        emplacementestAttaquant->speedY = 0.0;
     }
     else if (indicePNG == indiceRobotmetalWalk)
     {
         // emplacementestAttaquant->typeCombattant = ROBOTMETAL;
         emplacementestAttaquant->physiqueRestant = 0;
         emplacementestAttaquant->magieRestante = 5;
-        emplacementestAttaquant->speedX = 1.015;
-        emplacementestAttaquant->speedY = 1.0;
+        emplacementestAttaquant->speedX = 4.0;
+        emplacementestAttaquant->speedY = 0.0;
     }
     else if (indicePNG == indiceRobotpetitwalk)
     {
         // emplacementestAttaquant->typeCombattant = ROBOTPETIT;
         emplacementestAttaquant->physiqueRestant = 3;
         emplacementestAttaquant->magieRestante = 3;
-        emplacementestAttaquant->speedX = 1.015;
-        emplacementestAttaquant->speedY = 1.0;
+        emplacementestAttaquant->speedX = 5.0;
+        emplacementestAttaquant->speedY = 0.0;
     }
     // else
     // {
@@ -253,6 +253,35 @@ int retourIndicePNG(typeCombattant_t typeCombattants, etatCombattant_t etatArriv
     return bonIndicePNG;
 }
 
+// float positionArret(float borneGauche, float borneDroite){
+//     float arret = rand()%100/100;
+//     while((arret<borneGauche)||(arret>borneDroite)) arret = rand()%100/100;
+//     return (arret);
+// }
+
+void faireAvancerParalaxe(spriteCourant_t *listeCourants[tailleMaxSpritesCourants])
+{
+    for (int i = 0; i < tailleMaxSpritesCourants; i++)
+    {
+        if (listeCourants[i] != NULL)
+        {
+            if (listeCourants[i]->spriteDeBase->indicePNG >= indiceFond1 && listeCourants[i]->spriteDeBase->indicePNG <= indiceFond3)
+            {
+
+                if (listeCourants[i]->xProportionPosFenetre <= -wFenetreVirtuelle) // dégueulasse, c'est pas du tout paramètrable mdr
+                {
+                    listeCourants[i]->xProportionPosFenetre = 0.0;
+                }
+                else
+                {
+                    listeCourants[i]->xProportionPosFenetre += listeCourants[i]->spriteDeBase->speedFondX;
+                }
+            }
+        }
+    }
+    // return avanceeFinie; //recommencer le parallaxe
+}
+
 int faireAvancerCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS], typeCombattant_t familleCombattants)
 {
     int avanceeFinie = 0;
@@ -266,76 +295,78 @@ int faireAvancerCombattants(combattant_t *tableauCombattants[NBRMAXCOMBATTANTS],
             {
 
                 //////////////////////:dégeulasse
+
                 if (tableauCombattants[i]->typeCombattant == BUGFIRE)
                 {
-                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre <= 0.3) // dégueulasse, c'est pas du tout paramètrable mdr
+                    // printf("%f",positionArret(borneGauche, borneDroite));
+                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre <= (0.25 + i / 50.0) * wFenetreVirtuelle) // dégueulasse, c'est pas du tout paramètrable mdr
                     {
                         nbrCombattantsArrives++;
                     }
                     else
                     {
-                        tableauCombattants[i]->spriteCourant->xProportionPosFenetre *= tableauCombattants[i]->speedX;
-                        tableauCombattants[i]->spriteCourant->yProportionPosFenetre *= tableauCombattants[i]->speedY;
+                        tableauCombattants[i]->spriteCourant->xProportionPosFenetre += tableauCombattants[i]->speedX;
+                        tableauCombattants[i]->spriteCourant->yProportionPosFenetre += tableauCombattants[i]->speedY;
                     }
                 }
                 else if (tableauCombattants[i]->typeCombattant == MANTIS)
                 {
-                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre <= 0.55) // dégueulasse, c'est pas du tout paramètrable mdr
+                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre <= (0.4 + i / 50.0) * wFenetreVirtuelle) // dégueulasse, c'est pas du tout paramètrable mdr
                     {
                         nbrCombattantsArrives++;
                     }
                     else
                     {
-                        tableauCombattants[i]->spriteCourant->xProportionPosFenetre *= tableauCombattants[i]->speedX;
-                        tableauCombattants[i]->spriteCourant->yProportionPosFenetre *= tableauCombattants[i]->speedY;
+                        tableauCombattants[i]->spriteCourant->xProportionPosFenetre += tableauCombattants[i]->speedX;
+                        tableauCombattants[i]->spriteCourant->yProportionPosFenetre += tableauCombattants[i]->speedY;
                     }
                 }
                 else if (tableauCombattants[i]->typeCombattant == FLY)
                 {
-                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre <= 0.55) // dégueulasse, c'est pas du tout paramètrable mdr
+                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre <= (0.4 + i / 50.0) * wFenetreVirtuelle) // dégueulasse, c'est pas du tout paramètrable mdr
                     {
                         nbrCombattantsArrives++;
                     }
                     else
                     {
-                        tableauCombattants[i]->spriteCourant->xProportionPosFenetre *= tableauCombattants[i]->speedX;
-                        tableauCombattants[i]->spriteCourant->yProportionPosFenetre *= tableauCombattants[i]->speedY;
+                        tableauCombattants[i]->spriteCourant->xProportionPosFenetre += tableauCombattants[i]->speedX;
+                        tableauCombattants[i]->spriteCourant->yProportionPosFenetre += tableauCombattants[i]->speedY;
                     }
                 }
                 else if (tableauCombattants[i]->typeCombattant == ROBOTGROS)
                 {
-                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre >= 0.5) // dégueulasse, c'est pas du tout paramètrable mdr
+                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre >= 0.4 * wFenetreVirtuelle) // dégueulasse, c'est pas du tout paramètrable mdr
                     {
                         nbrCombattantsArrives++;
                     }
                     else
                     {
-                        tableauCombattants[i]->spriteCourant->xProportionPosFenetre *= tableauCombattants[i]->speedX;
-                        tableauCombattants[i]->spriteCourant->yProportionPosFenetre *= tableauCombattants[i]->speedY;
+                        tableauCombattants[i]->spriteCourant->xProportionPosFenetre += tableauCombattants[i]->speedX;
+                        tableauCombattants[i]->spriteCourant->yProportionPosFenetre += tableauCombattants[i]->speedY;
                     }
                 }
                 else if (tableauCombattants[i]->typeCombattant == ROBOTMETAL)
                 {
-                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre >= 0.50) // dégueulasse, c'est pas du tout paramètrable mdr
+                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre >= 0.3 * wFenetreVirtuelle) // dégueulasse, c'est pas du tout paramètrable mdr
                     {
                         nbrCombattantsArrives++;
                     }
                     else
                     {
-                        tableauCombattants[i]->spriteCourant->xProportionPosFenetre *= tableauCombattants[i]->speedX;
-                        tableauCombattants[i]->spriteCourant->yProportionPosFenetre *= tableauCombattants[i]->speedY;
+                        tableauCombattants[i]->spriteCourant->xProportionPosFenetre += tableauCombattants[i]->speedX;
+                        tableauCombattants[i]->spriteCourant->yProportionPosFenetre += tableauCombattants[i]->speedY;
                     }
                 }
                 else if (tableauCombattants[i]->typeCombattant == ROBOTPETIT)
                 {
-                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre >= 0.50) // dégueulasse, c'est pas du tout paramètrable mdr
+                    if (tableauCombattants[i]->spriteCourant->xProportionPosFenetre >= 0.4 * wFenetreVirtuelle) // dégueulasse, c'est pas du tout paramètrable mdr
                     {
                         nbrCombattantsArrives++;
                     }
                     else
                     {
-                        tableauCombattants[i]->spriteCourant->xProportionPosFenetre *= tableauCombattants[i]->speedX;
-                        tableauCombattants[i]->spriteCourant->yProportionPosFenetre *= tableauCombattants[i]->speedY;
+                        tableauCombattants[i]->spriteCourant->xProportionPosFenetre += tableauCombattants[i]->speedX;
+                        tableauCombattants[i]->spriteCourant->yProportionPosFenetre += tableauCombattants[i]->speedY;
                     }
                 }
                 ////////////////////////

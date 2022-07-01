@@ -28,7 +28,7 @@
 #define FINDEVAGUE 100
 #define FINJEU 110
 
-#define NBRTEXTURES 27
+#define NBRTEXTURES 29
 #define nbrPolices 2
 
 //#define nombreFichier 18
@@ -54,21 +54,21 @@
 #define NBRATTAQUESDEFENSEURAVANTMORT 3
 
 #define NBRDEVAGUES 1
-#define NBRVAGUESTRAIN 100000000
+#define NBRVAGUESTRAIN 1000000
 #define NBRCOUPSMAXENREGISTRABLES 100
+
+#define wFenetreVirtuelle 1500 //!\//
+#define hFenetreVirtuelle 1000
 
 #define GAMMADEPART 0.695
 #define GAMMAARRIVEE 0.1
 
-// #define wHypothetiqueFenetre 1500
-// #define hHypothetiqueFenetre 1000
-
-#define xSponeDefenseur0 0.05
-#define ySponeDefenseur0 0.775
-#define xSponeDefenseur1 0.05
-#define ySponeDefenseur1 0.77
-#define xSponeDefenseur2 0.05
-#define ySponeDefenseur2 0.64
+#define xSponeDefenseur0 125 //!\//
+#define ySponeDefenseur0 775
+#define xSponeDefenseur1 125
+#define ySponeDefenseur1 770
+#define xSponeDefenseur2 125
+#define ySponeDefenseur2 640
 
 typedef enum typePNG
 {
@@ -76,7 +76,9 @@ typedef enum typePNG
     indicePasserelleAnimee,
     indiceBatiment2,
     indiceBatiment2coupe,
-    indiceFond,
+    indiceFond1,
+    indiceFond2,
+    indiceFond3,
     indiceFondAccueil,
     indiceLore1,
     indiceLore2,
@@ -139,6 +141,8 @@ typedef struct spriteBase
 
     int wImageSprite;
     int hImageSprite;
+
+    float speedFondX;
 
     // int animation;
     int animationInfinie;

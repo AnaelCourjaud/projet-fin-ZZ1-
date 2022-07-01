@@ -153,10 +153,13 @@ int main()
                     {
                         cleanListeCourants(listeCourants);
                         cleanListeCombattants(listeCombattants);
-                        creerSpriteCourant(spritesDeBase, listeCourants, indiceBatiment2coupe, 0.0, 0.0);
-                        creerSpriteCourant(spritesDeBase, listeCourants, indiceFond, 0.0, 0.0);
+                        // creerSpriteCourant(spritesDeBase, listeCourants, indiceBatiment2coupe, 0.0, 0.0);
+                        creerSpriteCourant(spritesDeBase, listeCourants, indiceFond3, 0.0, 0.0);
+                        creerSpriteCourant(spritesDeBase, listeCourants, indiceFond2, 0.0, 0.0);
+                        creerSpriteCourant(spritesDeBase, listeCourants, indiceFond1, 0.0, 0.0);
+                        
                         creerSpriteCourant(spritesDeBase, listeCourants, indicePasserelleAnimee, 0.0, 0.0);
-                        creerSpriteCourant(spritesDeBase, listeCourants, indiceBatiment2, -0.12, 0.27);
+                        creerSpriteCourant(spritesDeBase, listeCourants, indiceBatiment2, -0.12*wFenetreVirtuelle, 0.27*hFenetreVirtuelle);
                         creationVague(spritesDeBase, listeCombattants, listeCourants, modeAffichage);
                         numeroDeVague++;
                         ETATJEU = ARRIVEEVAGUE;
@@ -549,6 +552,10 @@ int main()
         }
 
         changermusique = 0;
+
+    if((ETATJEU >= ARRIVEEVAGUE && ETATJEU <= ANIMATIONMORT) || (ETATJEU == ATTAQUESDEFENSEUR)){
+            faireAvancerParalaxe(listeCourants);
+        }
 
         SDL_RenderPresent(renderer);
         SDL_RenderClear(renderer);
