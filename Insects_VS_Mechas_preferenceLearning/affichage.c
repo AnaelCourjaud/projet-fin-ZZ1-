@@ -1,5 +1,7 @@
 #include "affichage.h"
 
+//j'ai une folle envie de tester le commit !!
+
 void creationTexte(char texte[], char style[], char police[], SDL_Renderer *renderer, int taille, int x, int y, int opacite)
 {
 
